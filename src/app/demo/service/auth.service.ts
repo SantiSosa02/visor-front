@@ -10,7 +10,6 @@ import { checkTokenResponse } from '../interfaces/check-token.response';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly baseUrl: string = environment.baseUrl;
   private _currentUser: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(this.retrieveUserFromStorage());
   currentUser: Observable<User | null> = this._currentUser.asObservable();
   private _authStatus: BehaviorSubject<AuthStatus> = new BehaviorSubject<AuthStatus>(this.retrieveAuthStatusFromStorage());
@@ -33,7 +32,7 @@ export class AuthService {
 
   login(correo: string, contrasena: string): Observable<boolean> {
     console.log('Attempting login...');
-    const url = `${this.baseUrl}/usuarios/login`;
+    const url = `https://api-postgress.onrender.com/api/usuarios/login`;
     const body = { correo, contrasena };
 
     return this.http.post<LoginResponse>(url, body).pipe(
@@ -97,7 +96,7 @@ export class AuthService {
       return of(null);
     }
   
-    const url = `${this.baseUrl}/ruta-protegida`;
+    const url = `https://api-postgress.onrender.com/api/ruta-protegida`;
     const headers = new HttpHeaders().set('x-token', token);
   
     return this.http.get<checkTokenResponse>(url, { headers }).pipe(

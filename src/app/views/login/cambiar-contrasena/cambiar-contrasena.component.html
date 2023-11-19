@@ -19,7 +19,8 @@
                         class="form-control"
                         (blur)="validarContrasena()"
                         [ngClass]="{'is-invalid': errorMessages.contrasena}"
-                        placeholder>
+                        placeholder
+                        [disabled]="!camposHabilitados">
                     <label for="contrasena" class="input-label">Contraseña
                     </label>
 

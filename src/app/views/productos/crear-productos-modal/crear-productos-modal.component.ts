@@ -85,7 +85,8 @@ loading:boolean = false;
       this.camposValidos=false;
     }else {
 
-      this.apiProducto.verificarNombreExistente(this.product.nombre).subscribe(
+      const token =localStorage.getItem('token');
+      this.apiProducto.verificarNombreExistente(this.product.nombre,token).subscribe(
         (response) => {
           if (response.existe) {
             this.errorMessages.nombre = 'Este nombre ya está en uso por otro producto.';
@@ -190,8 +191,8 @@ validarPrecioVenta(event: Event) {
 
   registrarProducto() {
     console.log('Haciendo clic en el botón de Registrar');
-    
-    this.apiProducto.createProduct(this.product).subscribe(
+    const token=localStorage.getItem('token');
+    this.apiProducto.createProduct(this.product,token).subscribe(
       (response) => {
         console.log('Respuesta del servidor:', response);
         if (response && response.status === 'success') {
