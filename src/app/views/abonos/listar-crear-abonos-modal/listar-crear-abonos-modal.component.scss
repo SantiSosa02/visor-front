@@ -1,0 +1,232 @@
+/* Estilos para el switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+  }
+  
+  .switch input {
+    display: none;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 20px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+  
+  /* Estilos para el contenedor de botones */
+  .botones {
+    white-space: nowrap; /* Evita que los elementos se envuelvan a la siguiente línea */
+  }
+  
+  /* Estilos para los botones Editar y el switch */
+  .boton-editar,
+  .boton-switch {
+    display: inline-block;
+    vertical-align: middle; /* Alinea verticalmente los elementos */
+    margin-right: 10px; /* Ajusta el margen según tu preferencia */
+  }
+  
+  /* Estilo para el círculo (activo/inactivo) */
+  .circulo-verde, .circulo-rojo {
+    display: inline-block;
+    padding: 5px 10px; /* Ajusta el relleno según tus preferencias */
+    border-radius: 10%;
+    background-color: transparent; /* Ajusta el fondo según tus preferencias */
+    color: black; /* Ajusta el color del texto según tus preferencias */
+    text-align: center; /* Centra el texto horizontalmente */
+    min-width: 40px; /* Establece un ancho mínimo para el círculo */
+    font-size: 13px;
+  }
+  
+  .circulo-verde {
+    background-color: rgb(174, 233, 174);
+  }
+  
+  .circulo-rojo {
+    background-color: rgb(205, 131, 131);
+  }
+  
+  .card-title {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    width: 300px;
+    border-radius: 10px;
+    padding: 5px;
+  }
+  
+  .contenedor-buscador {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+  }
+  
+  .table th {
+    background-color: #ececec;
+    color: #fff;
+  }
+  
+  td {
+    padding: 10px;
+    font-size: 15px;
+  }
+  
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .fila-inactiva {
+    background-color: #880f0f;
+  }
+  
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .paginacion {
+    margin: 0 10px;
+  }
+  
+  .input-icon {
+    position: relative;
+  }
+  
+  .input-icon input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .input-icon label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+  }
+  
+  .input-icon label i {
+    margin-right: 5px;
+  }
+  
+  h4 {
+    font-size: 28px;
+  }
+  
+  
+  .mensaje-no-resultados{
+    padding: 15px;
+    font-size: 15px;
+    color:red;
+  }
+
+  .input-container {
+    position: relative;
+}
+
+.input-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: 0.2s;
+    color: #333;
+}
+
+input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc; /* Agrega un borde en lugar de un borde inferior */
+    border-radius: 5px; /* Añade bordes redondeados para un aspecto más uniforme */
+    outline: none;
+    font-size: 16px; /* Ajusta el tamaño de fuente según tus preferencias */
+}
+
+input::placeholder {
+    color: transparent; /* Oculta el texto del placeholder por defecto */
+}
+
+input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
+    top: -20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.invalid-feedback {
+  position: absolute;
+  left: 18em; /* Ajusta la distancia vertical según tus necesidades */
+ bottom: -9px;
+}
+
+
+.valor-restante-label {
+  font-size: 16px; /* Tamaño de fuente */
+  margin-bottom: 8px; /* Espaciado inferior */
+  color: #333; /* Color del texto */
+}
+
+/* Estilo para el input del valor restante */
+.valor-restante-input {
+  padding: 8px; /* Relleno interno */
+  font-size: 16px; /* Tamaño de fuente */
+  border: 1px solid #ccc; /* Borde del input */
+  border-radius: 4px; /* Bordes redondeados */
+  background-color: #f9f9f9; /* Color de fondo */
+  color: #555; /* Color del texto */
+  width: 100%; /* Ancho completo */
+}
+
+.boton-excel{
+  margin-top: 15px;
+}

@@ -1,0 +1,116 @@
+
+<div class="card">
+    <div class="modal-header">
+        <h4 class="card-title">Registro de cliente</h4>
+    </div>
+    <div class="modal-body">
+        <form class="row g-3 mb-3">
+            <div class="col-12 mt-5">
+                <div class="input-container">
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        [(ngModel)]="client.nombre"
+                        class="form-control"
+                        (blur)="validarNombre()"
+                        [ngClass]="{'is-invalid': errorMessages.nombre}"
+                        placeholder=" ">
+                    <label for="nombre" class="input-label">Nombre
+                        <span style="color: red;" *ngIf="!client.nombre">*</span>
+                    </label>
+
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.nombre" style="color: red;">
+                        {{errorMessages.nombre}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+                    <input
+                        type="apellido"
+                        id="nombre"
+                        name="apellido"
+                        [(ngModel)]="client.apellido"
+                        class="form-control"
+                        (blur)="validarApellido()"
+                        [ngClass]="{'is-invalid': errorMessages.apellido}"
+                        placeholder=" ">
+                    <label for="nombre" class="input-label">Apellido
+                        <span style="color: red;" *ngIf="!client.apellido">*</span>
+                    </label>
+
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.apellido" style="color: red;">
+                        {{errorMessages.apellido}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+
+                    <input
+                        type="number"
+                        id="telefono"
+                        name="telefono"
+                        [(ngModel)]="client.telefono"
+                        class="form-control"
+                        (input)="validarTelefono($event)"
+                        [ngClass]="{'is-invalid': errorMessages.telefono}"
+                        placeholder=" ">
+
+                    <label for="telefono" class="input-label">Telefono
+                        <span style="color: red;" *ngIf="!client.telefono">*</span>
+                    </label>
+
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.telefono" style="color: red;">
+                        {{errorMessages.telefono}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+
+                    <input
+                        type="email"
+                        id="correo"
+                        name="correo"
+                        [(ngModel)]="client.correo"
+                        class="form-control"
+                        (input)="validarCorreo()"
+                        [ngClass]="{'is-invalid': errorMessages.correo}"
+                        placeholder="Ingrese el apellido">
+
+                    <label for="correo" class="input-label">Correo
+                        <span style="color: red;" *ngIf="!client.correo">*</span>
+                    </label>
+
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.correo" style="color: red;">
+                        {{errorMessages.correo}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button  pButton pRipple type="button"    class="p-button-success boton-registrar"
+                    [disabled]="loading || !camposCompletos() || !camposValidos"
+                    (click)="registrarCliente()">
+                    <span *ngIf="!loading">Registrar</span>
+                    <span *ngIf="loading">Registrando...</span>
+                </button>
+                <button
+                pButton pRipple type="button"
+                class="p-button-secondary"
+                    (click)="cerrarModal()">
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

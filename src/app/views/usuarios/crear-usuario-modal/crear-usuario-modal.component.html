@@ -1,0 +1,134 @@
+<div class="card" >
+    <div class="modal-header">
+        <h4 class="card-title">Registro de Usuario</h4>
+    </div>
+    <div class="modal-body">
+        <form class="row g-3 mb-3">
+            <div class="col-12 mt-5">
+                <div class="input-container">
+                   
+                    <input
+                        type="text"
+                        id="name"
+                        name="nombre"
+                        [(ngModel)]="user.nombre"
+                        class="form-control"
+                        (blur)="validarNombre()"
+                        [ngClass]="{'is-invalid': errorMessages.nombre}"
+                        placeholder="">
+                        <label for="name" class="input-label">Nombre 
+                            <span style="color: red;" *ngIf="!user.nombre">*</span>
+                        </label>
+
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.nombre" style="color: red;">
+                        {{errorMessages.nombre}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+                 
+                    <input
+                        type="text"
+                        id="apellido"
+                        name="apellido"
+                        [(ngModel)]="user.apellido"
+                        class="form-control"
+                        (blur)="validarApellido()"
+                        [ngClass]="{'is-invalid': errorMessages.apellido}"
+                        placeholder="">
+                        <label for="apellido" class="input-label">Apellido 
+                            <span style="color: red;" *ngIf="!user.apellido">*</span>
+                        </label>
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.apellido" style="color: red;">
+                        {{errorMessages.apellido}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+               
+                <input
+                    type="email"
+                    id="correo"
+                    name="correo"
+                    [(ngModel)]="user.correo"
+                    class="form-control"
+                    (blur)="validarCorreo()"
+                    [ngClass]="{'is-invalid': errorMessages.correo}"
+                    placeholder="">
+                    <label for="correo" class="input-label">Correo 
+                        <span style="color: red;" *ngIf="!user.correo">*</span>
+                    </label>
+                <div class="invalid-feedback error-message mt-2"
+                    *ngIf="errorMessages.correo" style="color: red;">
+                    {{errorMessages.correo}}
+                </div>
+            </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+               
+                <input
+                    type="password"
+                    id="contrasena"
+                    name="contrasena"
+                    [(ngModel)]="user.contrasena"
+                    class="form-control"
+                    (blur)="validarContrasena()"
+                    [ngClass]="{'is-invalid': errorMessages.contrasena}"
+                    placeholder="">
+                    <label for="contrasena" class="input-label">Contraseña 
+                        <span style="color: red;" *ngIf="!user.contrasena">*</span>
+                    </label>
+                <div class="invalid-feedback error-message mt-2"
+                    *ngIf="errorMessages.contrasena" style="color: red;">
+                    {{errorMessages.contrasena}}
+                </div>
+            </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+                <input
+                    type="password"
+                    id="confirmContrasena"
+                    name="confirmContrasena"
+                    [(ngModel)]="confirmarContrasena"
+                    class="form-control"
+                    (input)="validarConfirmarContrasena()"
+                    [ngClass]="{'is-invalid': errorMessages.confirmarContrasena}"
+                    placeholder="">
+                    <label for="confirmContrasena" class="input-label">Confirmar Contraseña
+                         <span style="color: red;" *ngIf="!confirmarContrasena">*</span>
+                        </label>
+                <div class="invalid-feedback error-message mt-2"
+                    *ngIf="errorMessages.confirmarContrasena"
+                    style="color: red;">
+                    {{errorMessages.confirmarContrasena}}
+                </div>
+            </div>
+            </div>
+
+            <div class="botones mt-4">
+                <button pButton pRipple type="button"
+                    [disabled]="loading || !camposCompletos() || !camposValidos"
+                    (click)="registrarUsuario()"  class="p-button-success boton-registrar">
+                    <span *ngIf="!loading">Registrar</span>
+                    <span *ngIf="loading">Registrando...</span>
+                </button>
+                <button
+                pButton pRipple type="button"
+                class="p-button-secondary"
+                    (click)="cerrarModal()">
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

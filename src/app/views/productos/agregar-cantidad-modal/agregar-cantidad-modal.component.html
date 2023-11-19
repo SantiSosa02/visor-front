@@ -1,0 +1,68 @@
+ <div class="card">
+    <div class="modal-header">
+        <h4 class="card-title">Agregar cantidad</h4>
+    </div>
+    <div class="modal-body">
+        <form class="row g-3 mb-3">
+            <div class="col-12 mt-2">
+                <label for="cantidadActual">Cantidad Actual</label>
+                <input
+                    type="text"
+                    id="cantidadActual"
+                    name="cantidadActual"
+                    [(ngModel)]="cantidadActual"
+                    class="form-control"
+                    placeholder="Cantidad Actual"
+                    disabled>
+                    
+            </div>
+
+            <div class="col-6 agregar">
+                <div class="input-container">
+              
+                <input
+                    type="number"
+                    id="cantidad"
+                    name="cantidad"
+                    [(ngModel)]="cantidadAAgregar"
+                    class="form-control"
+                    (input)="validarCantidad($event)"
+                    [ngClass]="{'is-invalid': errorMessages.cantidad}"
+                    placeholder="">
+                    <label for="cantidad" class="input-label">Cantidad a agregar</label>
+                <div class="invalid-feedback error-message mt-2"
+                    *ngIf="errorMessages.cantidad" style="color: red;">
+                    {{errorMessages.cantidad}}
+                </div>
+            </div>
+            </div>
+
+            <div class="col-6 ">
+                <label for="cantidadActual">Cantidad Total</label>
+                <input
+                    type="text"
+                    id="cantidadActual"
+                    name="cantidadTotal"
+                    [(ngModel)]="cantidadTotal"
+                    class="form-control"
+                    placeholder="Cantidad Actual"
+                    disabled>
+            </div>
+
+            <div class="botones">
+                <button pButton pRipple type="button"    class="p-button-success boton-registrar"
+                    [disabled]="loading || !camposCompletos() || !camposValidos"
+                    (click)="agregarCantidad()">
+                    <span *ngIf="!loading">Agregar</span>
+                    <span *ngIf="loading">Agregando...</span>
+                </button>
+                <button
+                pButton pRipple type="button"
+                class="p-button-secondary"
+                    (click)="cerrarModal()">
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

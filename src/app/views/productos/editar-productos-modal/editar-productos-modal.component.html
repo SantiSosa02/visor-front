@@ -1,0 +1,135 @@
+
+<div class="card">
+    <div class="modal-header">
+        <h4 class="card-title">Editar producto</h4>
+    </div>
+    <div class="modal-body">
+        <form class="row g-3 mb-3">
+
+            <div class="col-12 mt-5">
+                <div class="input-container">
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        [(ngModel)]="datosModificados.nombre"
+                        class="form-control"
+                        (blur)="validarNombre()"
+                        [ngClass]="{'is-invalid': errorMessages.nombre}"
+                        placeholder="Ingresa el nombre">
+                    <label for="name" class="input-label">Nombre
+                        <span style="color: red;" *ngIf="!datosModificados.nombre">*</span>
+                    </label>
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.nombre" style="color: red;">
+                        {{errorMessages.nombre}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 ">
+                <div class="input-container">
+                    <label for="name">Categoria
+                        <span style="color: red;" *ngIf="!datosModificados.idcategoria">*</span>
+                    </label>
+                    <select
+                        id="idcategoria"
+                        name="idcategoria"
+                        [(ngModel)]="datosModificados.idcategoria"
+                        class="form-control"
+                        (change)="validarCategoria()">
+
+                        <option value disabled selected>Selecciona una categoría</option>
+                        <option *ngFor="let categoria of categorias"
+                            [value]="categoria.idcategoria">{{ categoria.nombre
+                            }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-6 mt-4">
+                <div class="input-container">
+
+                    <input
+                        type="number"
+                        id="stock_minimo"
+                        name="stock_minimo"
+                        required
+                        [(ngModel)]="datosModificados.stock_minimo"
+                        class="form-control"
+                        (input)="validarStockMinimo($event)"
+                        [ngClass]="{'is-invalid': errorMessages.stock_minimo}"
+                        placeholder="Ingresa el stock minimo"
+                        required>
+                    <label for="name" class="input-label">Stock minimo
+                        <span style="color: red;" *ngIf="!datosModificados.stock_minimo">*</span>
+                    </label>
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.stock_minimo" style="color: red;">
+                        {{errorMessages.stock_minimo}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 mt-4">
+                <div class="input-container">
+
+                    <input
+                        type="number"
+                        id="cantidad"
+                        name="cantidad"
+                        [(ngModel)]="datosModificados.cantidad"
+                        class="form-control"
+                        (input)="validarCantidad($event)"
+                        [ngClass]="{'is-invalid': errorMessages.cantidad}"
+                        placeholder="Ingresa la cantidad">
+                    <label for="name" class="input-label">Cantidad
+                        <span style="color: red;" *ngIf="!datosModificados.cantidad">*</span>
+                    </label>
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.cantidad" style="color: red;">
+                        {{errorMessages.cantidad}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+
+                    <input
+                        type="number"
+                        id="precio_venta"
+                        name="precio_venta"
+                        [(ngModel)]="datosModificados.precio_venta"
+                        class="form-control"
+                        (input)="validarPrecioVenta($event)"
+                        [ngClass]="{'is-invalid': errorMessages.precio_venta}"
+                        placeholder="Ingresa el precio de venta">
+                    <label for="name" class="input-label">Precio venta
+                        <span style="color: red;" *ngIf="!datosModificados.precio_venta">*</span>
+                    </label>
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.precio_venta" style="color: red;">
+                        {{errorMessages.precio_venta}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="botones mt-4">
+                <button pButton pRipple type="button"    class="p-button-success boton-registrar"
+                    [disabled]="loading || !camposCompletos() || !cambios() || !camposValidos"
+                    (click)="actualizarProducto()">
+                    <span *ngIf="!loading">Actualizar</span>
+                    <span *ngIf="loading">Actualizando...</span>
+                </button>
+                <button
+                pButton pRipple type="button"
+                class="p-button-secondary"
+                    (click)="cerrarModal()">
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

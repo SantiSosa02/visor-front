@@ -1,0 +1,78 @@
+<body>
+  <div class="container">
+      <div class="login">
+          <div class="content">
+              <img src="../../../../assets/demo/images/login/VISOR1.png" alt>
+          </div>
+
+          <div class="loginform">
+            <h1>Cambiar contraseña</h1>
+            <form class="row g-3 mt-3"> 
+              <div class="col-12">
+                <div class="input-container mt-5">
+
+                    <input
+                        type="password"
+                        id="contrasena"
+                        name="contrasena"
+                        [(ngModel)]="newPassword"
+                        class="form-control"
+                        (blur)="validarContrasena()"
+                        [ngClass]="{'is-invalid': errorMessages.contrasena}"
+                        placeholder>
+                    <label for="contrasena" class="input-label">Contraseña
+                    </label>
+
+                    <div class="invalid-feedback error-message"
+                        *ngIf="errorMessages.contrasena" style="color: red;">
+                        {{errorMessages.contrasena}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+              <div class="input-container mt-3">
+
+                <input type="password"
+                name="confirmarContrasena"
+                id="confirmarContrasena"
+                class="form-control"
+                [(ngModel)]="confirmarContrasena"
+                placeholder=""
+                (input)="validarConfirmar()"
+                [ngClass]="{'is-invalid': errorMessages.confirmarContrasena}"
+                [disabled]="!camposHabilitados"
+                >
+                  <label for="correo" class="input-label">Confirmar
+                    Contraseña
+                  </label>
+
+                  <div class="invalid-feedback error-message"
+                      *ngIf="errorMessages.confirmarContrasena" style="color: red;">
+                      {{errorMessages.confirmarContrasena}}
+                  </div>
+              </div>
+          </div>
+          <div class="contenedor-botones">
+            <button pButton pRipple type="button" class="p-button-success boton-registrar" 
+            [disabled]="!camposValidos || !camposCompletos()"
+            (click)="changePassword()"
+            [ngClass]="{'is-invalid': errorMessages.recuperar}">
+            Cambiar contraseña
+          </button>
+            
+            <div class="invalid-feedback error-message mt-3"
+                 *ngIf="errorMessages.recuperar" style="color: red;">
+              {{errorMessages.recuperar}}
+            </div>
+          </div>
+            </form>
+          </div>
+
+      </div>
+  </div>
+</body>
+
+
+
+

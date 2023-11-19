@@ -1,0 +1,126 @@
+<div class="card card-w-title">
+  <h4>Ventas</h4>
+  <p-menubar class="mt-2 p-1">
+    <ng-template pTemplate="start">
+      <button pButton pRipple type="button" (click)="abrirRegistroVenta()"
+        label="Success" class="p-button-success" icon="pi pi-plus"
+        label="Agregar venta"></button>
+        <button  type="button" (click)="exportarVentasExcel()"
+        class="btn btn-success excel" 
+        ><i class="fa-solid fa-file-excel"></i></button>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <span class="p-input-icon-right">
+        <input
+          type="text"
+          class="form-control icono ancho-personalizado"
+          placeholder="Buscar venta"
+          [(ngModel)]="busqueda"
+          (input)="actualizarTabla()">
+        <i class="pi pi-search"></i>
+      </span>
+    </ng-template>
+  </p-menubar>
+  <div class="col-6 mt-3 informe">
+    <label for="total" class="total-label">Informe de Ventas del Último Mes:</label>
+    <input id="total" 
+    type="text" 
+    class="total-input" 
+    [value]="sumaVentasActivasUltimoMes | currency:'USD':'symbol':'1.2-2'" 
+    disabled>
+</div>
+</div>
+
+<div class="card card-body">
+  <div class="table-responsive">
+    <table class="table align-middle text-nowrap">
+      <thead>
+        <tr>
+          <th class="text-dark font-medium fs-5" style="width: 250px;">N Factura</th>
+          <th class="text-dark font-medium fs-5" style="width: 250px;">Cliente</th>
+          <th class="text-dark font-medium fs-5" style="width: 250px;">Fecha</th>
+          <th class="text-dark font-medium fs-5" style="width: 250px;">M Pago</th>
+          <th class="text-dark font-medium fs-5" style="width: 250px;">V total</th>
+          <th class="text-dark font-medium fs-5" style="width: 250px;">Estado pago</th>
+          <th class="text-dark font-medium fs-5" style="width: 250px;">
+            Estado
+            <i class="fa-solid fa-filter"
+              (click)="cambiarFiltro(!filtroActivo)"
+              [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}"></i>
+          </th>
+          <th class="text-dark font-medium fs-5" style="width: 250px;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let item of data; let i = index"
+          [style.background-color]="item.estado ? '' : '#880f0f'">
+          <td>{{item.numerofactura}}</td>
+          <td>{{item.idcliente}}</td>
+          <td>{{item.fecha}}</td>
+          <td>{{item.metodopago}}</td>
+          <td>{{ item.valortotal | currency:'':'symbol':'1.0-0' }}</td>
+
+          <td>
+            <div [ngClass]="{'estado-pago': item.estadopago === 'Por pagos', 'estado-container': item.estadopago === 'Pagado', 'circulo-amarillo': item.estadopago === 'Por pagos', 'circulo-verde': item.estadopago === 'Pagado'}" style="font-weight: bold;">
+              {{ item.estadopago }}
+            </div>
+          </td>
+          
+          
+          <td class="estado-column">
+            <div
+              [ngClass]="{'estado-container': true, 'circulo-verde': item.estado, 'circulo-rojo': !item.estado}"
+              style="font-weight: bold;">
+              {{ item.estado ? 'Activo' : 'Inactivo' }}
+            </div>
+          </td>
+          <td>
+            <div class="botones">
+              <div class="boton-editar">
+                <button pButton pRipple type="button" icon="pi pi-eye" (click)="abrirDetalle(item.idventa)" class="p-button-rounded p-button-secondary"></button>
+              </div>
+              <div class="boton-abono" *ngIf="item.estadopago === 'Por pagos'">
+                <button (click)="abrirModalAbonos(item.idventa)" pButton pRipple type="button" icon="pi pi-wallet" class="p-button-rounded p-button-info">
+                </button>
+            </div>
+              <div class="boton-switch align-items-center">
+                <label class="switch">
+                  <input type="checkbox" [checked]="item.estado"
+                    (change)="item.estado === true ? toggleEstado(item) : mostrarMensaje(item)"
+                    (mouseenter)="mostrarMensaje(item)" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="mensaje-no-resultados" *ngIf="data.length === 0">
+      No se encontraron resultados
+    </div>
+  </div>
+  <div class="pagination">
+    <button class="paginacion btn btn-secondary btn-sm" [disabled]="currentPage === 1" (click)="previousPage()">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <span class="page-info">Página {{ currentPage }} de {{ totalPages }}</span>
+    <button class="paginacion btn btn-secondary btn-sm paginacion-right" [disabled]="currentPage === totalPages" (click)="nextPage()">
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+    <div class="filtrar">
+    <label for="itemsPerPage">Filas por página:</label>
+    <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="cambiarFilasPorPagina()">
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+  </div>
+  </div>
+</div>

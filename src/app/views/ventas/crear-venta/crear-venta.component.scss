@@ -1,0 +1,158 @@
+.botones{
+    padding: 8px;
+    width: 100%;
+}
+
+.botones.cancelar{
+    margin-right: 50px;
+}
+.botones button {
+    display: inline-block; /* Coloca los botones en línea horizontal */
+    margin-right: 10px; /* Agrega un margen derecho entre los botones según tus necesidades */
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: 0.2s;
+    color: #333;
+}
+
+input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc; /* Agrega un borde en lugar de un borde inferior */
+    border-radius: 5px; /* Añade bordes redondeados para un aspecto más uniforme */
+    outline: none;
+    font-size: 16px; /* Ajusta el tamaño de fuente según tus preferencias */
+}
+
+input::placeholder {
+    color: transparent; /* Oculta el texto del placeholder por defecto */
+}
+
+input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
+    top: -20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.invalid-feedback {
+    margin-top: 5px;
+}
+
+.select-cliente{
+  
+    margin-top: -24px;
+}
+
+.select-metodopago{
+    margin-top: -24px;
+}
+
+.row{
+    margin-top: 10px;
+}
+
+.contenedor-principal{
+
+    display: flex;
+    justify-content: space-evenly;
+    padding: 8px;
+
+}
+
+.product-cant{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.boton-agregar{
+
+    width: 4%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 34px;
+}
+
+.boton-add,
+.boton-clean{
+    border-radius: 50%;
+    color:white
+    
+}
+
+
+.contenedor-botones{
+    padding: 8px;
+    display: flex;
+    justify-content: start;   
+}
+
+.contenedor-botones button {
+    margin-right: 10px;  /* Ajusta el valor según la separación que desees */
+}
+
+.boton-pequeno {
+    padding: 8px 14px; /* Puedes ajustar estos valores según tus necesidades */
+    font-size: 12px; /* Ajusta el tamaño de la fuente según tus necesidades */
+}
+
+.tabla-con-bordes {
+    border: 1px solid #ddd; /* Estilo del borde alrededor de la tabla */
+    border-collapse: collapse; /* Combina los bordes de las celdas */
+    width: 100%; /* O ajusta según tus necesidades */
+}
+
+.tabla-con-bordes th,
+.tabla-con-bordes td {
+    padding: 8px; /* Ajusta el espacio interno de las celdas según tus necesidades */
+}
+
+.tabla-con-bordes th {
+    background-color: #f9f8f8; /* Color de fondo para las celdas del encabezado si es necesario */
+    border-radius: 5px;
+}
+
+.total-input {
+    width: 150px; /* Ancho del input */
+    padding: 5px; /* Espaciado interno */
+    font-size: 1.2em; /* Tamaño de fuente */
+    border: 1px solid #ced4da; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f8f9fa; /* Color de fondo */
+    color: #495057; /* Color del texto */
+    margin-left: 15px;
+}
+
+.total-label{
+    font-size: 20px;
+    
+}
+
+.boton-registrar,
+.boton-cerrar{
+    padding: 10px; /* Ajusta según sea necesario para el relleno */
+  }
+
+  .boton-registrar {
+    width: 120px; /* Ajusta el ancho según tus necesidades */
+}
+
+.cantidad-actual{
+    width: 9em;
+}
+
+.cantidad-agregar{
+    width: 9em;
+}

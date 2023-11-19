@@ -1,0 +1,40 @@
+
+  
+        <div class="card">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Recuperar Contraseña</h5>
+            </div>
+            <form #loginForm="ngForm" action="">
+                <div class="modal-body">
+                    <p class="mt-2">Ingrese su correo electrónico para recuperar la contraseña:</p>
+                    <input type="email"
+                     name="correo" 
+                     id="correo" 
+                     [(ngModel)]="correo"
+                     class="form-control mt-2" 
+                     placeholder="Correo electrónico"
+                     [ngClass]="{'is-invalid': errorMessages.recuperar}">
+                     <div class="invalid-feedback error-message mt-2"
+                     *ngIf="errorMessages.recuperar" style="color: green;">
+                     {{errorMessages.recuperar}}
+                 </div>
+                </div>
+            </form>
+
+            <div class="botones mt-4">
+                <button pButton pRipple type="button"
+                    class="p-button-success boton-registrar"
+                    [disabled]="loading"
+                    (click)="forgotPassword(loginForm)">
+                    <span *ngIf="!loading">Recuperar</span>
+                    <span *ngIf="loading">Enviando correo...</span>
+                </button>
+                <button
+                    pButton pRipple type="button"
+                    class="p-button-secondary"
+                    (click)="cerrarModal()">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+

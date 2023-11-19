@@ -1,0 +1,72 @@
+
+<div class="card">
+    <div class="modal-header">
+        <h4 class="card-title">Registro de categoria</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-container">
+            <div class="col-12 mt-4">
+                <div class="input-container">
+                    
+                    <input
+                        type="text"
+                        id="name"
+                        name="nombre"
+                        [(ngModel)]="category.nombre"
+                        class="form-control"
+                        (blur)="validarNombre()"
+                        [ngClass]="{'is-invalid': errorMessages.nombre}"
+                        placeholder="">
+                        <label for="name" class="input-label">Nombre
+                            <span style="color: red;" *ngIf="!category.nombre">*</span>
+                        </label>
+
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.nombre" style="color: red;">
+                        {{errorMessages.nombre}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+                    <label for="descripcion">Descripción
+                        <span style="color: red;" *ngIf="!category.descripcion">*</span>
+                    </label>
+                    <textarea
+                        type="text"
+                        id="descripcion"
+                        name="descripcion"
+                        [(ngModel)]="category.descripcion"
+                        class="form-control multiline-input"
+                        (blur)="validarDescripcion()"
+                        placeholder=""
+                        [ngClass]="{'is-invalid': errorMessages.descripcion}">
+                       </textarea>
+
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.descripcion" style="color: red;">
+                        {{errorMessages.descripcion}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="botones mt-4">
+                <button pButton pRipple type="button"    class="p-button-success boton-registrar"
+                    [disabled]="loading || !camposCompletos() || !camposValidos"
+                    (click)="registrarCategoria()">
+                    <span *ngIf="!loading">Registrar</span>
+                    <span *ngIf="loading">Registrando...</span>
+                </button>
+                <button
+                pButton pRipple type="button"
+                class="p-button-secondary"
+                    (click)="cerrarModal()">
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

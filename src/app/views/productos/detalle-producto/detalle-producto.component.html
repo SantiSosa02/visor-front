@@ -1,0 +1,102 @@
+
+<div class="card">
+    <div class="modal-header">
+        <h4 class="card-title">Detalle producto</h4>
+    </div>
+    <div class="modal-body">
+        <form class="row g-3 mb-3">
+
+            <div class="col-12 mt-5">
+                <div class="input-container">
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        [(ngModel)]="datosModificados.nombre"
+                        class="form-control"
+                        placeholder=""
+                        disabled>
+                    <label for="name" class="input-label">Nombre</label>
+
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="input-container">
+                    <label for="name">Categoria</label>
+                    <select
+                        id="idcategoria"
+                        name="idcategoria"
+                        [(ngModel)]="datosModificados.idcategoria"
+                        class="form-control"
+                        disabled>
+
+                        <option value disabled selected>Selecciona una categoría</option>
+                        <option *ngFor="let categoria of categorias"
+                            [value]="categoria.idcategoria">{{ categoria.nombre
+                            }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-6 mt-5">
+                <div class="input-container">
+
+                    <input
+                        type="number"
+                        id="stock_minimo"
+                        name="stock_minimo"
+                        required
+                        [(ngModel)]="datosModificados.stock_minimo"
+                        class="form-control"
+                        placeholder="Ingresa el stock minimo"
+                        required
+                        disabled>
+                    <label for="name" class="input-label">Stock minimo</label>
+
+                </div>
+            </div>
+
+            <div class="col-6 mt-5">
+                <div class="input-container">
+
+                    <input
+                        type="number"
+                        id="cantidad"
+                        name="cantidad"
+                        [(ngModel)]="datosModificados.cantidad"
+                        class="form-control"
+                        placeholder=""
+                        disabled>
+                    <label for="name" class="input-label">Cantidad</label>
+                </div>
+            </div>
+
+            <div class="col-12 mt-5">
+                <div class="input-container">
+
+                    <input
+                        type="number"
+                        id="precio_venta"
+                        name="precio_venta"
+                        [(ngModel)]="datosModificados.precio_venta"
+                        class="form-control"
+                        placeholder=""
+                        disabled>
+                    <label for="name" class="input-label">Precio venta</label>
+                </div>
+            </div>
+
+            <div class="botones mt-5">
+                <button
+                pButton pRipple type="button"
+                class="p-button-secondary"
+                    (click)="cerrarModal()">
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

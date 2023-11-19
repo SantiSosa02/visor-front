@@ -1,0 +1,83 @@
+<div class="card">
+    <div class="modal-header">
+        <h4 class="card-title">Detalle cliente</h4>
+    </div>
+    <div class="modal-body">
+        <form class="row g-3 mb-3">
+            <div class="col-12 mt-5">
+                <div class="input-container">
+                
+                <input
+                    type="text"
+                    id="name"
+                    name="nombre"
+                    [(ngModel)]="datosModificados.nombre"
+                    class="form-control"
+                    placeholder=""
+                    disabled>
+                    <label for="name" class="input-label">Nombre</label>
+
+            </div>
+            </div>
+            
+            <div class="col-12 mt-5">
+                <div class="input-container">
+              
+                <input
+                    type="text"
+                    id="apellido"
+                    name="apellido"
+                    [(ngModel)]="datosModificados.apellido"
+                    class="form-control"
+                    placeholder=""
+                    disabled>
+                    <label for="apellido" class="input-label">Apellido</label>
+            </div>
+            </div>
+
+            <div class="col-12 mt-5">
+                <div class="input-container">
+               
+                <input
+                    type="number"
+                    id="telefono"
+                    name="telefono"
+                    [(ngModel)]="datosModificados.telefono"
+                    class="form-control"
+                    placeholder=""
+                    disabled>
+                    <label for="telefono" class="input-label">Telefono</label>
+            </div>
+            </div>
+
+            <div class="col-12 mt-5">
+                <div class="input-container">
+              
+                <input
+                    type="email"
+                    id="correo"
+                    name="correo"
+                    [(ngModel)]="datosModificados.correo"
+                    class="form-control"
+                    placeholder=""
+                    disabled>
+                    <label for="correo" class="input-label">Correo</label>
+            </div>
+            </div>
+
+          
+            <div class="botones mt-5">
+                <button
+                pButton pRipple type="button"
+                class="p-button-secondary"
+                    (click)="cerrarModal()">
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

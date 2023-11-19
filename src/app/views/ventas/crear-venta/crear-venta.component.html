@@ -1,0 +1,364 @@
+<div class="card">
+    <div class="modal-header">
+        <h4>Registro de venta</h4>
+    </div>
+    <div class="modal-body">
+        <form class="row g-4 mb-3">
+
+            <div class="col-2 mt-3">
+                <div class="input-container">
+                    <label for="name">Numero Factura</label>
+                    <input
+                        type="number"
+                        name="numerofactura"
+                        id="numerofactura"
+                        class="form-control"
+                        [(ngModel)]="sale.numerofactura"
+                        disabled>
+
+                </div>
+            </div>
+
+            <div class="col-2 mt-5">
+                <div class="input-container">
+
+                    <input
+                        type="date"
+                        name="fecha"
+                        id="fecha"
+                        class="form-control"
+                        [(ngModel)]="sale.fecha"
+                        disabled>
+                    <label for="name" class="input-label">Fecha</label>
+                </div>
+            </div>
+
+            <div class="col-3 mt-5">
+                <div class="select-metodopago">
+                    <label for="cliente">Estado de pago</label>
+                    <select
+                        id="estadopago"
+                        name="estadopago"
+                        [(ngModel)]="sale.estadopago"
+                        class="form-select">
+
+                        <option value disabled selected>Selecciona un estado de
+                            pago</option>
+                        <option *ngFor="let estado of estadosPago"
+                            [value]="estado">{{ estado }}</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="col-3 mt-5">
+                <div class="select-metodopago">
+                    <label for="cliente">Metodo de pago</label>
+                    <select
+                        id="metodopago"
+                        name="metodopago"
+                        [(ngModel)]="sale.metodopago"
+                        class="form-select">
+
+                        <option value disabled selected>Selecciona un metodo de
+                            pago</option>
+                        <option *ngFor="let metodo of metodosPago"
+                            [value]="metodo">{{ metodo }}</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="col-3 mt-5">
+                <div class="input-container">
+                    <input type="text" name="searchCliente"
+                        [(ngModel)]="searchCliente" class="form-control"
+                        placeholder>
+                    <label for="name" class="input-label">Filtrar cliente</label>
+                </div>
+            </div>
+
+            <div class="col-3 mt-5">
+                <div class="select-cliente">
+                    <label for="cliente">Cliente</label>
+                    <select
+                        id="cliente"
+                        name="idcliente"
+                        [(ngModel)]="sale.idcliente"
+                        class="form-select">
+                        <option value disabled selected>Selecciona un cliente</option>
+                        <option *ngFor="let cliente of filteredClientes"
+                            [value]="cliente.idcliente">{{ cliente.nombre + " "
+                            + cliente.apellido }}</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="col-12 contenedor-botones">
+                <button
+                    (click)="mostrarDetallesProductos = !mostrarDetallesProductos; mostrarDetallesServicios = false"
+                    pButton pRipple type="button" class="p-button-success boton-pequeno">
+                    <span *ngIf="mostrarDetallesProductos; else iconoProductos"><i
+                            class="fa-solid fa-minus"></i>
+                        Productos</span>
+                    <ng-template #iconoProductos>
+                        <i class="fa-solid fa-plus"></i> Productos
+                    </ng-template>
+                </button>
+                <button
+                    (click)="mostrarDetallesServicios = !mostrarDetallesServicios; mostrarDetallesProductos = false"
+                    pButton pRipple type="button" class="p-button-success boton-pequeno">
+                    <span *ngIf="mostrarDetallesServicios; else textoServicios"><i
+                            class="fa-solid fa-minus"></i> Servicios</span>
+                    <ng-template #textoServicios>
+                        <i class="fa-solid fa-plus"></i> Servicios
+                    </ng-template>
+                </button>
+            </div>
+
+            <div *ngIf="mostrarDetallesProductos"
+                class="col-12 row contenedor-detalleProducto">
+                <div class="col-2">
+                    <label for="categoria">Categoría</label>
+                    <select
+                        id="categoria"
+                        name="idcategoria"
+                        [(ngModel)]="selectedCategoria"
+                        (change)="filtrarProductosPorCategoria(selectedCategoria)"
+                        class="form-control"
+                        required>
+                        <option value disabled selected>Selecciona una categoría</option>
+                        <option *ngFor="let categoria of categorias"
+                            [value]="categoria.idcategoria">
+                            {{ categoria.nombre }}
+                        </option>
+                    </select>
+
+                </div>
+                <div class="col-2">
+                    <label for="producto">Producto</label>
+                    <select
+                      id="producto"
+                      name="idproducto"
+                      [(ngModel)]="selectedProducto"
+                      (change)="obtenerPrecioProducto()"
+                      class="form-control"
+                      required
+                      [attr.disabled]="noHayProductosRelacionados ? 'true' : null">
+                  
+                      <!-- Si no hay productos disponibles -->
+                      <ng-container *ngIf="productos.length > 0; else noProductos">
+                        <option selected>Selecciona un producto</option>
+                        <option *ngFor="let producto of productos" [value]="producto.idproducto">
+                          {{ producto.nombre }}
+                        </option>
+                      </ng-container>
+                  
+                      <!-- Si no hay productos disponibles -->
+                      <ng-template #noProductos>
+                        <option selected disabled>No hay productos disponibles en esta categoría</option>
+                      </ng-template>
+                    </select>
+                  </div>
+
+                <div class="col-2">
+                    <label for="precio">Precio</label>
+                    <input
+                        type="number"
+                        name="precio"
+                        [(ngModel)]="precioProductoFormateado"
+                        class="form-control"
+                        disabled>
+                </div>
+                <div class="cantidad-actual mt-3">
+                    <label for="precio">Cantidad acutal</label>
+                    <input
+                        type="number"
+                        name="cantidad"
+                        [(ngModel)]="cantidad"
+                        class="form-control"
+                        disabled>
+                </div>
+
+                <div class="col-2 cantidad-agregar">
+                    <label for="cantidadProducto">Cantidad</label>
+                    <input
+                        type="number"
+                        name="cantidadProducto"
+                        [(ngModel)]="cantidadProducto"
+                        class="form-control"
+                        (input)="validarCantidad($event)"
+                        [ngClass]="{'is-invalid': errorMessages.cantidad}"
+                        required>
+
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.cantidad" style="color: red;">
+                        {{errorMessages.cantidad}}
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <label for="subtotal">Subtotal</label>
+                    <input
+                        type="number"
+                        name="subtotal"
+                        [(ngModel)]="cantidadProducto * precioProducto"
+                        class="form-control"
+                        disabled>
+                </div>
+
+                <div class="boton-agregar">
+                    <button class="btn btn-success boton-add"
+                    [disabled]="!camposValidos"
+                        (click)="agregarProducto()">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="mostrarDetallesServicios"
+                class="col-12 row contenedor-detalleServicio ">
+
+                <div class="col-2">
+                    <label for="servicio">Servicio</label>
+                    <select
+                        id="idservicio"
+                        name="idservicio"
+                        [(ngModel)]="selectedServicio"
+                        (change)="obtenerDescripcionServicio()"
+                        class="form-control"
+                        required>
+                        <option value disabled selected>Selecciona un servicio</option>
+                        <option *ngFor="let servicio of servicios"
+                            [value]="servicio.idservicio">
+                            {{ servicio.nombre }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-4">
+                    <label for="descripcion">Descripción</label>
+                    <input
+                        type="text"
+                        name="descripcion"
+                        [(ngModel)]="descripcionServicio"
+                        class="form-control"
+                        disabled>
+                </div>
+
+                <div class="col-2">
+                    <label for="precio">Precio</label>
+                    <input
+                        type="number"
+                        name="precio"
+                        [(ngModel)]="precioServicio"
+                        class="form-control"
+                        (input)="validarPrecioVenta($event)"
+                        [ngClass]="{'is-invalid': errorMessages.precio}"
+                        required>
+
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.precio" style="color: red;">
+                        {{errorMessages.precio}}
+                    </div>
+                </div>
+
+                <div class="col-2">
+                    <label for="subtotal">Subtotal</label>
+                    <input
+                        type="text"
+                        name="subtotal"
+                        [(ngModel)]="precioServicio"
+                        class="form-control"
+                        disabled>
+                </div>
+
+                <div class="boton-agregar">
+                    <button class="btn btn-success boton-add"
+                    [disabled]="!camposValidos"
+                        (click)="agregarServicio()"><i class="fa-solid fa-plus"></i></button>
+                </div>
+
+            </div>
+            <div class="contenedor-tabla">
+            <table class="table align-middle text-nowrap tabla-con-bordes">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Subtotal</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container
+                        *ngFor="let detalle of productosAgregados; let i = index">
+                        <tr>
+                            <!-- Detalles del producto -->
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ detalle.nombre }}</td>
+                            <td>{{ detalle.cantidad }}</td>
+                            <td>{{ detalle.precio | currency:'':'symbol':'1.0-0'
+                                }}</td>
+                            <td>{{ detalle.subtotal | currency:'':'symbol':'1.0-0'
+                                }}</td>
+                            <td>{{ detalle.tipo }}</td>
+                            <td>
+                                <button class="btn btn-danger boton-clean"
+                                    (click)="eliminarProducto(i)"><i
+                                        class="fa-solid fa-circle-xmark"></i></button>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+                    <ng-container
+                        *ngFor="let detalle of serviciosAgregados; let i = index">
+                        <tr>
+                            <!-- Detalles del servicio -->
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ detalle.nombre }}</td>
+                            <td>{{ detalle.cantidad }}</td>
+                            <td>{{ detalle.precio | currency:'USD':'symbol':'1.2-2'
+                                }}</td>
+                            <td>{{ detalle.subtotal | currency:'USD':'symbol':'1.2-2'
+                                }}</td>
+                            <td>{{ detalle.tipo }}</td>
+                            <td>
+                                <button class="btn btn-danger boton-clean"
+                                    (click)="eliminarServicio(i)"><i
+                                        class="fa-solid fa-circle-xmark"></i></button>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12 mt-3">
+            <label for="total" class="total-label">Total:</label>
+            <input id="total" type="text" class="total-input" [value]="sale.valortotal | currency:'USD':'symbol':'1.2-2'" readonly>
+        </div>
+
+            <div class="botones mt-4">
+                <button pButton pRipple type="button"    class="p-button-success boton-registrar"
+                    [disabled]="loading || !camposCompletos() || !camposValidos"
+                    (click)="registrarVenta()">
+                    <span *ngIf="!loading">Registrar</span>
+                    <span *ngIf="loading">Registrando...</span>
+                </button>
+                <button
+                pButton pRipple type="button"
+                class="p-button-secondary boton-cerrar"
+                    (click)="volverPaginaAnterior()">
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>

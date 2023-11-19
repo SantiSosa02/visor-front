@@ -1,0 +1,90 @@
+
+<div class="card">
+    <div class="modal-header">
+        <h4 class="card-title">Editar usuario</h4>
+    </div>
+    <div class="modal-body">
+        <form class="row g-2 mb-3">
+            <div class="col-12 mt-5">
+                <div class="input-container">
+                  
+                    <input
+                        type="text"
+                        id="name"
+                        name="nombre"
+                        [(ngModel)]="datosModificados.nombre"
+                        class="form-control"
+                        (blur)="validarNombre()"
+                        [ngClass]="{'is-invalid': errorMessages.nombre}"
+                        placeholder="">
+                        <label for="name" class="input-label">Nombre
+                            <span style="color: red;" *ngIf="!datosModificados.nombre">*</span>
+                        </label>
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.nombre" style="color: red;">
+                        {{errorMessages.nombre}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+                   
+                    <input
+                        type="text"
+                        id="apellido"
+                        name="apellido"
+                        [(ngModel)]="datosModificados.apellido"
+                        class="form-control"
+                        (blur)="validarApellido()"
+                        [ngClass]="{'is-invalid': errorMessages.apellido}"
+                        placeholder="">
+                        <label for="apellido" class="input-label">Apellido
+                            <span style="color: red;" *ngIf="!datosModificados.apellido">*</span>
+                        </label>
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.apellido" style="color: red;">
+                        {{errorMessages.apellido}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="input-container">
+                    
+                    <input
+                        type="email"
+                        id="correo"
+                        name="correo"
+                        [(ngModel)]="datosModificados.correo"
+                        class="form-control"
+                        (blur)="validarCorreo()"
+                        [ngClass]="{'is-invalid': errorMessages.correo}"
+                        placeholder="">
+                        <label for="correo" class="input-label">Correo
+                            <span style="color: red;" *ngIf="!datosModificados.correo">*</span>
+                        </label>
+                    <div class="invalid-feedback error-message mt-2"
+                        *ngIf="errorMessages.correo" style="color: red;">
+                        {{errorMessages.correo}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="botones mt-4">
+                <button pButton pRipple type="button"  class="p-button-success boton-registrar"
+                    [disabled]="loading || !camposCompletos() ||!cambios()|| !camposValidos "
+                    (click)="actualizarUsuario()">
+                    <span *ngIf="!loading">Actualizar</span>
+                    <span *ngIf="loading">Actualizando...</span>
+                </button>
+                <button
+                pButton pRipple type="button"
+                class="p-button-secondary"
+                    (click)="cerrarModal()">
+                    Cerrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

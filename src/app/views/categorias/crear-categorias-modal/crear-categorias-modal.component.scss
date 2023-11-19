@@ -1,0 +1,65 @@
+.botones{
+    padding: 8px;
+    width: 100%;
+}
+
+.botones.cancelar{
+    margin-right: 50px;
+}
+.botones button {
+    display: inline-block; /* Coloca los botones en línea horizontal */
+    margin-right: 10px; /* Agrega un margen derecho entre los botones según tus necesidades */
+}
+
+
+.input-container {
+    position: relative;
+}
+
+.input-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: 0.2s;
+    color: #333;
+}
+
+input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc; /* Agrega un borde en lugar de un borde inferior */
+    border-radius: 5px; /* Añade bordes redondeados para un aspecto más uniforme */
+    outline: none;
+    font-size: 16px; /* Ajusta el tamaño de fuente según tus preferencias */
+}
+
+input::placeholder {
+    color: transparent; /* Oculta el texto del placeholder por defecto */
+}
+
+input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
+    top: -20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.invalid-feedback {
+    margin-top: 5px;
+}
+
+
+.form-container {
+    max-height: 400px; /* Define la altura máxima del contenedor según tus necesidades */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
+}
+
+.p-button{
+    padding: 10px; /* Ajusta según sea necesario para el relleno */
+  }
+
+  .boton-registrar {
+    width: 120px; /* Ajusta el ancho según tus necesidades */
+}
+

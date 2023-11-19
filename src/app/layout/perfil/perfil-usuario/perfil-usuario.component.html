@@ -1,0 +1,27 @@
+<div class="card">
+    <div class="modal-header text-center">
+        <img src="../../../../assets/demo/images/avatar/usuario3.png" alt="Perfil Imagen" class="mx-auto img-fluid" style="max-width: 50%; height: auto;">
+    </div>
+    <div class="card-body">
+        <h3 class="card-title text-center mt-2">Perfil de {{ userData.nombre }}</h3>
+        <form class="row g-3">
+            <div class="col-md-6">
+                <label for="nombre" class="form-label mt-3">Nombre</label>
+                <input type="text" disabled id="nombre" name="nombre" [(ngModel)]="userData.nombre" class="form-control" placeholder="Nombre">
+            </div>
+            <div class="col-md-6 ">
+                <label for="apellido" class="form-label mt-3">Apellido</label>
+                <input type="text" disabled id="apellido" name="apellido" [(ngModel)]="userData.apellido" class="form-control" placeholder="Apellido">
+            </div>
+            <div class="col-12">
+                <label for="correo" class="form-label">Correo</label>
+                <input type="text" disabled id="correo" name="correo" [(ngModel)]="userData.correo" class="form-control" placeholder="Correo">
+            </div>
+            <div class="col-3 mt-4 boton center">
+                <div class="d-grid texte-center">
+                    <button pButton pRipple type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,215 @@
+/* Estilos para el switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+
+/* Estilos para el contenedor de botones */
+.botones {
+  white-space: nowrap; /* Evita que los elementos se envuelvan a la siguiente línea */
+}
+
+/* Estilos para los botones Editar y el switch */
+.boton-editar,
+.boton-switch {
+  display: inline-block;
+  vertical-align: middle; /* Alinea verticalmente los elementos */
+  margin-right: 10px; /* Ajusta el margen según tu preferencia */
+}
+
+/* Estilo para el círculo (activo/inactivo) */
+.circulo-verde, .circulo-rojo {
+  display: inline-block;
+  padding: 5px 10px; /* Ajusta el relleno según tus preferencias */
+  border-radius: 10%;
+  background-color: transparent; /* Ajusta el fondo según tus preferencias */
+  color: black; /* Ajusta el color del texto según tus preferencias */
+  text-align: center; /* Centra el texto horizontalmente */
+  min-width: 40px; /* Establece un ancho mínimo para el círculo */
+  font-size: 13px;
+}
+
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  width: 300px;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.contenedor-buscador {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+
+h4 {
+  font-size: 28px;
+  margin-left: 5px;
+}
+
+
+.mensaje-no-resultados{
+  padding: 15px;
+  font-size: 15px;
+  color:red;
+}
+
+.ancho-personalizado {
+  width: 300px; /* Puedes ajustar este valor según tus necesidades */
+  height: 40px;
+}
+
+.card-body{
+  margin-top: -12px;
+}
+
+.table td {
+  font-size: 15px; /* Ajusta el tamaño de fuente según tus preferencias */
+}
+
+.p-button{
+  font-size: 0.875rem; /* Ajusta según sea necesario para el tamaño de la fuente */
+  padding: 0.34rem 0.5rem; /* Ajusta según sea necesario para el relleno */
+}
+
+/* Ajusta el tamaño del icono del botón */
+.p-button.p-button-text .pi {
+  font-size: 1rem; /* Ajusta según sea necesario para el tamaño del icono */
+}
+
+
+.icono-azul {
+  color: rgb(129, 215, 213); /* Puedes ajustar el color según tus preferencias */
+}
+
+.color-activo {
+  color: white; /* Este color corresponde al color del botón p-button-success, puedes ajustarlo según tus preferencias */
+}
+
+.color-inactivo {
+  color: #dc3545; /* Este color corresponde al color del botón p-button-danger, puedes ajustarlo según tus preferencias */
+}
+
+/* Agrega estilos personalizados para la paginación */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.paginacion {
+  border-radius: 50%; /* Hace que los botones sean redondos */
+  margin: 0 5px;
+  background-color: #f0f0f0; /* Fondo más claro */
+  color: #333; /* Texto más oscuro */
+}
+
+.paginacion:hover {
+  background-color: #ccc; /* Cambia el fondo al pasar el mouse */
+}
+
+/* Estilo para el menú desplegable de filas por página */
+label {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+#itemsPerPage {
+  border-radius: 5px;
+  padding: 5px;
+  color: #333;
+}
+
+.estado-container {
+  padding: 6px;
+  border-radius: 5px;
+  display: inline-block;
+
+}
+
+.circulo-verde {
+  background-color: #28a745; /* Color verde */
+  color: #fff; /* Color blanco para el texto */
+}
+
+.circulo-rojo {
+  background-color: #dc3545; /* Color rojo */
+  color: #fff; /* Color blanco para el texto */
+}
+
+.paginacion, .page-info, label, select {
+  margin-right: 30px;
+}
+
+.paginacion:last-child, .paginacion-right {
+  margin-right: 0;
+}
+
+.filtrar{
+  margin-left: 30px;
+}
+
+.botones {
+  display: flex;
+}
+
+.align-items-center {
+ margin-top: 10px;
+}
+
+

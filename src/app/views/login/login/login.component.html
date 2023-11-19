@@ -1,0 +1,74 @@
+<body>
+    <div class="container">
+        <div class="login">
+            <div class="content">
+                <img src="../../../../assets/demo/images/login/VISOR1.png" alt>
+            </div>
+
+            <div class="loginform">
+                <h1>Login</h1>
+                <form class="row g-3 mt-3">
+                    <div class="col-12">
+                        <div class="input-container mt-5">
+        
+                            <input
+                                type="text"
+                                id="correo"
+                                name="correo"
+                                [(ngModel)]="correo"
+                                class="form-control"
+                                (blur)="validarCorreo()"
+                                [ngClass]="{'is-invalid': errorMessages.correo}"
+                                placeholder>
+                            <label for="correo" class="input-label">Correo
+                            </label>
+        
+                            <div class="invalid-feedback error-message"
+                                *ngIf="errorMessages.correo" style="color: red;">
+                                {{errorMessages.correo}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-container mt-3">
+        
+                            <input
+                                type="password"
+                                id="contrasena"
+                                name="contrasena"
+                                [(ngModel)]="contrasena"
+                                class="form-control"
+                                [ngClass]="{'is-invalid': errorMessages.contrasena}"
+                                placeholder>
+                            <label for="correo" class="input-label">Contraseña
+                            </label>
+        
+                            <div class="invalid-feedback error-message mt-2"
+                                *ngIf="errorMessages.contrasena" style="color: red;">
+                                {{errorMessages.contrasena}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contenedor-botones">
+                        <button pButton pRipple type="button" class="p-button-success boton-registrar" (click)="login()"
+                                [ngClass]="{'is-invalid': errorMessages.credenciales}">Iniciar sesión</button>
+                        
+                        <div class="invalid-feedback error-message mt-3"
+                             *ngIf="errorMessages.credenciales" style="color: red;">
+                          {{errorMessages.credenciales}}
+                        </div>
+                      </div>
+
+                
+
+                </form>
+                <div class="recuperar">
+                    <a  class="enlace-recuperar" (click)="abrirRecuperar()">
+                      Olvidaste tu contraseña?
+                    </a>
+                  </div>
+            </div>
+
+        </div>
+    </div>
+</body>
