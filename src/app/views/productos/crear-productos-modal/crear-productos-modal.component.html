@@ -37,7 +37,8 @@
                         id="categoria"
                         name="idcategoria"
                         [(ngModel)]="product.idcategoria"
-                        class="form-control">
+                        class="form-select" 
+                        aria-label="Default select example">
 
                         <option value disabled selected>Selecciona una categoría</option>
                         <option *ngFor="let categoria of categorias"
@@ -122,7 +123,6 @@
                     [disabled]="loading || !camposCompletos() || !camposValidos"
                     (click)="registrarProducto()">
                     <span *ngIf="!loading">Registrar</span>
-                    <span *ngIf="loading">Registrando...</span>
                 </button>
                 <button
                     pButton pRipple type="button"

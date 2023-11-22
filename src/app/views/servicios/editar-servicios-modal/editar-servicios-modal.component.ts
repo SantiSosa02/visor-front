@@ -159,12 +159,10 @@ export class EditarServiciosModalComponent {
   submit(){
     if(!this.loading){
       this.loading=true;
-      this.toastr.success('Servicio actualizado con exito', 'Exito', { progressBar:true, timeOut:1000});
-      setTimeout(() => {
-        this.loading=false;
-        this.cerrarModal();
-        this.reloadComponent();
-      },1000)
+      this.toastr.success('Servicio actualizado con exito', 'Exito', { progressBar:true, timeOut:2000});
+      this.cerrarModal();
+      this.reloadComponent();
+
     }
   }
 

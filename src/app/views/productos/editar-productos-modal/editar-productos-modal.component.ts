@@ -288,14 +288,9 @@ submit() {
     this.loading = true;
 
     // Cambia el tiempo de duración del mensaje del Toastr a 1000 ms (1 segundo)
-    this.toastr.success('Producto actualizado con éxito.', 'Éxito', { progressBar: true, timeOut: 1000 });
-
-    // Espera 1 segundo antes de cerrar el modal y recargar el componente
-    setTimeout(() => {
-      this.loading = false;
-      this.cerrarModal();
-      this.reloadComponent();
-    }, 1000);
+    this.toastr.success('Producto actualizado con éxito.', 'Éxito', { progressBar: true, timeOut: 2000 });
+    this.cerrarModal();
+    this.reloadComponent();
   }
 }
 

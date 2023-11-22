@@ -40,7 +40,8 @@
                         id="estadopago"
                         name="estadopago"
                         [(ngModel)]="sale.estadopago"
-                        class="form-select">
+                        class="form-select" 
+                        aria-label="Default select example">
 
                         <option value disabled selected>Selecciona un estado de
                             pago</option>
@@ -126,8 +127,8 @@
                         name="idcategoria"
                         [(ngModel)]="selectedCategoria"
                         (change)="filtrarProductosPorCategoria(selectedCategoria)"
-                        class="form-control"
-                        required>
+                        class="form-select"
+                        >
                         <option value disabled selected>Selecciona una categoría</option>
                         <option *ngFor="let categoria of categorias"
                             [value]="categoria.idcategoria">
@@ -143,7 +144,7 @@
                       name="idproducto"
                       [(ngModel)]="selectedProducto"
                       (change)="obtenerPrecioProducto()"
-                      class="form-control"
+                      class="form-select"
                       required
                       [attr.disabled]="noHayProductosRelacionados ? 'true' : null">
                   
@@ -227,7 +228,7 @@
                         name="idservicio"
                         [(ngModel)]="selectedServicio"
                         (change)="obtenerDescripcionServicio()"
-                        class="form-control"
+                        class="form-select"
                         required>
                         <option value disabled selected>Selecciona un servicio</option>
                         <option *ngFor="let servicio of servicios"

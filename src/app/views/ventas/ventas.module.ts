@@ -7,6 +7,7 @@ import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
 
 @NgModule({
   declarations: [
+  
   ],
   imports: [
     CommonModule

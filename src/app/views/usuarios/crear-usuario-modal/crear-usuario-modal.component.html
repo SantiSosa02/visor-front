@@ -120,7 +120,6 @@
                     [disabled]="loading || !camposCompletos() || !camposValidos"
                     (click)="registrarUsuario()"  class="p-button-success boton-registrar">
                     <span *ngIf="!loading">Registrar</span>
-                    <span *ngIf="loading">Registrando...</span>
                 </button>
                 <button
                 pButton pRipple type="button"

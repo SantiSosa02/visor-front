@@ -14,7 +14,7 @@ export class ApiCategoriaService {
 
 //   private baseUrl='http://localhost:8080/api/categorias'
 
-//   local
+//   //local
 
 //   public getCategorias(token?:string) : Observable<any> {
 //     const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
@@ -63,6 +63,14 @@ export class ApiCategoriaService {
 //   const verificarNomrebUrl = `${this.baseUrl}-nombre?nombre=${nombre}`
 //   return this.http.get<any>(verificarNomrebUrl, { headers });
 // }
+
+// public getProductosRelacioandos(id: number,token?:string): Observable<any[]> {
+//   const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
+//   const relacionadosUrl = `${this.baseUrl}/productos-relacionados/${id}`;
+//   console.log('URL de abonos:', relacionadosUrl);
+//   return this.http.get<any[]>(relacionadosUrl, { headers });
+// }
+
 
 
 
@@ -117,6 +125,13 @@ public verificarNombreExistente(nombre: string, token?:string): Observable<any> 
   const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
   const verificarNomrebUrl = `${this.baseUrl}-nombre?nombre=${nombre}`
   return this.http.get<any>(verificarNomrebUrl, { headers });
+}
+
+public getProductosRelacioandos(id: number,token?:string): Observable<any[]> {
+  const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
+  const relacionadosUrl = `${this.baseUrl}/productos-relacionados/${id}`;
+  console.log('URL de abonos:', relacionadosUrl);
+  return this.http.get<any[]>(relacionadosUrl, { headers });
 }
 
 

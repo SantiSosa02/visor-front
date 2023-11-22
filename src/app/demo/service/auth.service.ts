@@ -32,7 +32,9 @@ export class AuthService {
 
   login(correo: string, contrasena: string): Observable<boolean> {
     console.log('Attempting login...');
-    const url = `https://api-postgress.onrender.com/api/usuarios/login`;
+     const url = `https://api-postgress.onrender.com/api/usuarios/login`;
+    // const url='http://localhost:8080/api/usuarios/login';
+    
     const body = { correo, contrasena };
 
     return this.http.post<LoginResponse>(url, body).pipe(
@@ -62,13 +64,13 @@ export class AuthService {
       if (error.status === 400) {
         // Verificar si el mensaje de error es por "El usuario está inactivo."
         if (error.error && error.error.error === 'El usuario está inactivo.') {
-          // Puedes retornar un objeto con información adicional
-          return throwError({
-            message: error.error.error,
-            errorType: 'inactiveUser', // Añadimos un tipo para identificar el error
-          });
+            // Puedes retornar un objeto con información adicional
+            return throwError({
+                message: error.error.error,
+                errorType: 'inactiveUser', // Añadimos un tipo para identificar el error
+            });
         }
-      }
+    }
   
       if (error.status === 401) {
         console.log('No autorizado - Redireccionando a la página de inicio de sesión...');

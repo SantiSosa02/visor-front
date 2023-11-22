@@ -57,7 +57,7 @@ export class ApiVentasService {
 // }
 
 
-//Render 
+// //Render 
 
 private baseUrl='https://api-postgress.onrender.com/api/ventas'
 

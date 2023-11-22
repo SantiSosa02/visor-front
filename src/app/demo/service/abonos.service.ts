@@ -11,7 +11,7 @@ export class ApiAbonosService {
 
 //   private baseUrl='http://localhost:8080/api/abonos'
 
-//   Local 
+//   //Local 
 
 //   public getAbonos(token?:string) : Observable<any> {
 //     const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
@@ -25,6 +25,7 @@ export class ApiAbonosService {
 //   }
 
 //   public createPayment(abono: any,token?:string): Observable<any> {
+  
 //     const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
 //    return this.http.post(this.baseUrl, abono, { headers });
 //  }

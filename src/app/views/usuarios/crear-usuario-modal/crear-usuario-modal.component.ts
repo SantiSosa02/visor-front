@@ -59,39 +59,58 @@ loading:boolean = false;
   
     if (!this.user.nombre) {
       this.errorMessages.nombre = '';
-      this.camposValidos=false;
-    } else if (!validacion.test(this.user.nombre)) {
-      this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
-      this.camposValidos=false;
-    } else if (this.user.nombre.length > 50) {
-      this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
-      this.camposValidos=false;
+      this.camposValidos = false;
     } else {
-
-      this.user.nombre = this.user.nombre.charAt(0).toUpperCase() + this.user.nombre.slice(1);
-      this.errorMessages.nombre = '';
-      this.camposValidos=true;
+      // Divide el nombre en palabras
+      const palabras = this.user.nombre.split(' ');
+  
+      // Capitaliza la primera letra de cada palabra
+      const nombreCapitalizado = palabras.map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
+  
+      // Une las palabras nuevamente
+      this.user.nombre = nombreCapitalizado.join(' ');
+  
+      if (!validacion.test(this.user.nombre)) {
+        this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
+        this.camposValidos = false;
+      } else if (this.user.nombre.length > 50) {
+        this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
+        this.camposValidos = false;
+      } else {
+        this.errorMessages.nombre = '';
+        this.camposValidos = true;
+      }
     }
   }
 
-validarApellido() {
-  const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
-
-  if (!this.user.apellido) {
-    this.errorMessages.apellido = '';
-    this.camposValidos=false;
-  } else if (!validacion.test(this.user.apellido)) {
-    this.errorMessages.apellido = 'El apellido solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
-    this.camposValidos=false;
-  } else if (this.user.apellido.length > 50) {
-    this.errorMessages.apellido = 'El apellido no debe superar los 50 caracteres.';
-    this.camposValidos=false;
-  }else {
-    this.user.apellido = this.user.apellido.charAt(0).toUpperCase() + this.user.apellido.slice(1);
-    this.errorMessages.apellido = '';
-    this.camposValidos=true;
+  validarApellido() {
+    const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
+  
+    if (!this.user.apellido) {
+      this.errorMessages.apellido = '';
+      this.camposValidos = false;
+    } else {
+      // Divide el apellido en palabras
+      const palabras = this.user.apellido.split(' ');
+  
+      // Capitaliza la primera letra de cada palabra
+      const apellidoCapitalizado = palabras.map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
+  
+      // Une las palabras nuevamente
+      this.user.apellido = apellidoCapitalizado.join(' ');
+  
+      if (!validacion.test(this.user.apellido)) {
+        this.errorMessages.apellido = 'El apellido solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
+        this.camposValidos = false;
+      } else if (this.user.apellido.length > 50) {
+        this.errorMessages.apellido = 'El apellido no debe superar los 50 caracteres.';
+        this.camposValidos = false;
+      } else {
+        this.errorMessages.apellido = '';
+        this.camposValidos = true;
+      }
+    }
   }
-}
 
 validarCorreo() {
   const validacionCorreo = /^[a-zA-Z0-9._%-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-]+\.(com|co|org|net|edu)$/;
@@ -216,14 +235,10 @@ cerrarModal() {
       this.loading = true;
   
       // Cambia el tiempo de duración del mensaje del Toastr a 1000 ms (1 segundo)
-      this.toastr.success('Empleado registrado con éxito.', 'Éxito', { progressBar: true, timeOut: 1000 });
-  
-      // Espera 1 segundo antes de cerrar el modal y recargar el componente
-      setTimeout(() => {
-        this.loading = false;
-        this.cerrarModal();
-        this.reloadComponent();
-      }, 1000);
+      this.toastr.success('Empleado registrado con éxito.', 'Éxito', { progressBar: true, timeOut: 2000 });
+      this.cerrarModal();
+      this.reloadComponent();
+
     }
   }
   

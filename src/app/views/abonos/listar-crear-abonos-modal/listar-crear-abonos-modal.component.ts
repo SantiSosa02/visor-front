@@ -37,6 +37,7 @@ export class ListarCrearAbonosModalComponent {
   camposValidos:boolean=false;
   token=localStorage.getItem('token');
   nombreClientes:string;
+  numeroFactura:number;
 
 
 
@@ -240,10 +241,40 @@ cargarNombresClientes(): Promise<void[]> {
   return Promise.all(promesasClientes);
 }
 
+cargarNumeroFactura(): Promise<void[]> {
+  const promesasVentas = this.ventas.map((venta) => {
+    return new Promise<void>((resolve, reject) => {
+      // Asegúrate de que venta.id tenga un valor antes de hacer la llamada a la API
+      if (venta.idventa) {
+        this.apiVentas.getVentasById(venta.idventa, this.token).subscribe(
+          (ventaDetallada: any) => {
+            if (ventaDetallada) {
+              venta.numeroFactura = ventaDetallada.numerofactura;
+              this.numeroFactura=venta.numerofactura;
+              resolve();
+            } else {
+              reject('No se pudo obtener la información de la venta.');
+            }
+          },
+          (error) => {
+            console.error('Error al obtener el número de factura:', error);
+            reject(error);
+          }
+        );
+      } else {
+        reject('ID de venta no definido.');
+      }
+    });
+  });
+
+  return Promise.all(promesasVentas);
+}
+
+
 // Método para exportar abonos a Excel con nombres de clientes
 exportarExcelAbonos(): void {
   // Cargar nombres de clientes antes de exportar
-  this.cargarNombresClientes().then(() => {
+ Promise.all([ this.cargarNombresClientes(),this.cargarNumeroFactura()]).then(() => {
     // Obtén todos los datos de abonos
     this.apiVentas.getAbonosRelacionados(this.ventaId, this.token).subscribe(
       (data: any[] | any) => {
@@ -253,16 +284,16 @@ exportarExcelAbonos(): void {
           const excelData: any[] = [];
 
           // Agrega el encabezado del thead (excluyendo la columna de acciones)
-          const headerData = ['#', 'Fecha Abono', 'Valor Abono', 'ID Venta', 'Nombre Cliente'];
+          const headerData = ['Fecha Abono', 'Valor Abono', 'Numero factura', 'Nombre Cliente'];
           excelData.push(headerData);
 
           // Itera sobre los datos y obtén los valores de las celdas
           data.forEach((item, index) => {
             const rowData = [
-              index + 1, // Incrementa el índice para comenzar desde 1
+
               item.fechaabono,
               item.valorabono,
-              item.idventa,
+              this.numeroFactura,
               this.nombreClientes // Utiliza el nombre del cliente obtenido previamente
             ];
             excelData.push(rowData);

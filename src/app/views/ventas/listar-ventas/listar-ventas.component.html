@@ -80,6 +80,11 @@
               <div class="boton-editar">
                 <button pButton pRipple type="button" icon="pi pi-eye" (click)="abrirDetalle(item.idventa)" class="p-button-rounded p-button-secondary"></button>
               </div>
+              <div class="boton-imprimir">
+                <button pButton pRipple type="button" icon="pi pi-print" (click)="imprimirDetalleVenta(item.idventa)"
+                class="p-button-rounded p-button-secondary">
+                </button>
+              </div>
               <div class="boton-abono" *ngIf="item.estadopago === 'Por pagos'">
                 <button (click)="abrirModalAbonos(item.idventa)" pButton pRipple type="button" icon="pi pi-wallet" class="p-button-rounded p-button-info">
                 </button>

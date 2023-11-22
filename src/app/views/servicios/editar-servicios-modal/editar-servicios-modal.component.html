@@ -55,7 +55,6 @@
                     [disabled]="loading || !camposCompletos() || !cambios() || !camposValidos"
                     (click)="actualizarServicio()">
                     <span *ngIf="!loading">Actualizar</span>
-                    <span *ngIf="loading">Actualizando...</span>
                 </button>
                 <button
                 pButton pRipple type="button"

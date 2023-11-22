@@ -34,10 +34,11 @@
                         <span style="color: red;" *ngIf="!datosModificados.idcategoria">*</span>
                     </label>
                     <select
+                        class="form-select" 
+                        aria-label="Default select example"
                         id="idcategoria"
                         name="idcategoria"
                         [(ngModel)]="datosModificados.idcategoria"
-                        class="form-control"
                         (change)="validarCategoria()">
 
                         <option value disabled selected>Selecciona una categoría</option>
@@ -83,7 +84,8 @@
                         class="form-control"
                         (input)="validarCantidad($event)"
                         [ngClass]="{'is-invalid': errorMessages.cantidad}"
-                        placeholder="Ingresa la cantidad">
+                        placeholder="Ingresa la cantidad"
+                        disabled>
                     <label for="name" class="input-label">Cantidad
                         <span style="color: red;" *ngIf="!datosModificados.cantidad">*</span>
                     </label>
@@ -121,7 +123,6 @@
                     [disabled]="loading || !camposCompletos() || !cambios() || !camposValidos"
                     (click)="actualizarProducto()">
                     <span *ngIf="!loading">Actualizar</span>
-                    <span *ngIf="loading">Actualizando...</span>
                 </button>
                 <button
                 pButton pRipple type="button"

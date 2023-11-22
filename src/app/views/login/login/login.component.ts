@@ -119,12 +119,17 @@ export class LoginComponent {
           console.log('No autorizado - Redireccionando a la página de inicio de sesión...');
           this.errorMessages.credenciales = 'Usuario o contraseña incorrectos.';
         } else if (error.errorType === 'inactiveUser') {
+         
           this.errorMessages.credenciales = 'El usuario está inactivo.'; 
-        } else {
-          this.errorMessages.credenciales = 'Credenciales invalidas.';
           setTimeout(() =>{
             this.errorMessages.credenciales=''
           },2000)
+        } else {
+          // Manejo de otros casos de error
+          this.errorMessages.credenciales = 'Credenciales invalidas.';
+          setTimeout(() => {
+            this.errorMessages.credenciales = '';
+          }, 2000);
         }
       },
     });
