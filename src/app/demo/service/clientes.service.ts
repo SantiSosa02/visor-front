@@ -12,10 +12,10 @@ export class ApiClientesService {
   
   constructor(private http: HttpClient) {}
 
-  //private baseUrl='http://localhost:8080/api/clientes'
+//   private baseUrl='http://localhost:8080/api/clientes'
 
 
-  //Local 
+//   Local 
 
 //   public getClientes(token?:string) : Observable<any> {
 //     const headers = token ? new HttpHeaders().set('x-token', token) : undefined;

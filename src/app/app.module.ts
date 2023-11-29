@@ -132,7 +132,7 @@ import { DialogModule } from 'primeng/dialog';
 		SplitButtonModule,
 		ToggleButtonModule,
         DropdownModule,
-        DialogModule
+        DialogModule,
     
     ],
     providers: [

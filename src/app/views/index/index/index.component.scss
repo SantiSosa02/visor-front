@@ -8,7 +8,27 @@
     margin-top: -12px;
   }
   
+  p{
+    font-size: 15px;
+  }
 
-  
-  
-  
+.table td {
+  font-size: 15px; /* Ajusta el tamaño de fuente según tus preferencias */
+}
+
+.recomendacion-column {
+  padding: 4px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-top: 3px;
+}
+
+.circulo-verde {
+  background-color: #28a745; /* Color verde */
+  color: #fff; /* Color blanco para el texto */
+}
+
+.circulo-rojo {
+  background-color: #dc3545; /* Color rojo */
+  color: #fff; /* Color blanco para el texto */
+}

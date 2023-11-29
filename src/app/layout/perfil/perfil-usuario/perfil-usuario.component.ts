@@ -21,7 +21,7 @@ export class PerfilUsuarioComponent {
     this.authService.currentUser.subscribe(user => {
       this.userData = user;
     });
-    console.log(this.userData.nombre);
+    // console.log(this.userData.nombre);
   }
 
   cerrarModal() {

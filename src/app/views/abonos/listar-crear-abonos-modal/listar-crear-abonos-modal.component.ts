@@ -38,6 +38,10 @@ export class ListarCrearAbonosModalComponent {
   token=localStorage.getItem('token');
   nombreClientes:string;
   numeroFactura:number;
+  mostrarAbonosRegistrados: boolean = false;
+  valorRestanteCero: boolean = false;
+
+
 
 
 
@@ -132,6 +136,10 @@ export class ListarCrearAbonosModalComponent {
     this.bsModalRef.hide();  // Cierra el modal
   }
 
+  mostrarVistaRegistrarAbono(): boolean {
+    return !this.valorRestanteCero;
+  }
+
   calcularValorRestanteTotal(): number {
     // Obtener el valor total de la venta
     const valortotalVenta = this.ventas.length > 0 ? this.ventas[0].valortotal : 0;
@@ -147,6 +155,7 @@ export class ListarCrearAbonosModalComponent {
 
     if(valorRestanteTotal === 0){
       this.camposValidos=false;
+      this.valorRestanteCero = valorRestanteTotal === 0;
     }
   
     return valorRestanteTotal;

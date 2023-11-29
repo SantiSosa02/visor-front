@@ -41,6 +41,11 @@ loading:boolean = false;
 
   confirmarContrasena: string = '';
   camposValidos:boolean=false;
+  showPassword = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
   
   
   camposCompletos(): boolean {

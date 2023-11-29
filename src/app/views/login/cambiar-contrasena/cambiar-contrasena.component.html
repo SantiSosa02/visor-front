@@ -8,11 +8,11 @@
           <div class="loginform">
             <h1>Cambiar contraseña</h1>
             <form class="row g-3 mt-3"> 
-              <div class="col-12">
+              <div class="col-10">
                 <div class="input-container mt-5">
 
                     <input
-                        type="password"
+                        [type]="showPassword ? 'text' : 'password'"
                         id="contrasena"
                         name="contrasena"
                         [(ngModel)]="newPassword"
@@ -30,8 +30,12 @@
                     </div>
                 </div>
             </div>
+            <div class="eye-icon col-2 check" (click)="togglePasswordVisibility()">
+              <i class="fa-solid fa-eye" *ngIf="showPassword"></i>
+              <i class="fa-solid fa-eye-slash" *ngIf="!showPassword"></i>
+            </div>
 
-            <div class="col-12">
+            <div class="col-11">
               <div class="input-container mt-3">
 
                 <input type="password"

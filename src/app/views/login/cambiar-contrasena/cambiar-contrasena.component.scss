@@ -139,3 +139,12 @@ input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
     color: red;
     bottom: 0;
 }
+
+.check{
+    width: 15%;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 18%;
+}

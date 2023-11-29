@@ -64,4 +64,11 @@ input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
     width: 120px; /* Ajusta el ancho según tus necesidades */
 }
 
-
+.check{
+    width: 15%;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8%;
+}

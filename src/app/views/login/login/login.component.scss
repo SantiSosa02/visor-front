@@ -72,7 +72,7 @@ body{
 
 .recuperar {
     text-align: center;
-    margin-top: 3em;
+    margin-top: 15px;
   }
   
   .enlace-recuperar {
@@ -138,4 +138,13 @@ input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
     position: absolute;
     color: red;
     bottom: 0;
+}
+
+.check{
+    width: 10%;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 11%;
 }

@@ -89,9 +89,9 @@ baseUrl = 'https://api-postgress.onrender.com/api/servicios'
       return this.http.get(urlActivos , { headers });
     }
   
-    public createService(category: any, token?:string): Observable<any> {
+    public createService(service: any, token?:string): Observable<any> {
       const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
-     return this.http.post(this.baseUrl, category, { headers });
+     return this.http.post(this.baseUrl, service, { headers });
    }
   
    public getServiceById(serviceId: number, token?:string): Observable<any> {

@@ -5,8 +5,44 @@
     <h4>Bienvenido {{user.nombre}}</h4>
   </div>
 
-  <div class="card card-body">
-    <p>Aca se implementara el maching learning</p>
-    <p>* Puede ser predicción de productos a comprar</p>
-    <p>* Si da tiempo reconocimiento facial</p>
+  <div class="card">
+    <h5>Recomendaciones</h5>
+    <p class="mt-2">Estos son algunas opciones de los productos que podrias comprar.</p>
+  <div *ngIf="resultadoPrediccion && resultadoPrediccion.length > 0" class="mt-4 col-8">
+    <table class="table align-middle text-center text-nowrap table-bordered">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Recomendacion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let prediccion of resultadoPrediccion">
+          <tr *ngIf="prediccion.prediccion === 'comprar'">
+            <td>{{ prediccion.nombre_producto }}</td>
+            <td
+              [ngClass]="{'recomendacion-column': true, 'circulo-verde': prediccion.prediccion === 'comprar', 'circulo-rojo': prediccion.prediccion === 'no comprar'}"
+              style="font-weight: bold;"
+            >
+              {{ prediccion.prediccion }}
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
   </div>
+  <div *ngIf="!resultadoPrediccion || resultadoPrediccion.length === 0">
+    No hay resultados de predicción.
+  </div>
+  </div>
+
+
+  <!-- <tr *ngFor="let prediccion of resultadoPrediccion">
+    <td>{{ prediccion.nombre_producto }}</td>
+    <td
+    [ngClass]="{'recomendacion-column': true, 'circulo-verde': prediccion.prediccion === 'comprar', 'circulo-rojo': prediccion.prediccion === 'no comprar'}"
+    style="font-weight: bold;"
+  >
+    {{ prediccion.prediccion }}
+  </td>
+  </tr>   mostrar comprar y no comprar --> 

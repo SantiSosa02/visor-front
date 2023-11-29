@@ -71,28 +71,37 @@
             </div>
             </div>
 
-            <div class="col-12 mt-4">
-                <div class="input-container">
-               
-                <input
-                    type="password"
+            <div class="col-10 mt-4">
+                <div class="input-container relative-position">
+                  <input
+                    [type]="showPassword ? 'text' : 'password'"
                     id="contrasena"
                     name="contrasena"
                     [(ngModel)]="user.contrasena"
                     class="form-control"
                     (blur)="validarContrasena()"
                     [ngClass]="{'is-invalid': errorMessages.contrasena}"
-                    placeholder="">
-                    <label for="contrasena" class="input-label">Contraseña 
-                        <span style="color: red;" *ngIf="!user.contrasena">*</span>
-                    </label>
-                <div class="invalid-feedback error-message mt-2"
-                    *ngIf="errorMessages.contrasena" style="color: red;">
+                    placeholder=""
+                  />
+                  <label for="contrasena" class="input-label">
+                    Contraseña
+                    <span style="color: red;" *ngIf="!user.contrasena">*</span>
+                  </label>
+                  <div
+                    class="invalid-feedback error-message mt-2"
+                    *ngIf="errorMessages.contrasena"
+                    style="color: red;"
+                  >
                     {{errorMessages.contrasena}}
-                </div>
-            </div>
-            </div>
+                  </div>
 
+                </div>
+              </div>
+
+              <div class="eye-icon col-2 check" (click)="togglePasswordVisibility()">
+                <i class="fa-solid fa-eye" *ngIf="showPassword"></i>
+                <i class="fa-solid fa-eye-slash" *ngIf="!showPassword"></i>
+              </div>
             <div class="col-12 mt-4">
                 <div class="input-container">
                 <input

@@ -48,8 +48,8 @@ export class CrearVentaComponent {
   ]
 
   estadosPago=[
-    'Pagado',
-    'Por pagos'
+    'Contado',
+    'Credito'
   ]
 
   clientes: any[] = [];

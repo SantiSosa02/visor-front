@@ -163,7 +163,7 @@ export class ListarVentasComponent {
 
   imprimirDetalleVenta(idventa: number) {
     this.apiVentas.getVentasById(idventa, this.token).subscribe((data) => {
-      console.log('Data:', data);
+      // console.log('Data:', data);
 
       if (data.venta) {
         this.datosOriginales = {
@@ -176,7 +176,7 @@ export class ListarVentasComponent {
           detalleProductos: data.venta.DetalleVentaProductos || [],
           detalleServicios: data.venta.DetalleVentaServicios || [],
         };
-        console.log('Datos originales', this.datosOriginales);
+        // console.log('Datos originales', this.datosOriginales);
 
         this.datosModificados.numerofactura = data.venta.numerofactura;
         this.datosModificados.metodopago = data.venta.metodopago;
@@ -188,10 +188,10 @@ export class ListarVentasComponent {
           data.venta.DetalleVentaProductos || [];
         this.datosModificados.detalleServicios =
           data.venta.DetalleVentaServicios || [];
-        console.log(
-          'Datos modificados',
-          this.datosModificados.detalleProductos
-        );
+        // console.log(
+        //   'Datos modificados',
+        //   this.datosModificados.detalleProductos
+        // );
 
         // Obtener el cliente por su ID
         this.apiClientes.getClientById(this.datosModificados.idcliente, this.token).subscribe((cliente) => {
@@ -209,89 +209,127 @@ export class ListarVentasComponent {
           this.construirTablaDetallesProductosYServicios().then((tablaHTML) => {
             const contenidoHTML: string = `
             <style>
-             h2{
-              margin-top:20px;
-              text-align:center;
-             }
-
-             h3{
-              margin-top:40px;
-             }
-
-             .valor-total{
-              font-weight:bold;
-             }
-
-             .contenedor {
+            h2 {
+              margin-top: 20px;
+              text-align: center;
+            }
+          
+            h3 {
+              margin-top: 40px;
+            }
+          
+            .valor-total {
+              font-weight: bold;
+            }
+          
+            .contenedor {
               display: flex;
               flex-direction: column;
               align-items: center;
               justify-content: center;
               text-align: center;
               margin-top: 60px;
-              border: 2px solid #000; 
-              padding:20px;
-              width:65%
+              border: 2px solid #000;
+              padding: 20px;
+              width: 65%;
             }
-            p.espaciado {
-              padding-right: 10px; /* Ajusta el valor según sea necesario */
+          
+            .container {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 10px;
             }
-
-            label{
-              font-weight:bold;
+          
+            label {
+              font-weight: bold;
             }
-
-            .container1{
-              margin-left:48%;
+          
+            .etiqueta {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end; /* Alinea a la derecha */
+              margin-right: 10px; /* Espacio entre label y p */
             }
-
-            img{
-              width:15%;
-              heidht:15%;
+          
+            img {
+              width: 15%;
+              height: 15%;
               border-radius: 50%;
-              border: 2px solid #000; 
+              border: 2px solid #000;
             }
 
-            body{
+          
+            body {
               display: flex;
               justify-content: center;
               align-items: center;
-              height: 100vh; 
-              margin: 0; 
+              height: 100vh;
+              margin: 0;
             }
+
+            .contenedor-valores{
+              displya:flex;
+              align-items: space-around;
+              width:80%;
+            }
+
+            .container1{
+              display: flex;
+              align-items:flex-end ;
+              width:80%;
+            }
+
+            .valor{
+              margin-left: 10px;
+            }
+          </style>
           
-            </style>
-            <body>
-              <div class="contenedor">
-              <img src="assets/layout/images/VISOR1.png" alt="logo">
-                <h2>Recibo de Venta</h2>
-                <div class="container">
-                <label class="espaciado">Número de Factura: </label>
-                <p style="display: inline-block; margin-left: 168px;">${this.datosModificados.numerofactura}</p>	  
+          <body>
+            <div class="contenedor">
+           
+                <img src="assets/layout/images/VISOR1.png" alt="logo">
+          
+              <h2>Recibo de Venta</h2>
+              <div class="contenedor-valores">
+              <div class="container">
+                <label>Número de Factura:</label>
+                <div class="etiqueta">
+                  <p>${this.datosModificados.numerofactura}</p>
                 </div>
-                <div class="container">
-                <label class="espaciado">Método de pago: </label>
-                <p style="display: inline-block; margin-left: 157px;"> ${this.datosModificados.metodopago}</p>
+              </div>
+              <div class="container">
+                <label>Método de pago:</label>
+                <div class="etiqueta">
+                  <p>${this.datosModificados.metodopago}</p>
                 </div>
-                <div class="container">
-                <label class="espaciado">Fecha: </label>
-                <p style="display: inline-block; margin-left: 240px;">${this.datosModificados.fecha}</p>
+              </div>
+              <div class="container">
+                <label>Fecha:</label>
+                <div class="etiqueta">
+                  <p>${this.datosModificados.fecha}</p>
                 </div>
-                <div class="container">
-                <label class="espaciado">Estado de Pago: </label>
-                <p style="display: inline-block; margin-left: 208px;"> ${this.datosModificados.estadopago}</p>
+              </div>
+              <div class="container">
+                <label>Estado de Pago:</label>
+                <div class="etiqueta">
+                  <p>${this.datosModificados.estadopago}</p>
                 </div>
-                <div class="container">
-                <label class="espaciado">Cliente: </label>
-                <p style="display: inline-block; margin-left: 242px;"> ${nombreCliente}</p>
+              </div>
+              <div class="container">
+                <label>Cliente:</label>
+                <div class="etiqueta">
+                  <p>${nombreCliente}</p>
                 </div>
+              </div>
+              </div>
   
                 <h3>Detalles de Productos y Servicios</h3>
                 ${tablaHTML} 
 
                 <div class="container1" style="display: flex; align-items: baseline;">
                   <label class="espaciado">Valor Total:</label>
-                  <p>${valorFormateado}</p>
+                  <p class="valor">${valorFormateado}</p>
               </div>
               </div>
             `;
@@ -416,7 +454,7 @@ export class ListarVentasComponent {
     console.log(saleId)
     this.apiVentas.getAbonosRelacionados(saleId).subscribe(
       (abonos) => {
-        console.log('Respuesta del servicio:', abonos); // Agrega este console.log
+        // console.log('Respuesta del servicio:', abonos); // Agrega este console.log
 
 
 
@@ -545,6 +583,7 @@ export class ListarVentasComponent {
         (error) => {
           this.noHayVentasRegsitradas = true;
           console.error('Error al obtener ventas activas: ', error);
+          this.toastr.warning('No hay ventas activas', 'Advertencia');
         }
       );
     } else {
@@ -559,6 +598,7 @@ export class ListarVentasComponent {
         (error) => {
           this.noHayVentasRegsitradas = true;
           console.error('Error al obtener ventas inactivas: ', error);
+          this.toastr.warning('No hay ventas inactivos', 'Advertencia');
         }
       );
     }
@@ -614,8 +654,8 @@ export class ListarVentasComponent {
     const fechaFin = new Date();
     const fechaInicio = new Date();
     fechaInicio.setMonth(fechaInicio.getMonth() - 1);
-    console.log(fechaInicio)
-    console.log(fechaFin)
+    // console.log(fechaInicio)
+    // console.log(fechaFin)
 
     this.apiVentas.getVentasActivos(this.token).subscribe(
       (ventas: any[]) => {

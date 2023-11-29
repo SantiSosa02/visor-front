@@ -189,6 +189,7 @@ validarPrecioVenta(event: Event) {
 }
 
 
+
   registrarProducto() {
     console.log('Haciendo clic en el botón de Registrar');
     const token=localStorage.getItem('token');

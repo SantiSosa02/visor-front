@@ -145,7 +145,9 @@ h4 {
   color: #dc3545; /* Este color corresponde al color del botón p-button-danger, puedes ajustarlo según tus preferencias */
 }
 
-
+.p-button-rounded.p-button-success.boton-detalle {
+  filter: brightness(90%); /* Ajusta el valor según tus preferencias */
+}
 
 /* Agrega estilos personalizados para la paginación */
 .pagination {

@@ -62,7 +62,7 @@
           <td>{{ item.valortotal | currency:'':'symbol':'1.0-0' }}</td>
 
           <td>
-            <div [ngClass]="{'estado-pago': item.estadopago === 'Por pagos', 'estado-container': item.estadopago === 'Pagado', 'circulo-amarillo': item.estadopago === 'Por pagos', 'circulo-verde': item.estadopago === 'Pagado'}" style="font-weight: bold;">
+            <div [ngClass]="{'estado-pago': item.estadopago === 'Credito', 'estado-container': item.estadopago === 'Contado', 'circulo-amarillo': item.estadopago === 'Credito', 'circulo-verde': item.estadopago === 'Contado'}" style="font-weight: bold;">
               {{ item.estadopago }}
             </div>
           </td>
@@ -81,11 +81,11 @@
                 <button pButton pRipple type="button" icon="pi pi-eye" (click)="abrirDetalle(item.idventa)" class="p-button-rounded p-button-secondary"></button>
               </div>
               <div class="boton-imprimir">
-                <button pButton pRipple type="button" icon="pi pi-print" (click)="imprimirDetalleVenta(item.idventa)"
-                class="p-button-rounded p-button-secondary">
+                <button pButton pRipple type="button"  icon="pi pi-print" (click)="imprimirDetalleVenta(item.idventa)"
+                class="p-button-rounded p-button-success boton-detalle">
                 </button>
               </div>
-              <div class="boton-abono" *ngIf="item.estadopago === 'Por pagos'">
+              <div class="boton-abono" *ngIf="item.estadopago === 'Credito' && item.estado">
                 <button (click)="abrirModalAbonos(item.idventa)" pButton pRipple type="button" icon="pi pi-wallet" class="p-button-rounded p-button-info">
                 </button>
             </div>

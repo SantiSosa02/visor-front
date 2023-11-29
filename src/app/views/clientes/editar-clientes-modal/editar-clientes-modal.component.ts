@@ -147,25 +147,8 @@ export class EditarClientesModalComponent {
       this.camposValidos = false;
     } else {
      
-      if(this.datosModificados.telefono !== this.datosOriginales.telefono){
-        this.apiClientes.verificarTelefonoExistente(this.datosModificados.telefono, this.token).subscribe(
-          (response) =>{
-            if(response.existe){
-              this.errorMessages.telefono='Este telefono esta en uso por otro cliente.';
-              this.camposValidos=false;
-            }else{
               this.errorMessages.telefono='';
               this.camposValidos=true;
-            }
-          },
-          (error) => {
-            console.error('Error al verificar el telefono:' ,error)
-          }
-        );
-        
-        }else{
-          this.errorMessages.telefono='';
-        }
     }
   
     // Asigna el valor limpio nuevamente al campo de entrada
@@ -189,25 +172,8 @@ export class EditarClientesModalComponent {
       this.errorMessages.correo = 'El correo no debe superar los 100 caracteres.';
       this.camposValidos=false;
     }else {
-
-      if(this.datosModificados.correo !== this.datosOriginales.correo){
-      this.apiClientes.verificarCorreoExistente(this.datosModificados.correo, this.token).subscribe(
-        (response) => {
-          if (response.existe) {
-            this.errorMessages.correo = 'Este correo ya está en uso por otro usuario.';
-            this.camposValidos=false;
-          } else {
             this.errorMessages.correo = '';
             this.camposValidos=true;
-          }
-        },
-        (error) => {
-          console.error('Error al verificar el correo:', error);
-        }
-      );
-      }else{
-        this.errorMessages.correo='';
-      }
     }
   }
 

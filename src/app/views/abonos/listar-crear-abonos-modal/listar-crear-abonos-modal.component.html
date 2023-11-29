@@ -7,13 +7,13 @@
 
         <!-- Pestañas -->
         <ul class="nav nav-tabs" id="pestanas" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="formulario-tab" data-toggle="tab"
+            <li class="nav-item" *ngIf="!valorRestanteCero"> 
+                <a class="nav-link " id="formulario-tab" data-toggle="tab"
                     href="#formulario" role="tab" aria-controls="formulario"
                     aria-selected="true">Registrar abono</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="abonos-tab" data-toggle="tab"
+                <a class="nav-link active" id="abonos-tab" data-toggle="tab"
                     href="#abonos" role="tab" aria-controls="abonos"
                     aria-selected="false">Abonos registrados</a>
             </li>
@@ -21,8 +21,8 @@
 
         <!-- Contenido de las pestañas -->
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="formulario"
-                role="tabpanel" aria-labelledby="formulario-tab">
+            <div class="tab-pane fade " id="formulario"
+                role="tabpanel" aria-labelledby="formulario-tab#"  *ngIf="mostrarVistaRegistrarAbono()">
                 <form>
 
                     <div class="row">
@@ -82,12 +82,11 @@
                             [disabled]="loading || !camposValidos"
                             (click)="registrarAbono()">
                             <span *ngIf="!loading">Registrar</span>
-                            <span *ngIf="loading">Registrando...</span>
                         </button>
                     </div>
                 </form>
             </div>
-            <div class="tab-pane fade" id="abonos" role="tabpanel"
+            <div class="tab-pane fade show active" id="abonos" role="tabpanel"
                 aria-labelledby="abonos-tab">
                 <div class="boton-excel">
                     <button type="button mt-3" (click)="exportarExcelAbonos()"

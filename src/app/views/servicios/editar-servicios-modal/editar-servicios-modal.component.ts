@@ -93,19 +93,25 @@ export class EditarServiciosModalComponent {
   }
   }
 
-  validarDescripcion(){
-   if(!this.datosModificados.descripcion){
-    this.errorMessages.descripcion='';
-    this.camposValidos=false;
-   }
-    else if(this.datosModificados.descripcion.length > 200){
-      this.errorMessages.descripcion='La descripción no debe superar los 200 caracteres.';
-      this.camposValidos=false;
-      console.log(this.errorMessages.descripcion)
-    }else{
+  validarDescripcion() {
+    const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
+  
+    if (!this.datosModificados.descripcion) {
+      this.errorMessages.descripcion = 'La descripción es obligatoria.';
+      this.camposValidos = false;
+    } else if (!validacion.test(this.datosModificados.descripcion)) {
+      this.errorMessages.descripcion = 'La descripcion solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).'
+      this.camposValidos = false;
+    } else if (this.datosModificados.descripcion.length > 200) {
+      this.errorMessages.descripcion = 'La descripción no debe superar los 200 caracteres.';
+      this.camposValidos = false;
+    } else if (this.datosModificados.descripcion.length < 10) {
+      this.errorMessages.descripcion = 'La descripcion debe tener 10 o más caracteres.'
+      this.camposValidos = false;
+    } else {
       this.datosModificados.descripcion = this.datosModificados.descripcion.charAt(0).toUpperCase() + this.datosModificados.descripcion.slice(1);
-      this.errorMessages.descripcion='';
-      this.camposValidos=true;
+      this.errorMessages.descripcion = '';
+      this.camposValidos=true
     }
   }
 

@@ -230,3 +230,9 @@ input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
 .boton-excel{
   margin-top: 15px;
 }
+
+.nav-item.disabled {
+  pointer-events: none; /* Desactiva los eventos del puntero (hace que el enlace no sea clickeable) */
+  opacity: 0.5; /* Reduce la opacidad para indicar visualmente que está desactivado */
+  /* Agrega cualquier otro estilo que desees para una apariencia desactivada */
+}

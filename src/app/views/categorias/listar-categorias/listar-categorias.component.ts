@@ -294,6 +294,7 @@ cargarCategorias(activos: boolean) {
       (error) => {
         this.noHayUsuariosRegistrados = true;
         console.error('Error al obtener categorías activas:', error);
+        this.toastr.warning('No hay categorias activas', 'Advertencia');
       }
     );
   } else {
@@ -308,6 +309,7 @@ cargarCategorias(activos: boolean) {
       (error) => {
         this.noHayUsuariosRegistrados = true;
         console.error('Error al obtener categorías inactivas:', error);
+        this.toastr.warning('No hay categorias inactivos', 'Advertencia');
       }
     );
   }

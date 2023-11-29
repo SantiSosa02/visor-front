@@ -81,7 +81,7 @@ export class ApiProductosService {
   //   return this.http.get<any>(getProductUrl, { headers });
   // }
 
-  //Render
+  Render
 
   baseUrl = 'https://api-postgress.onrender.com/api/productos'
 

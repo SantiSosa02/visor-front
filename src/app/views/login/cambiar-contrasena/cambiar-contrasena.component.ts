@@ -35,8 +35,12 @@ export class CambiarContrasenaComponent {
     recuperar:''
   }
 
-
 camposValidos:boolean=false;
+showPassword = false;
+
+togglePasswordVisibility() {
+  this.showPassword = !this.showPassword;
+}
 
 
 camposCompletos(): boolean {

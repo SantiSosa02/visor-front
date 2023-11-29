@@ -221,7 +221,8 @@ actualizarTabla(): void {
         },
         (error) => {
           this.noHayProductosRegistrados = true;
-          console.error('Error al obtener categorías activas:', error);
+          console.error('Error al obtener productos activos:', error);
+          this.toastr.warning('No hay productos activos', 'Advertencia');
         }
       );
     } else {
@@ -237,7 +238,7 @@ actualizarTabla(): void {
         (error) => {
           this.noHayProductosRegistrados = true;
           console.error('Error al obtener categorías inactivas:', error);
-        }
+          this.toastr.warning('No hay productos inactivos', 'Advertencia');        }
       );
     }
   }

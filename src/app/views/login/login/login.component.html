@@ -8,7 +8,7 @@
             <div class="loginform">
                 <h1>Login</h1>
                 <form class="row g-3 mt-3">
-                    <div class="col-12">
+                    <div class="col-11">
                         <div class="input-container mt-5">
         
                             <input
@@ -29,11 +29,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-10">
                         <div class="input-container mt-3">
         
                             <input
-                                type="password"
+                                [type]="showPassword ? 'text' : 'password'"
                                 id="contrasena"
                                 name="contrasena"
                                 [(ngModel)]="contrasena"
@@ -49,6 +49,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="eye-icon col-2 check" (click)="togglePasswordVisibility()">
+                        <i class="fa-solid fa-eye" *ngIf="showPassword"></i>
+                        <i class="fa-solid fa-eye-slash" *ngIf="!showPassword"></i>
+                      </div>
                     <div class="contenedor-botones">
                         <button pButton pRipple type="button" class="p-button-success boton-registrar" (click)="login()"
                                 [ngClass]="{'is-invalid': errorMessages.credenciales}">Iniciar sesión</button>

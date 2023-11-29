@@ -32,13 +32,12 @@ export class AuthService {
 
   login(correo: string, contrasena: string): Observable<boolean> {
     console.log('Attempting login...');
-     const url = `https://api-postgress.onrender.com/api/usuarios/login`;
-    // const url='http://localhost:8080/api/usuarios/login';
+    const url = `https://api-postgress.onrender.com/api/usuarios/login`;
+    //  const url='http://localhost:8080/api/usuarios/login';
     
     const body = { correo, contrasena };
 
     return this.http.post<LoginResponse>(url, body).pipe(
-      tap(response => console.log('Server Response:', response)),
       map(response => this.handleLoginResponse(response)),
       catchError((error: any) => this.handleError(error))
     );
