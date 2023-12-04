@@ -25,14 +25,14 @@
       <thead>
         <tr>
           <th class="text-dark font-medium fs-5" style="width: 400px;">Nombre</th>
-          <th class="text-dark font-medium fs-5" style="width: 400px;">Descripción</th>
-          <th class="text-dark font-medium fs-5"  style="width:300px;">
+          <th class="text-dark font-medium fs-5" style="width: 380px;">Descripción</th>
+          <th class="text-dark font-medium fs-5"  style="width:280px;">
             Estado
             <i class="fa-solid fa-filter"
-               (click)="cambiarFiltro(!filtroActivo)"
+               (click)="cambiarFiltro(!filtroActivo)" matTooltip="Filtrar"
                [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}"></i>
           </th>
-          <th class="text-dark font-medium fs-5" style="width: 290px;">Acciones</th>
+          <th class="text-dark font-medium fs-5" style="width: 350px;">Acciones</th>
 
         </tr>
       </thead>
@@ -43,7 +43,7 @@
         <tr *ngFor="let item of data; let i = index"
           [style.background-color]="item.estado ? '' : '#880f0f'">
           <td>{{ item.nombre }}</td>
-          <td>{{ item.descripcion }}</td>
+          <td style="white-space: normal;">{{ item.descripcion }}</td>
           <td class="estado-column">
             <div [ngClass]="{'estado-container': true, 'circulo-verde': item.estado, 'circulo-rojo': !item.estado}" style="font-weight: bold;">
               {{ item.estado ? 'Activo' : 'Inactivo' }}
@@ -52,13 +52,13 @@
           <td>
             <div class="botones">
               <div class="boton-editar">
-                <button pButton pRipple type="button" (click)="abrirModalDeEdicion(item.idcategoria)" icon="pi pi-pencil" class="p-button-rounded p-button-warning "></button>
+                <button pButton pRipple type="button" matTooltip="Editar" (click)="abrirModalDeEdicion(item.idcategoria)" icon="pi pi-pencil" class="p-button-rounded p-button-warning "></button>
               </div>
               <div class="boton-editar">
-                <button pButton pRipple type="button" icon="pi pi-eye" (click)="abrirModalDetalle(item.idcategoria)" class="p-button-rounded p-button-secondary"></button>
+                <button pButton pRipple type="button" icon="pi pi-eye" matTooltip="Ver detalles" (click)="abrirModalDetalle(item.idcategoria)" class="p-button-rounded p-button-secondary"></button>
               </div>
               <div class="boton-switch align-items-center">
-                <label class="switch">
+                <label class="switch" matTooltip="{{ item.estado ? 'Desactivar' : 'Activar' }}">
                   <input type="checkbox" [checked]="item.estado"
                     (change)="toggleEstado(item)">
                   <span class="slider"></span>
@@ -72,24 +72,24 @@
     </table>
   </div>
   <div class="pagination">
-    <button class="paginacion btn btn-secondary btn-sm" [disabled]="currentPage === 1" (click)="previousPage()">
+    <button class="paginacion btn btn-secondary btn-sm"  matTooltip="Anterior" [disabled]="currentPage === 1" (click)="previousPage()">
       <i class="fa-solid fa-arrow-left"></i>
     </button>
     <span class="page-info">Página {{ currentPage }} de {{ totalPages }}</span>
-    <button class="paginacion btn btn-secondary btn-sm paginacion-right" [disabled]="currentPage === totalPages" (click)="nextPage()">
+    <button class="paginacion btn btn-secondary btn-sm paginacion-right" matTooltip="Siguiente" [disabled]="currentPage === totalPages" (click)="nextPage()">
       <i class="fa-solid fa-arrow-right"></i>
     </button>
     <div class="filtrar">
-    <label for="itemsPerPage">Filas por página:</label>
-    <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="cambiarFilasPorPagina()">
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-    </select>
-  </div>
+      <label for="itemsPerPage">Filas por página:</label>
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="cambiarFilasPorPagina()">
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+    </div>
   </div>
 </div>

@@ -65,7 +65,7 @@ import { PerfilUsuarioComponent } from './layout/perfil/perfil-usuario/perfil-us
 import { DialogModule } from 'primeng/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { PasswordModule } from 'primeng/password';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -137,7 +137,8 @@ import { PasswordModule } from 'primeng/password';
 		ToggleButtonModule,
         DropdownModule,
         DialogModule,
-        PasswordModule
+        PasswordModule,
+        MatTooltipModule
         
     
     ],

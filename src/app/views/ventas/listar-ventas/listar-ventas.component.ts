@@ -58,6 +58,7 @@ export class ListarVentasComponent {
   token = localStorage.getItem('token');
   sumaVentasActivasUltimoMes: number = 0;
   filtroEstadoPago: string = '';
+  
 
 
   construirTablaDetallesProductosYServicios(): Promise<string> {

@@ -25,15 +25,15 @@
 
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
         <button class="p-link layout-topbar-button"
-        (click)="verPerfil()">
+        (click)="verPerfil()" matTooltip="Ver perfil">
             <i class="pi pi-user"></i>
             <span>Profile</span>
         </button>
-        <button class="p-link layout-topbar-button" (click)="toggleTheme()">
+        <button class="p-link layout-topbar-button" (click)="toggleTheme()" matTooltip="Cambiar tema">
             <i class="fa fa-{{currentTheme === 'bootstrap4-dark-blue' ? 'sun-o' : 'moon-o'}} fa-2x"></i>
           </button>
         <button class="p-link layout-topbar-button"
-        (click)="logout()">
+        (click)="logout()" matTooltip="Cerrar sesión">
             <i class="pi pi-sign-out"></i>
             <span>cerrar</span>
         </button>

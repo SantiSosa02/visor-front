@@ -58,38 +58,41 @@ camposValidos:boolean = false;
 
   validarNombre() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
-
-
+  
     if (!this.category.nombre) {
       this.errorMessages.nombre = '';
-      this.camposValidos=false;
-    } else if (!validacion.test(this.category.nombre)) {
-      this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
-      this.camposValidos=false;
-    } else if (this.category.nombre.length > 50) {
-      this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
-      this.camposValidos=false;
-    }else {
-      
-      const token = localStorage.getItem('token');
-      this.apicategoria.verificarNombreExistente(this.category.nombre, token).subscribe(
-        (response) => {
-          if (response.existe) {
-            this.errorMessages.nombre = 'Este nombre ya está en uso por otra categoria.';
-            this.camposValidos=false;
-          } else {
-            this.category.nombre = this.category.nombre.charAt(0).toUpperCase() + this.category.nombre.slice(1);
-            this.errorMessages.nombre = '';
-            this.camposValidos=true;
+      this.camposValidos = false;
+    } else {
+      // Eliminar espacios en blanco al inicio y al final del nombre
+      this.category.nombre = this.category.nombre.trim();
+  
+      if (!validacion.test(this.category.nombre)) {
+        this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
+        this.camposValidos = false;
+      } else if (this.category.nombre.length > 50) {
+        this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
+        this.camposValidos = false;
+      } else {
+        const token = localStorage.getItem('token');
+        this.apicategoria.verificarNombreExistente(this.category.nombre, token).subscribe(
+          (response) => {
+            if (response.existe) {
+              this.errorMessages.nombre = 'Este nombre ya está en uso por otra categoría.';
+              this.camposValidos = false;
+            } else {
+              this.category.nombre = this.category.nombre.charAt(0).toUpperCase() + this.category.nombre.slice(1);
+              this.errorMessages.nombre = '';
+              this.camposValidos = true;
+            }
+          },
+          (error) => {
+            console.error('Error al verificar el nombre:', error);
           }
-        },
-        (error) => {
-          console.error('Error al verificar el correo:', error);
-        }
-      );
+        );
+      }
     }
   }
-
+  
   validarDescripcion() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
   

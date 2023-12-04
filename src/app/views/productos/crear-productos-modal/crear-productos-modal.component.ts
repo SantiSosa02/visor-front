@@ -69,40 +69,44 @@ loading:boolean = false;
     );
   }
 
-
-
   validarNombre() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
-
+  
     if (!this.product.nombre) {
       this.errorMessages.nombre = '';
-      this.camposValidos=false;
-    } else if (!validacion.test(this.product.nombre)) {
-      this.errorMessages.nombre = 'El nombre solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).';
-      this.camposValidos=false;
-    } else if (this.product.nombre.length > 50) {
-      this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
-      this.camposValidos=false;
-    }else {
-
-      const token =localStorage.getItem('token');
-      this.apiProducto.verificarNombreExistente(this.product.nombre,token).subscribe(
-        (response) => {
-          if (response.existe) {
-            this.errorMessages.nombre = 'Este nombre ya está en uso por otro producto.';
-            this.camposValidos=false;
-          } else {
-            this.product.nombre = this.product.nombre.charAt(0).toUpperCase() + this.product.nombre.slice(1);
-            this.errorMessages.nombre = '';
-            this.camposValidos=true;
+      this.camposValidos = false;
+    } else {
+      // Eliminar espacios en blanco al inicio y al final del nombre
+      this.product.nombre = this.product.nombre.trim();
+  
+      if (!validacion.test(this.product.nombre)) {
+        this.errorMessages.nombre = 'El nombre solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).';
+        this.camposValidos = false;
+      } else if (this.product.nombre.length > 50) {
+        this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
+        this.camposValidos = false;
+      } else {
+        const token = localStorage.getItem('token');
+        this.apiProducto.verificarNombreExistente(this.product.nombre, token).subscribe(
+          (response) => {
+            if (response.existe) {
+              this.errorMessages.nombre = 'Este nombre ya está en uso por otro producto.';
+              this.camposValidos = false;
+            } else {
+              this.product.nombre = this.product.nombre.charAt(0).toUpperCase() + this.product.nombre.slice(1);
+              this.errorMessages.nombre = '';
+              this.camposValidos = true;
+            }
+          },
+          (error) => {
+            console.error('Error al verificar el nombre:', error);
           }
-        },
-        (error) => {
-          console.error('Error al verificar el nombre:', error);
-        }
-      );
+        );
+      }
     }
   }
+  
+
 
   validarStockMinimo(event: Event) {
     const inputElement = event.target as HTMLInputElement;

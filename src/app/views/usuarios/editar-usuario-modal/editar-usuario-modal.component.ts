@@ -77,20 +77,23 @@ camposValidos:boolean=false;
 
   validarNombre() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
-  
+    
     if (!this.datosModificados.nombre) {
       this.errorMessages.nombre = '';
       this.camposValidos = false;
     } else {
+      // Eliminar espacios en blanco al inicio y al final del nombre
+      this.datosModificados.nombre = this.datosModificados.nombre.trim();
+  
       // Divide el nombre en palabras
       const palabras = this.datosModificados.nombre.split(' ');
-  
+    
       // Capitaliza la primera letra de cada palabra
       const nombreCapitalizado = palabras.map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
-  
+    
       // Une las palabras nuevamente
       this.datosModificados.nombre = nombreCapitalizado.join(' ');
-  
+    
       if (!validacion.test(this.datosModificados.nombre)) {
         this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
         this.camposValidos = false;
@@ -103,23 +106,26 @@ camposValidos:boolean=false;
       }
     }
   }
-
+  
   validarApellido() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
-  
+    
     if (!this.datosModificados.apellido) {
       this.errorMessages.apellido = '';
       this.camposValidos = false;
     } else {
+      // Eliminar espacios en blanco al inicio y al final del apellido
+      this.datosModificados.apellido = this.datosModificados.apellido.trim();
+  
       // Divide el apellido en palabras
       const palabras = this.datosModificados.apellido.split(' ');
-  
+    
       // Capitaliza la primera letra de cada palabra
       const apellidoCapitalizado = palabras.map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
-  
+    
       // Une las palabras nuevamente
       this.datosModificados.apellido = apellidoCapitalizado.join(' ');
-  
+    
       if (!validacion.test(this.datosModificados.apellido)) {
         this.errorMessages.apellido = 'El apellido solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
         this.camposValidos = false;
@@ -132,6 +138,7 @@ camposValidos:boolean=false;
       }
     }
   }
+  
 
 validarCorreo() {
   const validacionCorreo = /^[a-zA-Z0-9._%-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-]+\.(com|co|org|net|edu)$/;

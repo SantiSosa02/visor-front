@@ -47,6 +47,9 @@ export class CrearClientesModalComponent {
       this.errorMessages.nombre = '';
       this.camposValidos = false;
     } else {
+      // Eliminar espacios en blanco al inicio y al final del nombre
+      this.client.nombre = this.client.nombre.trim();
+  
       // Divide el nombre en palabras
       const palabras = this.client.nombre.split(' ');
   
@@ -68,7 +71,7 @@ export class CrearClientesModalComponent {
       }
     }
   }
-
+  
   validarApellido() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
   
@@ -76,6 +79,9 @@ export class CrearClientesModalComponent {
       this.errorMessages.apellido = '';
       this.camposValidos = false;
     } else {
+      // Eliminar espacios en blanco al inicio y al final del apellido
+      this.client.apellido = this.client.apellido.trim();
+  
       // Divide el apellido en palabras
       const palabras = this.client.apellido.split(' ');
   
@@ -97,6 +103,8 @@ export class CrearClientesModalComponent {
       }
     }
   }
+  
+  
 
 
   validarTelefono(event: Event) {

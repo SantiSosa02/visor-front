@@ -212,7 +212,7 @@
                 <div class="boton-agregar">
                     <button class="btn btn-success boton-add"
                     [disabled]="!camposValidos"
-                        (click)="agregarProducto()">
+                        (click)="agregarProducto()" matTooltip="Agregar">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
@@ -278,7 +278,8 @@
                 <div class="boton-agregar">
                     <button class="btn btn-success boton-add"
                     [disabled]="!camposValidos"
-                        (click)="agregarServicio()"><i class="fa-solid fa-plus"></i></button>
+                        (click)="agregarServicio()" matTooltip="Agregar">
+                        <i class="fa-solid fa-plus"></i></button>
                 </div>
 
             </div>
@@ -310,7 +311,7 @@
                             <td>{{ detalle.tipo }}</td>
                             <td>
                                 <button class="btn btn-danger boton-clean"
-                                    (click)="eliminarProducto(i)"><i
+                                    (click)="eliminarProducto(i)" matTooltip="Eliminar"><i
                                         class="fa-solid fa-circle-xmark"></i></button>
                             </td>
                         </tr>
@@ -330,7 +331,7 @@
                             <td>{{ detalle.tipo }}</td>
                             <td>
                                 <button class="btn btn-danger boton-clean"
-                                    (click)="eliminarServicio(i)"><i
+                                    (click)="eliminarServicio(i)" matTooltip="Eliminar"><i
                                         class="fa-solid fa-circle-xmark"></i></button>
                             </td>
                         </tr>

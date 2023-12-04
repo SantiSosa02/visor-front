@@ -77,6 +77,9 @@ export class EditarClientesModalComponent {
       this.errorMessages.nombre = '';
       this.camposValidos = false;
     } else {
+      // Eliminar espacios en blanco al inicio y al final del nombre
+      this.datosModificados.nombre = this.datosModificados.nombre.trim();
+  
       // Divide el nombre en palabras
       const palabras = this.datosModificados.nombre.split(' ');
   
@@ -98,8 +101,7 @@ export class EditarClientesModalComponent {
       }
     }
   }
-
-
+  
   validarApellido() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
   
@@ -107,6 +109,9 @@ export class EditarClientesModalComponent {
       this.errorMessages.apellido = '';
       this.camposValidos = false;
     } else {
+      // Eliminar espacios en blanco al inicio y al final del apellido
+      this.datosModificados.apellido = this.datosModificados.apellido.trim();
+  
       // Divide el apellido en palabras
       const palabras = this.datosModificados.apellido.split(' ');
   
@@ -128,7 +133,7 @@ export class EditarClientesModalComponent {
       }
     }
   }
-
+  
 
 
   validarTelefono(event: Event) {

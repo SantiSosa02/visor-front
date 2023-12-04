@@ -20,6 +20,8 @@ import { AppLayoutComponent } from "./app.layout.component";
 import { DropdownModule } from 'primeng/dropdown';
 import { PerfilUsuarioComponent } from './perfil/perfil-usuario/perfil-usuario.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 
 @NgModule({
@@ -47,7 +49,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         RippleModule,
         RouterModule,
         AppConfigModule, 
-        DropdownModule
+        DropdownModule,
+        MatTooltipModule
     ],
     exports: [AppLayoutComponent]
 })

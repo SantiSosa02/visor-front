@@ -66,6 +66,9 @@ loading:boolean = false;
       this.errorMessages.nombre = '';
       this.camposValidos = false;
     } else {
+      // Eliminar espacios en blanco al inicio y al final del nombre
+      this.user.nombre = this.user.nombre.trim();
+  
       // Divide el nombre en palabras
       const palabras = this.user.nombre.split(' ');
   
@@ -87,6 +90,7 @@ loading:boolean = false;
       }
     }
   }
+  
 
   validarApellido() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
@@ -95,6 +99,9 @@ loading:boolean = false;
       this.errorMessages.apellido = '';
       this.camposValidos = false;
     } else {
+      // Eliminar espacios en blanco al inicio y al final del apellido
+      this.user.apellido = this.user.apellido.trim();
+  
       // Divide el apellido en palabras
       const palabras = this.user.apellido.split(' ');
   
@@ -116,38 +123,44 @@ loading:boolean = false;
       }
     }
   }
-
-validarCorreo() {
-  const validacionCorreo = /^[a-zA-Z0-9._%-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-]+\.(com|co|org|net|edu)$/;
-
-  if (!this.user.correo) {
-    this.errorMessages.correo = '';
-    this.camposValidos = false;
-  } else if (!validacionCorreo.test(this.user.correo)) {
-    this.errorMessages.correo = 'El correo debe tener una estructura válida (usuario123@dominio.com).';
-    this.camposValidos = false;
-  } else if (this.user.correo.length > 100) {
-    this.errorMessages.correo = 'El correo no debe superar los 50 caracteres.';
-    this.camposValidos = false;
-  } else {
-    const token = localStorage.getItem('token');
-    // Verificar si el correo ya existe
-    this.apiServices.verificarCorreoExistente(this.user.correo, token).subscribe(
-      (response) => {
-        if (response.existe) {
-          this.errorMessages.correo = 'Este correo ya está en uso por otro usuario.';
-          this.camposValidos = false;
-        } else {
-          this.errorMessages.correo = '';
-          this.camposValidos = true;
-        }
-      },
-      (error) => {
-        console.error('Error al verificar el correo:', error);
+  
+  validarCorreo() {
+    const validacionCorreo = /^[a-zA-Z0-9._%-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-]+\.(com|co|org|net|edu)$/;
+  
+    if (!this.user.correo) {
+      this.errorMessages.correo = '';
+      this.camposValidos = false;
+    } else {
+      // Eliminar espacios en blanco al inicio y al final del correo
+      this.user.correo = this.user.correo.trim();
+  
+      if (!validacionCorreo.test(this.user.correo)) {
+        this.errorMessages.correo = 'El correo debe tener una estructura válida (usuario123@dominio.com).';
+        this.camposValidos = false;
+      } else if (this.user.correo.length > 100) {
+        this.errorMessages.correo = 'El correo no debe superar los 100 caracteres.';
+        this.camposValidos = false;
+      } else {
+        const token = localStorage.getItem('token');
+        // Verificar si el correo ya existe
+        this.apiServices.verificarCorreoExistente(this.user.correo, token).subscribe(
+          (response) => {
+            if (response.existe) {
+              this.errorMessages.correo = 'Este correo ya está en uso por otro usuario.';
+              this.camposValidos = false;
+            } else {
+              this.errorMessages.correo = '';
+              this.camposValidos = true;
+            }
+          },
+          (error) => {
+            console.error('Error al verificar el correo:', error);
+          }
+        );
       }
-    );
+    }
   }
-}
+  
 
 
   validarContrasena(){

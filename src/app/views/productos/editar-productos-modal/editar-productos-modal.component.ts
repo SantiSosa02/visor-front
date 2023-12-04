@@ -66,40 +66,45 @@ token=localStorage.getItem('token');
 
   validarNombre() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
-
+  
     if (!this.datosModificados.nombre) {
       this.errorMessages.nombre = '';
-      this.camposValidos=false;
-    } else if (!validacion.test(this.datosModificados.nombre)) {
-      this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
-      this.camposValidos=false;
-    } else if (this.datosModificados.nombre.length > 50) {
-      this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
-      this.camposValidos=false;
-    }else {
-
-      if (this.datosModificados.nombre !== this.datosOriginales.nombre) {
-        this.apiProducto.verificarNombreExistente(this.datosModificados.nombre, this.token).subscribe(
-          (response) => {
-            if (response.existe) {
-              this.errorMessages.nombre = 'Este nombre ya está en uso por otro usuario.';
-              this.camposValidos=false;
-            } else {
-              this.datosModificados.nombre = this.datosModificados.nombre.charAt(0).toUpperCase() + this.datosModificados.nombre.slice(1);
-              this.errorMessages.nombre = '';
-              this.camposValidos=true;
-            }
-          },
-          (error) => {
-            console.error('Error al verificar el nombre:', error);
-          }
-        );
+      this.camposValidos = false;
+    } else {
+      // Eliminar espacios en blanco al inicio y al final del nombre
+      this.datosModificados.nombre = this.datosModificados.nombre.trim();
+  
+      if (!validacion.test(this.datosModificados.nombre)) {
+        this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
+        this.camposValidos = false;
+      } else if (this.datosModificados.nombre.length > 50) {
+        this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
+        this.camposValidos = false;
       } else {
-        // Si el correo es el mismo que el del cliente actual, no mostramos el mensaje de error
-        this.errorMessages.nombre = '';
+        if (this.datosModificados.nombre !== this.datosOriginales.nombre) {
+          this.apiProducto.verificarNombreExistente(this.datosModificados.nombre, this.token).subscribe(
+            (response) => {
+              if (response.existe) {
+                this.errorMessages.nombre = 'Este nombre ya está en uso por otro usuario.';
+                this.camposValidos = false;
+              } else {
+                this.datosModificados.nombre = this.datosModificados.nombre.charAt(0).toUpperCase() + this.datosModificados.nombre.slice(1);
+                this.errorMessages.nombre = '';
+                this.camposValidos = true;
+              }
+            },
+            (error) => {
+              console.error('Error al verificar el nombre:', error);
+            }
+          );
+        } else {
+          // Si el nombre es el mismo que el original, no mostramos el mensaje de error
+          this.errorMessages.nombre = '';
+        }
       }
     }
   }
+  
   
 
   validarStockMinimo(event: Event) {

@@ -60,41 +60,45 @@ camposValidos:boolean = false;
     );
 }
 
-  validarNombre() {
-    const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
+validarNombre() {
+  const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
 
+  if (!this.datosModificados.nombre) {
+    this.errorMessages.nombre = '';
+    this.camposValidos = false;
+  } else {
+    // Eliminar espacios en blanco al inicio y al final del nombre
+    this.datosModificados.nombre = this.datosModificados.nombre.trim();
 
-    if (!this.datosModificados.nombre) {
-      this.errorMessages.nombre = '';
-      this.camposValidos=false;
-    } else if (!validacion.test(this.datosModificados.nombre)) {
+    if (!validacion.test(this.datosModificados.nombre)) {
       this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
-      this.camposValidos=false;
+      this.camposValidos = false;
     } else if (this.datosModificados.nombre.length > 50) {
       this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
-      this.camposValidos=false;
-    }else {
-      
+      this.camposValidos = false;
+    } else {
       const token = localStorage.getItem('token');
-      if(this.datosModificados.nombre !== this.datosOriginales.nombre){
-      this.apicategoria.verificarNombreExistente(this.datosModificados.nombre ,token).subscribe(
-        (response) => {
-          if (response.existe) {
-            this.errorMessages.nombre = 'Este nombre ya está en uso por otra categoria.';
-            this.camposValidos=false;
-          } else {
-            this.datosModificados.nombre = this.datosModificados.nombre.charAt(0).toUpperCase() + this.datosModificados.nombre.slice(1);
-            this.errorMessages.nombre = '';
-            this.camposValidos=true;
+      if (this.datosModificados.nombre !== this.datosOriginales.nombre) {
+        this.apicategoria.verificarNombreExistente(this.datosModificados.nombre, token).subscribe(
+          (response) => {
+            if (response.existe) {
+              this.errorMessages.nombre = 'Este nombre ya está en uso por otra categoria.';
+              this.camposValidos = false;
+            } else {
+              this.datosModificados.nombre = this.datosModificados.nombre.charAt(0).toUpperCase() + this.datosModificados.nombre.slice(1);
+              this.errorMessages.nombre = '';
+              this.camposValidos = true;
+            }
+          },
+          (error) => {
+            console.error('Error al verificar el nombre:', error);
           }
-        },
-        (error) => {
-          console.error('Error al verificar el correo:', error);
-        }
-      );
+        );
       }
     }
   }
+}
+
 
   validarDescripcion(){
 

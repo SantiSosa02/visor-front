@@ -41,36 +41,43 @@ export class CrearServiciosModalComponent {
     )
   }
 
-  validarNombre(){
-    const validacion=/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
-
-    if(!this.service.nombre){
-      this.errorMessages.nombre='';
-      this.camposValidos=false;
-    }else if (!validacion.test(this.service.nombre)){
-      this.errorMessages.nombre='El nombre solo acepta letras, espacios y letras con acentos  (á, é, í, ó, ú).';
-      this.camposValidos=false;
-    }else if(this.service.nombre.length > 50){
-      this.errorMessages.nombre='El nombre no debe superar los 50 caracteres.';
-      this.camposValidos=false;
-    }else{
-      this.apiServicios.verificarNombreExistente(this.service.nombre, this.token).subscribe(
-        (response) =>{
-          if(response.existe){
-            this.errorMessages.nombre='El nombre ya esta en uso por otro servicio.';
-            this.camposValidos=false;
-          }else{
-            this.service.nombre = this.service.nombre.charAt(0).toUpperCase() + this.service.nombre.slice(1);
-            this.errorMessages.nombre='';
-            this.camposValidos=true;
+  
+  validarNombre() {
+    const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
+  
+    if (!this.service.nombre) {
+      this.errorMessages.nombre = '';
+      this.camposValidos = false;
+    } else {
+      // Eliminar espacios en blanco al inicio y al final del nombre
+      this.service.nombre = this.service.nombre.trim();
+  
+      if (!validacion.test(this.service.nombre)) {
+        this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
+        this.camposValidos = false;
+      } else if (this.service.nombre.length > 50) {
+        this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
+        this.camposValidos = false;
+      } else {
+        this.apiServicios.verificarNombreExistente(this.service.nombre, this.token).subscribe(
+          (response) => {
+            if (response.existe) {
+              this.errorMessages.nombre = 'El nombre ya está en uso por otro servicio.';
+              this.camposValidos = false;
+            } else {
+              this.service.nombre = this.service.nombre.charAt(0).toUpperCase() + this.service.nombre.slice(1);
+              this.errorMessages.nombre = '';
+              this.camposValidos = true;
+            }
+          },
+          (error) => {
+            console.error('Error al verificar el nombre:', error);
           }
-        },
-        (error) =>{
-          console.error('Error al verificar el nombre:', error)
-        }
-      )
+        );
+      }
     }
   }
+  
 
   validarDescripcion() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;

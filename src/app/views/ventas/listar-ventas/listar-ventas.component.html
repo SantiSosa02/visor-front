@@ -5,9 +5,9 @@
       <button pButton pRipple type="button" (click)="abrirRegistroVenta()"
         label="Success" class="p-button-success" icon="pi pi-plus"
         label="Agregar venta"></button>
-        <button  type="button" (click)="exportarVentasExcel()"
-        class="btn btn-success excel" 
-        ><i class="fa-solid fa-file-excel"></i></button>
+      <button type="button" (click)="exportarVentasExcel()"
+        matTooltip="Descargar Excel"
+        class="btn btn-success excel"><i class="fa-solid fa-file-excel"></i></button>
     </ng-template>
     <ng-template pTemplate="end">
       <span class="p-input-icon-right">
@@ -21,14 +21,22 @@
       </span>
     </ng-template>
   </p-menubar>
-  <div class="col-6 mt-3 informe">
+  <div class="col-3 mt-3 informe">
     <label for="total" class="total-label">Informe de Ventas del Último Mes:</label>
-    <input id="total" 
-    type="text" 
-    class="total-input" 
-    [value]="sumaVentasActivasUltimoMes | currency:'USD':'symbol':'1.2-2'" 
-    disabled>
-</div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">$</span>
+      </div>
+      <input 
+        id="total"
+        type="text"
+        class="form-control total-input"
+        [value]="sumaVentasActivasUltimoMes | currency:'USD':'symbol':'1.2-2' | slice:1"
+        disabled
+      >
+    </div>
+  </div>
+  
 </div>
 
 <div class="card card-body">
@@ -41,10 +49,11 @@
           <th class="text-dark font-medium fs-5" style="width: 250px;">Fecha</th>
           <th class="text-dark font-medium fs-5" style="width: 250px;">M Pago</th>
           <th class="text-dark font-medium fs-5" style="width: 250px;">V total</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Estado pago</th>
+          <th class="text-dark font-medium fs-5" style="width: 250px;">Estado
+            pago</th>
           <th class="text-dark font-medium fs-5" style="width: 250px;">
             Estado
-            <i class="fa-solid fa-filter"
+            <i class="fa-solid fa-filter" matTooltip="Filtrar"
               (click)="cambiarFiltro(!filtroActivo)"
               [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}"></i>
           </th>
@@ -62,12 +71,13 @@
           <td>{{ item.valortotal | currency:'':'symbol':'1.0-0' }}</td>
 
           <td>
-            <div [ngClass]="{'estado-pago': item.estadopago === 'Credito', 'estado-container': item.estadopago === 'Contado', 'circulo-amarillo': item.estadopago === 'Credito', 'circulo-verde': item.estadopago === 'Contado'}" style="font-weight: bold;">
+            <div
+              [ngClass]="{'estado-pago': item.estadopago === 'Credito', 'estado-container': item.estadopago === 'Contado', 'circulo-amarillo': item.estadopago === 'Credito', 'circulo-verde': item.estadopago === 'Contado'}"
+              style="font-weight: bold;">
               {{ item.estadopago }}
             </div>
           </td>
-          
-          
+
           <td class="estado-column">
             <div
               [ngClass]="{'estado-container': true, 'circulo-verde': item.estado, 'circulo-rojo': !item.estado}"
@@ -78,19 +88,27 @@
           <td>
             <div class="botones">
               <div class="boton-editar">
-                <button pButton pRipple type="button" icon="pi pi-eye" (click)="abrirDetalle(item.idventa)" class="p-button-rounded p-button-secondary"></button>
+                <button pButton pRipple type="button" icon="pi pi-eye"
+                  matTooltip="Ver detalles" (click)="abrirDetalle(item.idventa)"
+                  class="p-button-rounded p-button-secondary"></button>
               </div>
               <div class="boton-imprimir">
-                <button pButton pRipple type="button"  icon="pi pi-print" (click)="imprimirDetalleVenta(item.idventa)"
-                class="p-button-rounded p-button-success boton-detalle">
+                <button pButton pRipple type="button"
+                  matTooltip="Imprimir recibo" icon="pi pi-print"
+                  (click)="imprimirDetalleVenta(item.idventa)"
+                  class="p-button-rounded p-button-success boton-detalle">
                 </button>
               </div>
-              <div class="boton-abono" *ngIf="item.estadopago === 'Credito' && item.estado">
-                <button (click)="abrirModalAbonos(item.idventa)" pButton pRipple type="button" icon="pi pi-wallet" class="p-button-rounded p-button-info">
+              <div class="boton-abono"
+                *ngIf="item.estadopago === 'Credito' && item.estado">
+                <button (click)="abrirModalAbonos(item.idventa)"
+                  matTooltip="Agregar abono" pButton pRipple type="button"
+                  icon="pi pi-wallet" class="p-button-rounded p-button-info">
                 </button>
-            </div>
+              </div>
               <div class="boton-switch align-items-center">
-                <label class="switch">
+                <label class="switch"
+                  matTooltip="{{ item.estado ? 'Desactivar' : 'Activar' }}">
                   <input type="checkbox" [checked]="item.estado"
                     (change)="item.estado === true ? toggleEstado(item) : mostrarMensaje(item)"
                     (mouseenter)="mostrarMensaje(item)" />
@@ -108,24 +126,28 @@
     </div>
   </div>
   <div class="pagination">
-    <button class="paginacion btn btn-secondary btn-sm" [disabled]="currentPage === 1" (click)="previousPage()">
+    <button class="paginacion btn btn-secondary btn-sm" matTooltip="Anterior"
+      [disabled]="currentPage === 1" matTooltip="Anterior" (click)="previousPage()">
       <i class="fa-solid fa-arrow-left"></i>
     </button>
     <span class="page-info">Página {{ currentPage }} de {{ totalPages }}</span>
-    <button class="paginacion btn btn-secondary btn-sm paginacion-right" [disabled]="currentPage === totalPages" (click)="nextPage()">
+    <button class="paginacion btn btn-secondary btn-sm paginacion-right"
+      matTooltip="Siguiente" [disabled]="currentPage === totalPages"
+      matTooltip="Siguiente" (click)="nextPage()">
       <i class="fa-solid fa-arrow-right"></i>
     </button>
     <div class="filtrar">
-    <label for="itemsPerPage">Filas por página:</label>
-    <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="cambiarFilasPorPagina()">
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-    </select>
-  </div>
+      <label for="itemsPerPage">Filas por página:</label>
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage"
+        (change)="cambiarFilasPorPagina()">
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+    </div>
   </div>
 </div>
