@@ -232,7 +232,7 @@ export class ListarUsuariosComponent {
         },
         (error) => {
           this.noHayUsuariosRegistrados = true;
-          console.error('Error al obtener usuarios activos:', error);
+          // console.error('Error al obtener usuarios activos:', error);
           this.toastr.warning('No hay usuarios activos', 'Advertencia');
         }
       );
@@ -247,7 +247,7 @@ export class ListarUsuariosComponent {
         },
         (error) => {
           this.noHayUsuariosRegistrados = true;
-          console.error('Error al obtener usuarios inactivos:', error);
+          // console.error('Error al obtener usuarios inactivos:', error);
           this.toastr.warning('No hay usuarios inactivos', 'Advertencia');
         }
       );

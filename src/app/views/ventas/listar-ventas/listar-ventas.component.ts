@@ -582,7 +582,7 @@ export class ListarVentasComponent {
         },
         (error) => {
           this.noHayVentasRegsitradas = true;
-          console.error('Error al obtener ventas activas: ', error);
+          // console.error('Error al obtener ventas activas: ', error);
           this.toastr.warning('No hay ventas activas', 'Advertencia');
         }
       );
@@ -597,7 +597,7 @@ export class ListarVentasComponent {
         },
         (error) => {
           this.noHayVentasRegsitradas = true;
-          console.error('Error al obtener ventas inactivas: ', error);
+          // console.error('Error al obtener ventas inactivas: ', error);
           this.toastr.warning('No hay ventas inactivos', 'Advertencia');
         }
       );

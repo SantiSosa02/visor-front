@@ -70,7 +70,7 @@ export class ListarClientesComponent {
         },
         (error) => {
           this.noHayClientesRegistrados = true;
-          console.error('Error al obtener los clientes activos:', error)
+          // console.error('Error al obtener los clientes activos:', error)
           this.toastr.warning('No hay clientes activos', 'Advertencia');
         }
       )
@@ -85,7 +85,7 @@ export class ListarClientesComponent {
         },
         (error) => {
           this.noHayClientesRegistrados =  true;
-          console.error('Error al obtener los clientes inactivos:', error)
+          // console.error('Error al obtener los clientes inactivos:', error)
           this.toastr.warning('No hay clientes inactivos', 'Advertencia');
 
         }

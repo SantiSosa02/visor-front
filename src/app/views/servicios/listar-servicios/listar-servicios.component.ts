@@ -96,7 +96,7 @@ export class ListarServiciosComponent implements OnInit {
         },
         (error) => {
           this.noHayServiciosRegistrados = true;
-          console.error('Error al obtener servicios activos:', error);
+          // console.error('Error al obtener servicios activos:', error);
           this.toastr.warning('No hay servicios activos', 'Advertencia');
         }
       );
@@ -110,7 +110,7 @@ export class ListarServiciosComponent implements OnInit {
         },
         (error) => {
           this.noHayServiciosRegistrados = true;
-          console.error('Error al obtener servicios inactivos:', error);
+          // console.error('Error al obtener servicios inactivos:', error);
           this.toastr.warning('No hay servicios inactivos', 'Advertencia');
         }
       );
