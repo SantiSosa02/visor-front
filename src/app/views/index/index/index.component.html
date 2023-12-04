@@ -1,48 +1,38 @@
-<!-- <div *ngIf="user">
-    <p>{{ user | json }}</p>
-  </div> -->
+<!-- index.component.html -->
+
+<div *ngIf="user">
   <div class="card card-w-title">
-    <h4>Bienvenido {{user.nombre}}</h4>
+    <h4>Bienvenido {{ user.nombre }}</h4>
   </div>
 
   <div class="card">
     <h5>Recomendaciones</h5>
-    <p class="mt-2">Estos son algunas opciones de los productos que podrias comprar.</p>
-  <div *ngIf="resultadoPrediccion && resultadoPrediccion.length > 0" class="mt-4 col-8">
-    <table class="table align-middle text-center text-nowrap table-bordered">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Recomendacion</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngFor="let prediccion of resultadoPrediccion">
-          <tr *ngIf="prediccion.prediccion === 'comprar'">
-            <td>{{ prediccion.nombre_producto }}</td>
+    <p class="mt-2">Estas son algunas opciones de los productos que podrías comprar.</p>
+
+    <div *ngIf="productos.length > 0; else noProductos">
+      <table class="table col-5 table align-middle text-center text-nowrap table-bordered">
+        <thead>
+          <tr>
+            <th>Nombre del Producto</th>
+            <th>Recomendación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productos">
+            <td>{{ producto.nombre }}</td>
             <td
-              [ngClass]="{'recomendacion-column': true, 'circulo-verde': prediccion.prediccion === 'comprar', 'circulo-rojo': prediccion.prediccion === 'no comprar'}"
+              class="recomendacion-column circulo-verde"
               style="font-weight: bold;"
-            >
-              {{ prediccion.prediccion }}
+            > 
+              Comprar
             </td>
           </tr>
-        </ng-container>
-      </tbody>
-    </table>
-  </div>
-  <div *ngIf="!resultadoPrediccion || resultadoPrediccion.length === 0">
-    No hay resultados de predicción.
-  </div>
-  </div>
+        </tbody>
+      </table>
+    </div>
 
-
-  <!-- <tr *ngFor="let prediccion of resultadoPrediccion">
-    <td>{{ prediccion.nombre_producto }}</td>
-    <td
-    [ngClass]="{'recomendacion-column': true, 'circulo-verde': prediccion.prediccion === 'comprar', 'circulo-rojo': prediccion.prediccion === 'no comprar'}"
-    style="font-weight: bold;"
-  >
-    {{ prediccion.prediccion }}
-  </td>
-  </tr>   mostrar comprar y no comprar --> 
+    <ng-template #noProductos>
+      <p>No hay productos activos con cantidad menor a 5.</p>
+    </ng-template>
+  </div>
+</div>

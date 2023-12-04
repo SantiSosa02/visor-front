@@ -19,6 +19,8 @@ import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppLayoutComponent } from "./app.layout.component";
 import { DropdownModule } from 'primeng/dropdown';
 import { PerfilUsuarioComponent } from './perfil/perfil-usuario/perfil-usuario.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 @NgModule({
     declarations: [
@@ -29,7 +31,9 @@ import { PerfilUsuarioComponent } from './perfil/perfil-usuario/perfil-usuario.c
         AppSidebarComponent,
         AppLayoutComponent,
         PerfilUsuarioComponent,
+
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [
         BrowserModule,
         FormsModule,

@@ -63,6 +63,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { JwtInterceptorInterceptor } from './demo/service/token.service';
 import { PerfilUsuarioComponent } from './layout/perfil/perfil-usuario/perfil-usuario.component';
 import { DialogModule } from 'primeng/dialog';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { PasswordModule } from 'primeng/password';
 
 
 
@@ -100,9 +102,11 @@ import { DialogModule } from 'primeng/dialog';
         DetalleClienteComponent,
         DetalleVentaComponent,
         RecuperarComponent,
-        CambiarContrasenaComponent
+        CambiarContrasenaComponent,
+        NotfoundComponent,
         
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [
         AppRoutingModule,
         AppLayoutModule,
@@ -133,6 +137,8 @@ import { DialogModule } from 'primeng/dialog';
 		ToggleButtonModule,
         DropdownModule,
         DialogModule,
+        PasswordModule
+        
     
     ],
     providers: [

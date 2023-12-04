@@ -30,7 +30,7 @@
             <span>Profile</span>
         </button>
         <button class="p-link layout-topbar-button" (click)="toggleTheme()">
-            <i class="fa fa-{{currentTheme === 'bootstrap4-dark-blue' ? 'moon-o' : 'sun-o'}} fa-2x"></i>
+            <i class="fa fa-{{currentTheme === 'bootstrap4-dark-blue' ? 'sun-o' : 'moon-o'}} fa-2x"></i>
           </button>
         <button class="p-link layout-topbar-button"
         (click)="logout()">
@@ -42,3 +42,11 @@
     </div>
 
 </div>
+<div>
+    <df-messenger
+      intent="WELCOME"
+      chat-title="Vibot"
+      agent-id="4cd728db-4350-4511-90dd-39070b6b9dbb"
+      language-code="es"
+      chat-icon="https://cdn-icons-png.flaticon.com/128/1698/1698535.png"></df-messenger>
+  </div>

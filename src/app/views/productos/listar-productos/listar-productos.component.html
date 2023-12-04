@@ -49,10 +49,12 @@
             <td>{{ item.nombre }}</td>
             <td>{{ item.idcategoria }}</td>
             <td>{{ item.stock_minimo }}</td>
-            <td>{{ item.cantidad }}</td>
+            <td [ngClass]="{'cantidad-resaltada': item.cantidad < item.stock_minimo}" >
+              {{ item.cantidad }}
+            </td>         
             <td>{{ item.precio_venta | currency:'':'symbol':'1.0-0' }}</td>
             <td class="estado-column">
-              <div [ngClass]="{'estado-container': true, 'circulo-verde': item.estado, 'circulo-rojo': !item.estado}" style="font-weight: bold;">
+              <div [ngClass]="{'estado-container': true, 'circulo-verde': item.estado, 'circulo-rojo': !item.estado}" style="font-weight: bold;" >
                 {{ item.estado ? 'Activo' : 'Inactivo' }}
               </div>
             </td>
@@ -103,4 +105,3 @@
     </div>
     </div>
   </div>
-
