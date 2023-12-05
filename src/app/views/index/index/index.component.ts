@@ -44,7 +44,7 @@ export class IndexComponent {
     this.apiProductos.getProductosActivos(token).subscribe(
       (data: any[]) => {
         // Filtrar productos con cantidad menor a 5
-        this.productos = data.filter(producto => producto.cantidad < 5);
+        this.productos = data.filter(producto => producto.cantidad < producto.stock_minimo);
       },
       (error) => {
         console.error('Error al obtener productos activos:', error);
