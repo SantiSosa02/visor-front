@@ -8,6 +8,7 @@ import { CrearUsuarioModalComponent } from '../crear-usuario-modal/crear-usuario
 import { EditarUsuarioModalComponent } from '../editar-usuario-modal/editar-usuario-modal.component';
 import { DetalleUsuarioComponent } from '../detalle-usuario/detalle-usuario.component';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from 'src/app/demo/service/auth.service';
 
 
 @Component({
@@ -25,7 +26,9 @@ export class ListarUsuariosComponent {
     private toastr: ToastrService,
     private modalService: BsModalService,
     private bsModalRef: BsModalRef,
-    private cookieService : CookieService
+    private cookieService : CookieService,
+    private authService: AuthService,
+
     ) 
      {
       
@@ -41,10 +44,14 @@ export class ListarUsuariosComponent {
   noHayUsuariosRegistrados: boolean = true;
   filtroActivo: boolean = true; 
   modalRef: BsModalRef;
+  currentUser: any; 
   token = this.cookieService.get('token');
 
   ngOnInit(): void {
     this.cargarUsuarios(true);
+    this.authService.currentUser.subscribe((user) => {
+      this.currentUser = user;
+    });
   }
 
   
@@ -107,43 +114,60 @@ export class ListarUsuariosComponent {
     this.actualizarTabla();
   }
   
-  
   toggleEstado(user: any) {
     const userId = user.idusuario;
-    
-    // Guarda el estado actual del interruptor
     const estadoAnterior = user.estado;
-  
-    // Deshabilita el interruptor temporalmente
+
+    // Utiliza this.currentUser para obtener el usuario actual
+    const usuarioAutenticado = this.currentUser;
+
+    // Verifica si el usuario que intenta deshabilitar es el mismo que el usuario autenticado
+    if (usuarioAutenticado && usuarioAutenticado.idusuario === userId) {
+      Swal.fire({
+        title: 'Advertencia',
+        text: 'No puedes deshabilitar tu propia cuenta',
+        icon: 'warning',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#3085d6',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          user.estado = estadoAnterior;
+        }
+      });
+    }
+
     user.estado = !estadoAnterior;
-    
-    // Abre un SweetAlert de confirmación
-    Swal.fire({
-      title: 'Confirmar Cambio de Estado',
-      text: '¿Estás seguro de cambiar el estado de este usuario?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Aceptar',
-      confirmButtonColor: '#4CAF50',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"
-        this.cambiarEstadoUsuario(userId, !estadoAnterior);
-        this.toastr.success('Estado del usuario actualizado con éxito', 'Éxito',{
-          timeOut:1000
-        });
-        setTimeout(() => {
-          this.reloadComponent();
-        },1000)
-      } else {
-        // Si se hace clic en "Cancelar," restaura el estado del interruptor
-        user.estado = estadoAnterior;
-      }
-    });
+
+    // Verifica si el usuario es diferente antes de mostrar el SweetAlert
+    if (usuarioAutenticado && usuarioAutenticado.idusuario !== userId) {
+      Swal.fire({
+        title: 'Confirmar Cambio de Estado',
+        text: '¿Estás seguro de cambiar el estado de este usuario?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#4CAF50',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.cambiarEstadoUsuario(userId, !estadoAnterior);
+          Swal.fire({
+            title: 'Éxito',
+            text: 'Estado del usuario actualizado con éxito',
+            icon: 'success',
+            timer: 1000,
+            timerProgressBar: true,
+          });
+          setTimeout(() => {
+            this.reloadComponent();
+          }, 1000);
+        } else {
+          user.estado = estadoAnterior;
+        }
+      });
+    }
   }
-
-
 
   actualizarEstadoEnLista(userId: number, newState: boolean) {
     this.estados[userId] = newState;

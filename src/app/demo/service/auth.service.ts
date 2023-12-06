@@ -14,6 +14,7 @@ export class AuthService {
   currentUser: Observable<User | null> = this._currentUser.asObservable();
   private _authStatus: BehaviorSubject<AuthStatus> = new BehaviorSubject<AuthStatus>(this.retrieveAuthStatusFromStorage());
   authStatus: Observable<AuthStatus> = this._authStatus.asObservable();
+  
 
   constructor(private http: HttpClient) {
     // Ejecutar inmediatamente al cargar la aplicación
