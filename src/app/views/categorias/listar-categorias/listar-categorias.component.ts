@@ -178,7 +178,7 @@ export class ListarCategoriasComponent {
             if (result.isConfirmed) {
               // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"
               this.cambiarEstadoCategoriaId(categoryId, !estadoAnterior);
-              this.toastr.success('Estado del usuario actualizado con éxito', 'Éxito', {
+              this.toastr.success('Estado de la categoria actualizado con éxito', 'Éxito', {
                 timeOut: 1000
               });
               setTimeout(() => {

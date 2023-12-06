@@ -151,17 +151,14 @@ export class ListarUsuariosComponent {
         cancelButtonText: 'Cancelar',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.cambiarEstadoUsuario(userId, !estadoAnterior);
-          Swal.fire({
-            title: 'Éxito',
-            text: 'Estado del usuario actualizado con éxito',
-            icon: 'success',
-            timer: 1000,
-            timerProgressBar: true,
-          });
-          setTimeout(() => {
-            this.reloadComponent();
-          }, 1000);
+           // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"
+           this.cambiarEstadoUsuario(userId, !estadoAnterior);
+           this.toastr.success('Estado del usuario actualizado con éxito', 'Éxito', {
+             timeOut: 1000
+           });
+           setTimeout(() => {
+             this.reloadComponent();
+           }, 1000);
         } else {
           user.estado = estadoAnterior;
         }

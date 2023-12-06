@@ -41,7 +41,8 @@
                         class="form-control multiline-input"
                         (blur)="validarDescripcion()"
                         placeholder=""
-                        [ngClass]="{'is-invalid': errorMessages.descripcion}">
+                        [ngClass]="{'is-invalid': errorMessages.descripcion}"
+                        style="resize: none;">
                        </textarea>
 
                     <div class="invalid-feedback error-message mt-2"
