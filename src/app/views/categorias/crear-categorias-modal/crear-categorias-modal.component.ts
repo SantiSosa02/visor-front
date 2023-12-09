@@ -66,6 +66,9 @@ camposValidos:boolean = false;
       // Eliminar espacios en blanco al inicio y al final del nombre
       this.category.nombre = this.category.nombre.trim();
   
+      this.category.nombre = this.category.nombre.replace(/\s+/g, ' ');
+
+
       if (!validacion.test(this.category.nombre)) {
         this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
         this.camposValidos = false;
@@ -95,25 +98,30 @@ camposValidos:boolean = false;
   
   validarDescripcion() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
-  
+
     if (!this.category.descripcion) {
-      this.errorMessages.descripcion = 'La descripción es obligatoria.';
-      this.camposValidos = false;
+        this.errorMessages.descripcion = '';
+        this.camposValidos = false;
     } else if (!validacion.test(this.category.descripcion)) {
-      this.errorMessages.descripcion = 'La descripcion solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).'
-      this.camposValidos = false;
+        this.errorMessages.descripcion = 'La descripción solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).'
+        this.camposValidos = false;
     } else if (this.category.descripcion.length > 200) {
-      this.errorMessages.descripcion = 'La descripción no debe superar los 200 caracteres.';
-      this.camposValidos = false;
+        this.errorMessages.descripcion = 'La descripción no debe superar los 200 caracteres.';
+        this.camposValidos = false;
     } else if (this.category.descripcion.length < 10) {
-      this.errorMessages.descripcion = 'La descripcion debe tener 10 o más caracteres.'
-      this.camposValidos = false;
+        this.errorMessages.descripcion = 'La descripcion debe tener 10 o más caracteres.'
+        this.camposValidos = false;
     } else {
-      this.category.descripcion = this.category.descripcion.charAt(0).toUpperCase() + this.category.descripcion.slice(1);
-      this.errorMessages.descripcion = '';
-      this.camposValidos=true;
+        // Transformaciones para la descripción
+        this.category.descripcion = this.category.descripcion.trim();
+        this.category.descripcion = this.category.descripcion.replace(/\s+/g, ' ');
+        this.category.descripcion = this.category.descripcion.charAt(0).toUpperCase() + this.category.descripcion.slice(1);
+
+        this.errorMessages.descripcion = '';
+        this.camposValidos = true;
     }
-  }
+}
+
 
 
   registrarCategoria() {

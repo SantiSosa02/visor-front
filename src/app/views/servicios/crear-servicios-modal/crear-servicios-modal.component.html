@@ -39,7 +39,8 @@
                     class="form-control"
                     (blur)="validarDescripcion()"
                     [ngClass]="{'is-invalid': errorMessages.descripcion}"
-                    placeholder=""></textarea>
+                    placeholder=""
+                    style="resize: none;"></textarea>
 
                 <div class="invalid-feedback error-message mt-2"
                     *ngIf="errorMessages.descripcion" style="color: red;">

@@ -51,7 +51,9 @@ export class CrearServiciosModalComponent {
     } else {
       // Eliminar espacios en blanco al inicio y al final del nombre
       this.service.nombre = this.service.nombre.trim();
-  
+
+      this.service.nombre = this.service.nombre.replace(/\s+/g, ' ');
+
       if (!validacion.test(this.service.nombre)) {
         this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
         this.camposValidos = false;
@@ -83,7 +85,7 @@ export class CrearServiciosModalComponent {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
   
     if (!this.service.descripcion) {
-      this.errorMessages.descripcion = 'La descripción es obligatoria.';
+      this.errorMessages.descripcion = '';
       this.camposValidos = false;
     } else if (!validacion.test(this.service.descripcion)) {
       this.errorMessages.descripcion = 'La descripcion solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).'
@@ -95,9 +97,13 @@ export class CrearServiciosModalComponent {
       this.errorMessages.descripcion = 'La descripcion debe tener 10 o más caracteres.'
       this.camposValidos = false;
     } else {
+      // Transformaciones para la descripción
+      this.service.descripcion = this.service.descripcion.trim();
+      this.service.descripcion = this.service.descripcion.replace(/\s+/g, ' ');
       this.service.descripcion = this.service.descripcion.charAt(0).toUpperCase() + this.service.descripcion.slice(1);
+
       this.errorMessages.descripcion = '';
-      this.camposValidos=true
+      this.camposValidos = true;
     }
   }
 

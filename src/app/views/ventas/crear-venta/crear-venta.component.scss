@@ -156,3 +156,34 @@ input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
 .cantidad-agregar{
     width: 9em;
 }
+
+@media (max-width: 575.98px) {
+    .col-2,
+    .col-3,
+    .col-12 {
+      width: 100%; /* Ocupa el 100% del ancho en pantallas pequeñas */
+      margin-bottom: 10px; /* Añade espacio entre las columnas */
+    }
+  
+    .contenedor-botones {
+      flex-direction: column; /* Cambia la dirección del contenedor de botones a columna */
+    }
+  
+    /* Agrega cualquier otro estilo que necesites para pantallas pequeñas */
+  }
+
+  @media (max-width: 575.98px) {
+    .contenedor-tabla {
+      overflow-x: auto; /* Agrega un scroll horizontal en pantallas pequeñas */
+    }
+  
+    .table {
+      width: 100%; /* Ocupa el 100% del ancho en pantallas pequeñas */
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .boton-pequeno {
+      margin-bottom: 10px; /* Ajusta la cantidad de espacio según tus necesidades */
+    }
+  }

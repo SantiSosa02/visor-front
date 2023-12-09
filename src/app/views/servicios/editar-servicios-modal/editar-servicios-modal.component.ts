@@ -70,7 +70,9 @@ export class EditarServiciosModalComponent {
     } else {
       // Eliminar espacios en blanco al inicio y al final del nombre
       this.datosModificados.nombre = this.datosModificados.nombre.trim();
-  
+
+      this.datosModificados.nombre = this.datosModificados.nombre.replace(/\s+/g, ' ');
+
       if (!validacion.test(this.datosModificados.nombre)) {
         this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
         this.camposValidos = false;
@@ -106,7 +108,7 @@ export class EditarServiciosModalComponent {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
   
     if (!this.datosModificados.descripcion) {
-      this.errorMessages.descripcion = 'La descripción es obligatoria.';
+      this.errorMessages.descripcion = '';
       this.camposValidos = false;
     } else if (!validacion.test(this.datosModificados.descripcion)) {
       this.errorMessages.descripcion = 'La descripcion solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).'
@@ -118,9 +120,13 @@ export class EditarServiciosModalComponent {
       this.errorMessages.descripcion = 'La descripcion debe tener 10 o más caracteres.'
       this.camposValidos = false;
     } else {
+      // Transformaciones para la descripción
+      this.datosModificados.descripcion = this.datosModificados.descripcion.trim();
+      this.datosModificados.descripcion = this.datosModificados.descripcion.replace(/\s+/g, ' ');
       this.datosModificados.descripcion = this.datosModificados.descripcion.charAt(0).toUpperCase() + this.datosModificados.descripcion.slice(1);
+
       this.errorMessages.descripcion = '';
-      this.camposValidos=true
+      this.camposValidos = true;
     }
   }
 

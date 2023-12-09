@@ -3,8 +3,10 @@
   <p-menubar class="mt-2 p-1">
     <ng-template pTemplate="start">
       <button pButton pRipple type="button" (click)="abrirCrearCategoriaModal()"
-        class="p-button-success" icon="pi pi-plus"
-        label="Agregar categoria"></button>
+        class="p-button-success responsive-icon-only" icon="pi pi-plus"
+        label="Agregar categoria">
+   
+      </button>
     </ng-template>
     <ng-template pTemplate="end">
       <span class="p-input-icon-right">
@@ -19,6 +21,7 @@
     </ng-template>
   </p-menubar>
 </div>
+
 <div class="card card-body">
   <div class="table-responsive">
     <table class="table align-middle text-nowrap">

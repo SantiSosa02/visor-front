@@ -78,7 +78,9 @@ loading:boolean = false;
     } else {
       // Eliminar espacios en blanco al inicio y al final del nombre
       this.product.nombre = this.product.nombre.trim();
-  
+
+      this.product.nombre = this.product.nombre.replace(/\s+/g, ' ');
+
       if (!validacion.test(this.product.nombre)) {
         this.errorMessages.nombre = 'El nombre solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).';
         this.camposValidos = false;

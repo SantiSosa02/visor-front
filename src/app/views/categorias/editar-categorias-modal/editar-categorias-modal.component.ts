@@ -70,6 +70,9 @@ validarNombre() {
     // Eliminar espacios en blanco al inicio y al final del nombre
     this.datosModificados.nombre = this.datosModificados.nombre.trim();
 
+    this.datosModificados.nombre = this.datosModificados.nombre.replace(/\s+/g, ' ');
+
+
     if (!validacion.test(this.datosModificados.nombre)) {
       this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
       this.camposValidos = false;
@@ -100,28 +103,32 @@ validarNombre() {
 }
 
 
-  validarDescripcion(){
+validarDescripcion() {
+  const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
 
-    const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
-
-    if(!this.datosModificados.descripcion){
-      this.errorMessages.descripcion='';
-      this.camposValidos=false;
-    }else if(!validacion.test(this.datosModificados.descripcion)){
-      this.errorMessages.descripcion='La descripcion solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).'
-      this.camposValidos=false;
-    }else if(this.datosModificados.descripcion.length > 200){
-      this.errorMessages.descripcion='La descripcion no puede exceder los 200 caracteres.'
-      this.camposValidos=false;
-    } else if (this.datosModificados.descripcion.length < 10) {
+  if (!this.datosModificados.descripcion) {
+      this.errorMessages.descripcion = '';
+      this.camposValidos = false;
+  } else if (!validacion.test(this.datosModificados.descripcion)) {
+      this.errorMessages.descripcion = 'La descripción solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).'
+      this.camposValidos = false;
+  } else if (this.datosModificados.descripcion.length > 200) {
+      this.errorMessages.descripcion = 'La descripción no debe superar los 200 caracteres.';
+      this.camposValidos = false;
+  } else if (this.datosModificados.descripcion.length < 10) {
       this.errorMessages.descripcion = 'La descripcion debe tener 10 o más caracteres.'
       this.camposValidos = false;
-    }else{
+  } else {
+      // Transformaciones para la descripción
+      this.datosModificados.descripcion = this.datosModificados.descripcion.trim();
+      this.datosModificados.descripcion = this.datosModificados.descripcion.replace(/\s+/g, ' ');
       this.datosModificados.descripcion = this.datosModificados.descripcion.charAt(0).toUpperCase() + this.datosModificados.descripcion.slice(1);
-      this.errorMessages.descripcion='';
-      this.camposValidos=true;
-    }
+
+      this.errorMessages.descripcion = '';
+      this.camposValidos = true;
   }
+}
+
 
 
   ngOnInit() {

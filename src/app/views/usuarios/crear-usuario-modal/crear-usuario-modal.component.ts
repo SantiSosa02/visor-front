@@ -69,17 +69,20 @@ loading:boolean = false;
       // Eliminar espacios en blanco al inicio y al final del nombre
       this.user.nombre = this.user.nombre.trim();
   
-      // Divide el nombre en palabras
+      // Reemplazar múltiples espacios entre palabras con un solo espacio
+      this.user.nombre = this.user.nombre.replace(/\s+/g, ' ');
+  
+      // Capitalizar la primera letra de cada palabra
       const palabras = this.user.nombre.split(' ');
+      const nombreCapitalizado = palabras.map(
+        palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1)
+      );
   
-      // Capitaliza la primera letra de cada palabra
-      const nombreCapitalizado = palabras.map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
-  
-      // Une las palabras nuevamente
+      // Unir las palabras nuevamente con un solo espacio
       this.user.nombre = nombreCapitalizado.join(' ');
   
       if (!validacion.test(this.user.nombre)) {
-        this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
+        this.errorMessages.nombre = 'El nombre solo acepta letras, un espacio entre palabras y letras con acentos (á, é, í, ó, ú).';
         this.camposValidos = false;
       } else if (this.user.nombre.length > 50) {
         this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
@@ -90,6 +93,7 @@ loading:boolean = false;
       }
     }
   }
+  
   
 
   validarApellido() {
@@ -102,11 +106,14 @@ loading:boolean = false;
       // Eliminar espacios en blanco al inicio y al final del apellido
       this.user.apellido = this.user.apellido.trim();
   
+      this.user.apellido = this.user.apellido.replace(/\s+/g, ' ');
+
       // Divide el apellido en palabras
       const palabras = this.user.apellido.split(' ');
   
       // Capitaliza la primera letra de cada palabra
-      const apellidoCapitalizado = palabras.map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
+      const apellidoCapitalizado = palabras.map(
+        palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
   
       // Une las palabras nuevamente
       this.user.apellido = apellidoCapitalizado.join(' ');

@@ -212,4 +212,51 @@ label {
  margin-top: 10px;
 }
 
+/* Ajustar el ancho del botón "Agregar usuario" en pantallas pequeñas */
+@media (max-width: 575.98px) {
+  .p-button-success.responsive-icon-only {
+    width: 20px; /* Ajusta el ancho según sea necesario para mostrar solo el ícono */
+    padding: 2px;
+  }
 
+  .p-button-success.responsive-icon-only .pi {
+    font-size: 1.5rem; /* Ajusta según sea necesario para el tamaño del ícono */
+  }
+
+  .p-button-success.responsive-icon-only .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .ancho-personalizado {
+    width: 90%; /* Ajusta el ancho según sea necesario */
+  }
+
+  .p-input-icon-right i.pi-search {
+    font-size: 0rem; /* Ajusta según sea necesario para el tamaño del ícono */
+  }
+}
+
+@media (max-width: 575.98px) {
+  .table td {
+    font-size: 14px; /* Ajusta el tamaño de fuente según sea necesario */
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .paginacion, .paginacion-right, .page-info, label, select {
+    margin: 5px 0;
+  }
+}

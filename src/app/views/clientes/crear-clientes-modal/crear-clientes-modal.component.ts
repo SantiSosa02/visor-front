@@ -49,7 +49,9 @@ export class CrearClientesModalComponent {
     } else {
       // Eliminar espacios en blanco al inicio y al final del nombre
       this.client.nombre = this.client.nombre.trim();
-  
+
+      this.client.nombre = this.client.nombre.replace(/\s+/g, ' ');
+
       // Divide el nombre en palabras
       const palabras = this.client.nombre.split(' ');
   
@@ -81,7 +83,9 @@ export class CrearClientesModalComponent {
     } else {
       // Eliminar espacios en blanco al inicio y al final del apellido
       this.client.apellido = this.client.apellido.trim();
-  
+      
+      this.client.apellido = this.client.apellido.replace(/\s+/g, ' ');
+
       // Divide el apellido en palabras
       const palabras = this.client.apellido.split(' ');
   

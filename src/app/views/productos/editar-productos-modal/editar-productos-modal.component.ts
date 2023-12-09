@@ -73,6 +73,8 @@ token=localStorage.getItem('token');
     } else {
       // Eliminar espacios en blanco al inicio y al final del nombre
       this.datosModificados.nombre = this.datosModificados.nombre.trim();
+
+      this.datosModificados.nombre = this.datosModificados.nombre.replace(/\s+/g, ' ');
   
       if (!validacion.test(this.datosModificados.nombre)) {
         this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';

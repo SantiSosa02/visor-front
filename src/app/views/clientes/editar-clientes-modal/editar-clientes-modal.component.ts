@@ -79,6 +79,9 @@ export class EditarClientesModalComponent {
     } else {
       // Eliminar espacios en blanco al inicio y al final del nombre
       this.datosModificados.nombre = this.datosModificados.nombre.trim();
+
+      this.datosModificados.nombre = this.datosModificados.nombre.replace(/\s+/g, ' ');
+
   
       // Divide el nombre en palabras
       const palabras = this.datosModificados.nombre.split(' ');
@@ -111,6 +114,8 @@ export class EditarClientesModalComponent {
     } else {
       // Eliminar espacios en blanco al inicio y al final del apellido
       this.datosModificados.apellido = this.datosModificados.apellido.trim();
+
+      this.datosModificados.apellido = this.datosModificados.apellido.replace(/\s+/g, ' ');
   
       // Divide el apellido en palabras
       const palabras = this.datosModificados.apellido.split(' ');

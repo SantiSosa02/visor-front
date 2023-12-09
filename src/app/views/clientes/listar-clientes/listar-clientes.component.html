@@ -3,13 +3,13 @@
   <p-menubar class="mt-2 p-1">
     <ng-template pTemplate="start">
       <button pButton pRipple type="button" (click)="abrirCrearClienteModal()"
-        label="Success" class="p-button-success" icon="pi pi-plus"
+        label="Success" class="p-button-success responsive-icon-only" icon="pi pi-plus"
         label="Agregar cliente"></button>
-        <button  type="button" (click)="exportarExcel()" matTooltip="Descargar Excel"
+      <button  type="button" (click)="exportarExcel()" matTooltip="Descargar Excel"
         class="btn btn-success excel" 
         ><i class="fa-solid fa-file-excel"></i></button>
-    </ng-template>
-    <ng-template pTemplate="end">
+      </ng-template>
+        <ng-template pTemplate="end">
       <span class="p-input-icon-right">
         <input
           type="text"
