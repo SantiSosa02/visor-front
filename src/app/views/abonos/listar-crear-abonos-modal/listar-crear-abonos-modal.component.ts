@@ -109,7 +109,6 @@ export class ListarCrearAbonosModalComponent {
       (data) => {
         // Filtra los abonos relacionados con la venta específica (idventa)
         this.abonos = data.filter(abono => abono.idventa === idventa);
-        console.log(this.abonos)
         // Puedes realizar otras acciones aquí si es necesario
       },
       (error) => {
@@ -123,7 +122,6 @@ export class ListarCrearAbonosModalComponent {
       (data) => {
         // Filtra los abonos relacionados con la venta específica (idventa)
         this.ventas = data.filter(venta => venta.idventa === idventa);
-        console.log("Esta es la venta",this.ventas)
         // Puedes realizar otras acciones aquí si es necesario
       },
       (error) => {
