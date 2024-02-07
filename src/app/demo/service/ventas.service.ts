@@ -52,7 +52,6 @@ export class ApiVentasService {
 // public getAbonosRelacionados(saleId: number,token?:string): Observable<any[]> {
 //   const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
 //   const abonosUrl = `${this.baseUrl}/abonos-relacionados/${saleId}`;
-//   console.log('URL de abonos:', abonosUrl);
 //   return this.http.get<any[]>(abonosUrl, { headers });
 // }
 
@@ -99,7 +98,6 @@ public updateSaleState(saleId: number, newState: boolean,token?:string): Observa
 public getAbonosRelacionados(saleId: number,token?:string): Observable<any[]> {
   const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
   const abonosUrl = `${this.baseUrl}/abonos-relacionados/${saleId}`;
-  console.log('URL de abonos:', abonosUrl);
   return this.http.get<any[]>(abonosUrl, { headers });
 }
 

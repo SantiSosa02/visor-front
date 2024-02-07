@@ -160,6 +160,8 @@ export class ListarCategoriasComponent {
             icon: 'warning',
             confirmButtonText: 'OK',
             confirmButtonColor: '#3085d6',
+            allowOutsideClick: false,
+            allowEscapeKey: false
           }).then((result) => {
             if (result.isConfirmed) {
               category.estado = estadoAnterior;
@@ -174,6 +176,8 @@ export class ListarCategoriasComponent {
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#4CAF50',
             cancelButtonText: 'Cancelar',
+            allowOutsideClick: false,
+            allowEscapeKey: false
           }).then((result) => {
             if (result.isConfirmed) {
               // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"
@@ -248,7 +252,8 @@ actualizarTabla(): void {
   
   abrirCrearCategoriaModal() {
     this.modalRef = this.modalService.show(CrearCategoriasModalComponent,{
-      backdrop: 'static'
+      backdrop: 'static',
+      keyboard:false
     });
   }
 
@@ -264,7 +269,8 @@ actualizarTabla(): void {
   abrirModalDeEdicion(idcategoria: number) {
     const initialState = { categoryId: idcategoria };
     this.modalService.show(EditarCategoriasModalComponent, { initialState ,
-    backdrop: 'static' });
+    backdrop: 'static',
+    keyboard:false });
   }
 
   abrirModalDetalle(idcategoria: number) {

@@ -190,7 +190,6 @@ registrarAbono() {
   }).then((result) => {
     if (result.value) {
       // Si el usuario confirma, realiza el registro del abono
-      console.log('Haciendo clic en el botón de Registrar');
 
       const idventa = this.ventas.length > 0 ? this.ventas[0].idventa : null;
 
@@ -199,15 +198,11 @@ registrarAbono() {
 
         this.apiAbonosService.createPayment(this.abono,this.token).subscribe(
           (abono: any) => {
-            console.log('Respuesta del servidor:', abono);
             if (abono) {
-              console.log('Registro exitoso');
               // Actualizar la lista de abonos sin recargar la página
               this.obtenerAbonos(idventa,);
               this.submit();
               this.abono.valorabono = '';
-              console.log('ID del abono:', abono.idabono);
-              console.log('Fecha del abono:', abono.fechaabono);
             } else {
               console.error('Error al registrar el abono. La respuesta no tiene el formato esperado.');
             }

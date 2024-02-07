@@ -52,6 +52,9 @@ export class IndexComponent {
       }
     );
   }
+  
+
+  
 }
 
   // realizarPrediccion(productos: any[]) {

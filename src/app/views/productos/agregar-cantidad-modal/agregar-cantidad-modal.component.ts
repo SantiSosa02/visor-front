@@ -81,7 +81,6 @@ export class AgregarCantidadModalComponent {
       if (cantidad !== undefined) {
         this.cantidadActual = cantidad;
         this.actualizarCantidadTotal();
-        console.log(this.cantidadActual);
       } else {
         console.error('No se encontró la cantidad del producto con el ID proporcionado.');
       }

@@ -127,8 +127,10 @@ export class ListarUsuariosComponent {
         title: 'Advertencia',
         text: 'No puedes deshabilitar tu propia cuenta',
         icon: 'warning',
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#3085d6',
+        allowOutsideClick: false,
+        allowEscapeKey: false
       })
       .then((result) => {
         if (result.isConfirmed) {
@@ -149,6 +151,8 @@ export class ListarUsuariosComponent {
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#4CAF50',
         cancelButtonText: 'Cancelar',
+        allowOutsideClick: false,
+        allowEscapeKey: false
       }).then((result) => {
         if (result.isConfirmed) {
            // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"
@@ -214,6 +218,7 @@ export class ListarUsuariosComponent {
   abrirCrearUsuarioModal() {
    this.bsModalRef= this.modalService.show(CrearUsuarioModalComponent,{
     backdrop: 'static',
+    keyboard:false
    });
   }
 
@@ -231,7 +236,9 @@ export class ListarUsuariosComponent {
   abrirModalDeEdicion(idUsuario: number) {
     const initialState = { userId: idUsuario };
     this.modalService.show(EditarUsuarioModalComponent, { initialState,
-    backdrop: 'static' });
+    backdrop: 'static',
+    keyboard:false
+    });
   }
   
 

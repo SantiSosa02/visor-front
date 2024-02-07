@@ -387,13 +387,11 @@ export class ListarVentasComponent {
 
     this.apiVentas.getAbonosRelacionados(saleId, this.token).subscribe(
       (response: any) => {
-        console.log('Respuesta del servicio:', response);
 
         // Obtén la cantidad de abonos desde la respuesta
         const cantidadAbonos = response.length;
 
         // Agrega este console.log para verificar la cantidad de abonos
-        console.log('Cantidad de abonos:', cantidadAbonos);
 
         if (cantidadAbonos > 0) {
           Swal.fire({
@@ -402,6 +400,8 @@ export class ListarVentasComponent {
             icon: 'warning',
             confirmButtonText: 'OK',
             confirmButtonColor: '#3085d6',
+            allowOutsideClick: false,
+            allowEscapeKey: false
           })
             .then((result) => {
               if (result.isConfirmed) {
@@ -417,6 +417,8 @@ export class ListarVentasComponent {
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#4CAF50',
             cancelButtonText: 'Cancelar',
+            allowOutsideClick: false,
+            allowEscapeKey: false
           }).then((result) => {
             if (result.isConfirmed) {
               // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"
@@ -466,6 +468,8 @@ export class ListarVentasComponent {
             icon: 'warning',
             confirmButtonText: 'OK',
             confirmButtonColor: '#3085d6',
+            allowOutsideClick: false,
+            allowEscapeKey: false
           });
         }
       },
@@ -477,6 +481,8 @@ export class ListarVentasComponent {
           icon: 'error',
           confirmButtonText: 'OK',
           confirmButtonColor: '#d33',
+          allowOutsideClick: false,
+          allowEscapeKey: false
         });
       }
     );
@@ -558,7 +564,8 @@ export class ListarVentasComponent {
     const initialState = { ventaId: idventa };
     this.modalService.show(ListarCrearAbonosModalComponent, {
       initialState,
-      backdrop: 'static'
+      backdrop: 'static',
+      keyboard:false
     });
   }
 

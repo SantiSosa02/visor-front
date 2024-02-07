@@ -131,20 +131,24 @@ export class ListarClientesComponent {
 
   abrirCrearClienteModal() {
     this.bsModalRef= this.modalService.show(CrearClientesModalComponent,{
-      backdrop:'static'
+      backdrop:'static',
+      keyboard:false
     });
    }
 
    abrirModalDeEdicion(idcliente: number) {
     const initialState = { clientId: idcliente };
     this.modalService.show(EditarClientesModalComponent, { initialState,
-    backdrop:'static' });
+    backdrop:'static',
+    keyboard:false
+   });
   }
 
   abrirModalDetalle(idcliente: number) {
     const initialState = { clientId: idcliente };
     this.modalService.show(DetalleClienteComponent, { initialState,
-    backdrop:'static' });
+    backdrop:'static',
+    keyboard:false });
   }
 
   actualizarEstadoEnLista(clientId:number, newState:boolean){
@@ -175,6 +179,8 @@ export class ListarClientesComponent {
       confirmButtonText: 'Aceptar',
       confirmButtonColor: '#4CAF50',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false,
+      allowEscapeKey: false
     }).then((result) => {
       if (result.isConfirmed) {
         // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"

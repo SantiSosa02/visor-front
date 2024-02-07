@@ -26,9 +26,11 @@ export class PerfilUsuarioComponent {
 
   cerrarModal() {
     this.bsModalRef.onHidden.subscribe(() => {
+      
       // Esta función se ejecutará después de que el modal se haya ocultado completamente
     });
-    this.bsModalRef.hide();  // Cierra el modal
+    this.bsModalRef.hide(); 
+     // Cierra el modal
   }
 
 }

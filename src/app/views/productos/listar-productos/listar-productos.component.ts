@@ -114,6 +114,8 @@ export class ListarProductosComponent {
       confirmButtonText: 'Aceptar',
       confirmButtonColor: '#4CAF50',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false,
+      allowEscapeKey: false
     }).then((result) => {
       if (result.isConfirmed) {
         // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"
@@ -179,14 +181,18 @@ actualizarTabla(): void {
 
   abrirCrearProductoModal() {
    this.bsModalRef= this.modalService.show(CrearProductosModalComponent,{
-    backdrop:'static'});
+    backdrop:'static',
+    keyboard:false
+    });
   }
 
 
   abrirModalDeEdicion(idproducto: number) {
     const initialState = { productId: idproducto };
     this.modalService.show(EditarProductosModalComponent, { initialState,
-    backdrop:'static' });
+    backdrop:'static',
+    keyboard:false
+    });
   }
 
   abrirModalDetalle(idproducto: number) {
@@ -198,8 +204,9 @@ actualizarTabla(): void {
   abrirModalCantidad(idproducto: number) {
     const initialState = { productId: idproducto };
     this.modalService.show(AgregarCantidadModalComponent, { initialState,
-    backdrop: 'static' });
-    console.log(idproducto);
+    backdrop: 'static',
+    keyboard:false
+   }); 
   }
 
   cambiarFiltro(activos: boolean) {

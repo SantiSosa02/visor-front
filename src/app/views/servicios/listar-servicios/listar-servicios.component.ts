@@ -172,6 +172,8 @@ export class ListarServiciosComponent implements OnInit {
       confirmButtonText: 'Aceptar',
       confirmButtonColor: '#4CAF50',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false,
+      allowEscapeKey: false
     }).then((result) => {
       if (result.isConfirmed) {
         // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"
@@ -198,15 +200,18 @@ export class ListarServiciosComponent implements OnInit {
 
   abrirCrearServicioModal() {
     this.bsModalRef= this.modalService.show(CrearServiciosModalComponent,{
-      backdrop:'static'
+      backdrop:'static',
+      keyboard:false
     });
    }
 
    abrirModalDeEdicion(idservicio: number) {
     const initialState = { serviceId: idservicio };
     this.modalService.show(EditarServiciosModalComponent, { initialState,
-    backdrop:'static' });
-    console.log(idservicio)
+    backdrop:'static',
+    keyboard:false
+   });
+    //console.log(idservicio)
   }
 
   abrirModalDetalle(idservicio: number) {

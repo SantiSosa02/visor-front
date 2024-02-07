@@ -67,7 +67,6 @@ export class ApiCategoriaService {
 // public getProductosRelacioandos(id: number,token?:string): Observable<any[]> {
 //   const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
 //   const relacionadosUrl = `${this.baseUrl}/productos-relacionados/${id}`;
-//   console.log('URL de abonos:', relacionadosUrl);
 //   return this.http.get<any[]>(relacionadosUrl, { headers });
 // }
 
@@ -130,7 +129,6 @@ public verificarNombreExistente(nombre: string, token?:string): Observable<any> 
 public getProductosRelacioandos(id: number,token?:string): Observable<any[]> {
   const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
   const relacionadosUrl = `${this.baseUrl}/productos-relacionados/${id}`;
-  console.log('URL de abonos:', relacionadosUrl);
   return this.http.get<any[]>(relacionadosUrl, { headers });
 }
 
