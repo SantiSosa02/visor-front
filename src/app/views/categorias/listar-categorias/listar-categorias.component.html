@@ -1,10 +1,10 @@
 <div class="card card-w-title">
-  <h4>Categorias</h4>
+  <h4>Categorías</h4>
   <p-menubar class="mt-2 p-1">
     <ng-template pTemplate="start">
       <button pButton pRipple type="button" (click)="abrirCrearCategoriaModal()"
         class="p-button-success responsive-icon-only" icon="pi pi-plus"
-        label="Agregar categoria">
+        label="Agregar categoría">
    
       </button>
     </ng-template>
@@ -13,7 +13,7 @@
         <input
           type="text"
           class="form-control icono ancho-personalizado"
-          placeholder="Buscar categoria"
+          placeholder="Buscar categoría"
           [(ngModel)]="busqueda"
           (input)="actualizarTabla()">
         <i class="pi pi-search"></i>

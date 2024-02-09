@@ -95,16 +95,16 @@ export class LoginComponent {
    }
   
   
-  login() {
+   login() {
     const correo = (document.getElementById('correo') as HTMLInputElement).value;
     const contrasena = (document.getElementById('contrasena') as HTMLInputElement).value;
-    
+      
     if (!correo || !contrasena) {
-      console.error('Credenciales invalidas.');
-      this.errorMessages.credenciales='Credenciales invalidas.';
-      setTimeout(() =>{
-        this.errorMessages.credenciales=''
-      },2000)
+      console.error('Credenciales inválidas.');
+      this.errorMessages.credenciales = 'Credenciales inválidas.';
+      setTimeout(() => {
+        this.errorMessages.credenciales = '';
+      }, 2000);
       return;
     }
   
@@ -125,22 +125,30 @@ export class LoginComponent {
           console.log('No autorizado - Redireccionando a la página de inicio de sesión...');
           this.errorMessages.credenciales = 'Usuario o contraseña incorrectos.';
         } else if (error.errorType === 'inactiveUser') {
-         
           this.errorMessages.credenciales = 'El usuario está inactivo.'; 
           setTimeout(() =>{
-            this.errorMessages.credenciales=''
-          },2000)
+            this.errorMessages.credenciales = '';
+          }, 2000);
+        } else if (error.errorType === 'notRegisteredUser') {
+          // Mostrar mensaje cuando el usuario no está registrado
+          this.errorMessages.credenciales = error.message; 
+          setTimeout(() =>{
+            this.errorMessages.credenciales = '';
+          }, 2000);
         } else {
           // Manejo de otros casos de error
-          this.errorMessages.credenciales = 'Credenciales invalidas.';
+          this.errorMessages.credenciales = 'Credenciales inválidas.';
           setTimeout(() => {
             this.errorMessages.credenciales = '';
           }, 2000);
         }
       },
     });
-    
   }
+  
+  
+  
+  
   
 
   forgotPassword(form: NgForm) {

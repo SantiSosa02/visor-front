@@ -108,7 +108,7 @@ export class CrearVentaComponent {
   
     // Elimina la letra "e" si está presente
     inputValue = inputValue.replace(/e/gi, '');
-    console.log(typeof inputValue);
+//console.log(typeof inputValue);
     // Aplica la validación de números mayores a 0
     const validacion = /^[1-9][0-9]*$/;
     if (inputValue && !validacion.test(inputValue) ||+inputValue > 50) {
@@ -146,7 +146,7 @@ export class CrearVentaComponent {
             this.errorMessages.cantidad = 'La cantidad ingresada es mayor que la cantidad actual.';
             this.camposValidos=false;
           } else {
-            console.log('La cantidad ingresada es válida.');
+            //console.log('La cantidad ingresada es válida.');
             this.camposValidos=true;
           }
         },
@@ -164,7 +164,7 @@ export class CrearVentaComponent {
   
     // Elimina la letra "e" si está presente
     inputValue = inputValue.replace(/e/gi, '');
-    console.log(typeof inputValue);
+   // console.log(typeof inputValue);
     // Verifica si el campo está vacío y elimina el mensaje de error
     if (inputValue.trim() === '') {
       this.errorMessages.precio = '';
@@ -552,15 +552,15 @@ obtenerPrecioProducto() {
 }
 
 registrarVenta() {
-  console.log('Haciendo clic en el botón de Registrar');
+ // console.log('Haciendo clic en el botón de Registrar');
  
   this.apiVentas.createSale(this.sale,this.token).subscribe(
     (response) => {
-      console.log('Respuesta del servidor:', response);
+      //console.log('Respuesta del servidor:', response);
       if (response && response.status === 'success') {
-        console.log('Registro exitoso');
+       // console.log('Registro exitoso');
         if (response.sale) {
-          console.log('Datos del producto:', response.sale); // Actualiza el mensaje aquí
+         // console.log('Datos del producto:', response.sale); // Actualiza el mensaje aquí
           this.submit();
         }
    

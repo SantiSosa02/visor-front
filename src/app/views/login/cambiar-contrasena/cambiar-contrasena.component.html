@@ -58,6 +58,11 @@
                   </div>
               </div>
           </div>
+          <div class="eye-icon col-2 check" (click)="toggleConfirmPasswordVisibility()">
+            <i class="fa-solid fa-eye" *ngIf="showConfirmPassword"></i>
+            <i class="fa-solid fa-eye-slash" *ngIf="!showConfirmPassword"></i>
+          </div>
+          
           <div class="contenedor-botones">
             <button pButton pRipple type="button" class="p-button-success boton-registrar" 
             [disabled]="!camposValidos || !camposCompletos()"

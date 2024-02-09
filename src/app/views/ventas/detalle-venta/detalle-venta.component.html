@@ -1,141 +1,150 @@
 
 <div class="card">
-    <div class="modal-header">
-        <h4>Detalle  venta</h4>
-    </div>
-    <div class="modal-body">
-        <form class="row g-4 mb-3">
+  <div class="modal-header">
+    <h4>Detalle venta</h4>
+  </div>
+  <div class="modal-body">
+    <form class="row g-4 mb-3">
 
-            <div class="col-2 mt-3">
-                <div class="input-container">
-                    <label for="name">Numero Factura</label>
-                    <input
-                        type="number"
-                        name="numerofactura"
-                        id="numerofactura"
-                        class="form-control"
-                        [(ngModel)]="datosModificados.numerofactura"
-                        disabled>
+      <div class="col-2 mt-3">
+        <div class="input-container">
+          <label for="name">Numero Factura</label>
+          <input
+            type="number"
+            name="numerofactura"
+            id="numerofactura"
+            class="form-control"
+            [(ngModel)]="datosModificados.numerofactura"
+            disabled>
 
-                </div>
-            </div>
+        </div>
+      </div>
 
-            <div class="col-2 mt-5">
-                <div class="input-container">
+      <div class="col-2 mt-5">
+        <div class="input-container">
 
-                    <input
-                        type="date"
-                        name="fecha"
-                        id="fecha"
-                        class="form-control"
-                        [(ngModel)]="datosOriginales.fecha"
-                        disabled>
-                    <label for="name" class="input-label">Fecha</label>
-                </div>
-            </div>
+          <input
+            type="date"
+            name="fecha"
+            id="fecha"
+            class="form-control"
+            [(ngModel)]="datosOriginales.fecha"
+            disabled>
+          <label for="name" class="input-label">Fecha</label>
+        </div>
+      </div>
 
-            <div class="col-3 mt-5">
-                <div class="select-metodopago">
-                  <label for="estadopago">Estado de pago</label>
-                  <select id="estadopago" 
-                  name="estadopago" 
-                  [(ngModel)]="datosModificados.estadopago" 
-                  class="form-select" 
-                  disabled>
-                    <option  [value]="datosModificados.estadopago">{{ datosModificados.estadopago }}</option>
-                  </select>
-                </div>
-              </div>
+      <div class="col-3 mt-5">
+        <div class="select-metodopago">
+          <label for="estadopago">Estado de pago</label>
+          <select id="estadopago"
+            name="estadopago"
+            [(ngModel)]="datosModificados.estadopago"
+            class="form-select"
+            disabled>
+            <option [value]="datosModificados.estadopago">{{
+              datosModificados.estadopago }}</option>
+          </select>
+        </div>
+      </div>
 
-            <div class="col-3 mt-5">
-                <div class="select-metodopago">
-                    <label for="cliente">Metodo de pago</label>
-                    <select
-                        id="metodopago"
-                        name="metodopago"
-                        [(ngModel)]="datosModificados.metodopago"
-                        class="form-select" disabled>
+      <div class="col-3 mt-5">
+        <div class="select-metodopago">
+          <label for="cliente">Metodo de pago</label>
+          <select
+            id="metodopago"
+            name="metodopago"
+            [(ngModel)]="datosModificados.metodopago"
+            class="form-select" disabled>
 
-                        <option  [value]="datosModificados.metodopago">{{ datosModificados.metodopago }}</option>
-                       
-                    </select>
+            <option [value]="datosModificados.metodopago">{{
+              datosModificados.metodopago }}</option>
 
-                </div>
-            </div>
+          </select>
 
-            <div class="col-3 mt-5">
-                <div class="select-cliente">
-                    <label for="cliente">Cliente</label>
-                    <select
-                        id="cliente"
-                        name="idcliente"
-                        [(ngModel)]="datosModificados.idcliente"
-                        class="form-select" disabled>
-                        <option *ngFor="let cliente of clientes" [value]="cliente.idcliente">{{ cliente.nombre +" "+ cliente.apellido }}</option>
-                    </select>
+        </div>
+      </div>
 
-                </div>
-            </div>
+      <div class="col-3 mt-5">
+        <div class="select-cliente">
+          <label for="cliente">Cliente</label>
+          <select
+            id="cliente"
+            name="idcliente"
+            [(ngModel)]="datosModificados.idcliente"
+            class="form-select" disabled>
+            <option *ngFor="let cliente of clientes"
+              [value]="cliente.idcliente">{{ cliente.nombre +" "+
+              cliente.apellido }}</option>
+          </select>
 
-            <div class="contenedor-ps">
-                <h4>Prodcutos y servicios</h4>
-            </div>
-            <div class="contenedor-tabla">
-            <table class="table align-middle text-nowrap tabla-con-bordes">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Subtotal</th>
-                    <th scope="col">Tipo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <ng-container *ngFor="let detalle of productosAgregados; let i = index">
-                    <tr>
-                      <!-- Detalles del producto -->
-                      <td>{{ i + 1 }}</td>
-                      <td>{{ detalle.nombre }}</td>
-                      <td>{{ detalle.cantidad }}</td>
-                      <td>{{ detalle.precio | currency:'':'symbol':'1.0-0' }}</td>
-                      <td>{{ detalle.subtotal | currency:'':'symbol':'1.0-0' }}</td>
-                      <td>{{ detalle.tipo }}</td>
-                    </tr>
-                  </ng-container>
-              
-                  <ng-container *ngFor="let detalle of serviciosAgregados; let i = index">
-                    <tr>
-                      <!-- Detalles del servicio -->
-                      <td>{{ i + 1 }}</td>
-                      <td>{{ detalle.nombre }}</td>
-                      <td>{{ detalle.cantidad }}</td>
-                      <td>{{ detalle.precio | currency:'USD':'symbol':'1.2-2' }}</td>
-                      <td>{{ detalle.subtotal | currency:'USD':'symbol':'1.2-2' }}</td>
-                      <td>{{ detalle.tipo }}</td>
-                    </tr>
-                  </ng-container>
-              
-                </tbody>
-              </table>
-            </div>
+        </div>
+      </div>
 
-            <div class="col-12 mt-3">
-              <label for="total" class="total-label">Total:</label>
-              <input id="total" type="text" class="total-input" [value]="datosOriginales.valortotal | currency:'USD':'symbol':'1.2-2'" readonly>
-          </div>
+      <div class="contenedor-ps">
+        <h4>Prodcutos y servicios</h4>
+      </div>
+      <div class="contenedor-tabla">
+        <table class="table align-middle text-nowrap tabla-con-bordes">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Subtotal</th>
+              <th scope="col">Tipo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container
+              *ngFor="let detalle of productosAgregados; let i = index">
+              <tr>
+                <!-- Detalles del producto -->
+                <td>{{ i + 1 }}</td>
+                <td>{{ detalle.nombre }}</td>
+                <td>{{ detalle.cantidad }}</td>
+                <td>$ {{ detalle.precio.toLocaleString('es-ES') }}</td>
+                <td>$ {{ detalle.subtotal.toLocaleString('es-ES')}}</td>
+                <td>{{ detalle.tipo }}</td>
+              </tr>
+            </ng-container>
 
-            <div class="botones mt-4">
+            <ng-container
+              *ngFor="let detalle of serviciosAgregados; let i = index">
+              <tr>
+                <!-- Detalles del servicio -->
+                <td>{{ i + 1 }}</td>
+                <td>{{ detalle.nombre }}</td>
+                <td>{{ detalle.cantidad }}</td>
+                <td>$ {{ detalle.precio.toLocaleString('es-ES') }}</td>
+                <td>$ {{ detalle.subtotal.toLocaleString('es-ES')
+                  }}</td>
+                <td>{{ detalle.tipo }}</td>
+              </tr>
+            </ng-container>
 
-                <button
-                pButton pRipple type="button"
-                class="p-button-secondary boton-cerrar"
-                    (click)="volverPaginaAnterior()">
-                    Cerrar
-                </button>
-            </div>
-        </form>
-    </div>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-12 mt-3">
+        <label for="total" class="total-label">Total: $</label>
+        <input id="total" type="text" class="total-input"
+          [value]="datosOriginales.valortotal.toLocaleString('es-ES')"
+          readonly>
+      </div>
+
+      <div class="botones mt-4">
+
+        <button
+          pButton pRipple type="button"
+          class="p-button-secondary boton-cerrar"
+          (click)="volverPaginaAnterior()">
+          Cerrar
+        </button>
+      </div>
+    </form>
+  </div>
 
 </div>

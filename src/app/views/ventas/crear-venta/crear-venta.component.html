@@ -305,10 +305,8 @@
                             <td>{{ i + 1 }}</td>
                             <td>{{ detalle.nombre }}</td>
                             <td>{{ detalle.cantidad }}</td>
-                            <td>{{ detalle.precio | currency:'':'symbol':'1.0-0'
-                                }}</td>
-                            <td>{{ detalle.subtotal | currency:'':'symbol':'1.0-0'
-                                }}</td>
+                            <td>$ {{ detalle.precio.toLocaleString('es-ES') }}</td>
+                            <td>$ {{ detalle.subtotal.toLocaleString('es-ES') }}</td>
                             <td>{{ detalle.tipo }}</td>
                             <td>
                                 <button class="btn btn-danger boton-clean"
@@ -325,9 +323,9 @@
                             <td>{{ i + 1 }}</td>
                             <td>{{ detalle.nombre }}</td>
                             <td>{{ detalle.cantidad }}</td>
-                            <td>{{ detalle.precio | currency:'USD':'symbol':'1.2-2'
+                            <td>$ {{ detalle.precio.toLocaleString('es-ES')
                                 }}</td>
-                            <td>{{ detalle.subtotal | currency:'USD':'symbol':'1.2-2'
+                            <td>$ {{ detalle.subtotal.toLocaleString('es-ES')
                                 }}</td>
                             <td>{{ detalle.tipo }}</td>
                             <td>
@@ -343,8 +341,8 @@
         </div>
 
         <div class="col-12 mt-3">
-            <label for="total" class="total-label">Total:</label>
-            <input id="total" type="text" class="total-input" [value]="sale.valortotal | currency:'USD':'symbol':'1.2-2'" readonly>
+            <label for="total" class="total-label">Total: $ </label>
+            <input id="total" type="text" class="total-input" [value]="sale.valortotal.toLocaleString('es-ES')" readonly>
         </div>
 
             <div class="botones mt-4">

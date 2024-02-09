@@ -83,7 +83,6 @@ export class RecuperarComponent {
    forgotPassword(form: NgForm) {
     // Obtener el valor del campo de correo del formulario
     const correo = form.value.correo;
-    console.log(correo);
   
     // Cambiar el estado de loading antes de llamar al servicio
     this.loading = true;
@@ -91,7 +90,6 @@ export class RecuperarComponent {
     // Llamar al servicio para solicitar el restablecimiento de contraseña
     this.apiUsuarios.forgotPassword({ correo }).subscribe(
       (response) => {
-        console.log('Respuesta del servidor para recuperar contraseña:', response);
         if (response.message) {
           // Asignar el mensaje de éxito a una propiedad en tu componente
           this.errorMessages.recuperar = response.message;

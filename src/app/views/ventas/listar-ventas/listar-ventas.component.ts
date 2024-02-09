@@ -659,19 +659,25 @@ export class ListarVentasComponent {
   }
 
   obtenerSumaVentasActivasUltimoMes() {
-    const fechaFin = new Date();
-    const fechaInicio = new Date();
-    fechaInicio.setMonth(fechaInicio.getMonth() - 1);
-    // console.log(fechaInicio)
-    // console.log(fechaFin)
-
+    // Obtiene la fecha actual
+    const fechaActual = new Date();
+  
+    // Obtiene el primer día del mes actual
+    const primerDiaMesActual = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
+  
+    // Obtiene el último día del mes actual
+    const ultimoDiaMesActual = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0);
+  
+    // Llama a la API para obtener las ventas activas
     this.apiVentas.getVentasActivos(this.token).subscribe(
       (ventas: any[]) => {
-        const ventasUltimoMes = ventas.filter(venta =>
-          new Date(venta.fecha) >= fechaInicio && new Date(venta.fecha) <= fechaFin
+        // Filtra las ventas del mes actual
+        const ventasMesActual = ventas.filter(venta =>
+          new Date(venta.fecha) >= primerDiaMesActual && new Date(venta.fecha) <= ultimoDiaMesActual
         );
-
-        this.sumaVentasActivasUltimoMes = ventasUltimoMes.reduce((total, venta) => total + venta.valortotal, 0);
+  
+        // Suma las ventas del mes actual
+        this.sumaVentasActivasUltimoMes = ventasMesActual.reduce((total, venta) => total + venta.valortotal, 0);
       },
       (error) => {
         console.error('Error al obtener las ventas activas:', error);

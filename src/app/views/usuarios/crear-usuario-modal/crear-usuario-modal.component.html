@@ -101,10 +101,10 @@
                 <i class="fa-solid fa-eye" *ngIf="showPassword"></i>
                 <i class="fa-solid fa-eye-slash" *ngIf="!showPassword"></i>
               </div>
-            <div class="col-12 mt-4">
+            <div class="col-10 mt-4">
                 <div class="input-container">
                 <input
-                    type="password"
+                    [type]="showConfirmPassword ? 'text' : 'password'"
                     id="confirmContrasena"
                     name="confirmContrasena"
                     [(ngModel)]="confirmarContrasena"
@@ -122,6 +122,10 @@
                 </div>
             </div>
             </div>
+            <div class="eye-icon col-2 check" (click)="toggleConfirmPasswordVisibility()">
+                <i class="fa-solid fa-eye" *ngIf="showConfirmPassword"></i>
+                <i class="fa-solid fa-eye-slash" *ngIf="!showConfirmPassword"></i>
+              </div>
 
             <div class="botones mt-4">
                 <button pButton pRipple type="button"

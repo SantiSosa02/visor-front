@@ -44,11 +44,11 @@
 
                                 <input id="valorRestante" type="text"
                                     class="form-control"
-                                    [value]="calcularValorRes() | currency:'':'symbol':'1.0-0'"
+                                    [value]="calcularValorRes().toLocaleString('es-ES')"
                                     disabled>
                                 <label for="valorRestante"
                                     class="input-label">Valor Restante
-                                    Total:</label>
+                                    Total: $</label>
                             </div>
                         </div>
 
@@ -109,7 +109,7 @@
                                 <tr *ngFor="let item of abonos; let i = index">
                                     <td scope="row">{{ i + 1 }}</td>
                                     <td>{{ item.fechaabono }}</td>
-                                    <td>{{ item.valorabono | currency:'':'symbol':'1.0-0'}}</td>
+                                    <td>$ {{ item.valorabono.toLocaleString('es-ES')}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -117,10 +117,10 @@
                     <br>
                     <div class="valor-restante">
                         <label for="valorRestante" class="valor-restante-label">Valor
-                            Restante Total:</label>
+                            Restante Total: $</label>
                         <input id="valorRestante" type="text"
                             class="valor-restante-input"
-                            [value]="calcularValorRestanteTotal() | currency:'':'symbol':'1.0-0'"
+                            [value]="calcularValorRestanteTotal().toLocaleString('es-ES')"
                             readonly>
                     </div>
 

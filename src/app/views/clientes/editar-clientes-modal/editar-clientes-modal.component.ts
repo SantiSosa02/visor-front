@@ -242,7 +242,7 @@ export class EditarClientesModalComponent {
   submit(){
     if(!this.loading){
       this.loading=true;
-      this.toastr.success('Cliente actualizado con exito', 'Exito', { progressBar:true, timeOut:1000});
+      this.toastr.success('Cliente actualizado con exito', 'Exito', { progressBar:true, timeOut:2000});
       this.cerrarModal();
       this.reloadComponent();
       // setTimeout(() => {

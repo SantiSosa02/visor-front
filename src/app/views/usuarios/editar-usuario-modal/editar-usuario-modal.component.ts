@@ -321,7 +321,7 @@ submit() {
     this.loading = true;
 
     // Cambia el tiempo de duración del mensaje del Toastr a 1000 ms (1 segundo)
-    this.toastr.success('Empleado registrado con éxito.', 'Éxito', { progressBar: true, timeOut: 2000 });
+    this.toastr.success('Empleado actualizado con éxito.', 'Éxito', { progressBar: true, timeOut: 2000 });
     this.cerrarModal();
     this.reloadComponent();
   }

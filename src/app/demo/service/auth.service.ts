@@ -59,25 +59,28 @@ export class AuthService {
     let errorMessage = 'Error durante el inicio de sesión'; // Mensaje predeterminado
   
     if (error instanceof HttpErrorResponse) {
-      console.error('HTTP Error:', error.status, error.statusText);
   
       if (error.status === 400) {
         // Verificar si el mensaje de error es por "El usuario está inactivo."
         if (error.error && error.error.error === 'El usuario está inactivo.') {
-            // Puedes retornar un objeto con información adicional
-            return throwError({
-                message: error.error.error,
-                errorType: 'inactiveUser', // Añadimos un tipo para identificar el error
-            });
+          // Puedes retornar un objeto con información adicional
+          return throwError({
+            message: error.error.error,
+            errorType: 'inactiveUser', // Añadimos un tipo para identificar el error
+          });
         }
-    }
+      } else if (error.status === 404) {
+        // Usuario no registrado
+        return throwError({
+          message: 'El usuario no está registrado.',
+          errorType: 'notRegisteredUser', // Añadimos un tipo para identificar el error
+        });
+      }
   
       if (error.status === 401) {
-        console.log('No autorizado - Redireccionando a la página de inicio de sesión...');
         errorMessage = 'Usuario o contraseña incorrectos.';
       }
     } else if (error && error.error && error.error.error) {
-      console.error('Server Error:', error.error.error);
       errorMessage = error.error.error;
     } else {
       console.error('Se produjo un error inesperado:', error);
@@ -85,6 +88,7 @@ export class AuthService {
   
     return throwError(() => errorMessage);
   }
+  
   
 
   checkAuthStatus(): Observable<User | null> {

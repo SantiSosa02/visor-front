@@ -249,11 +249,14 @@ cerrarModal() {
       this.loading = true;
   
       // Cambia el tiempo de duración del mensaje del Toastr a 1000 ms (1 segundo)
-      this.toastr.success('Producto registrada con éxito.', 'Éxito', { progressBar: true, timeOut: 2000 });
+      this.toastr.success('Producto registrado con éxito.', 'Éxito', { progressBar: true, timeOut: 2000 });
       this.cerrarModal();
       this.reloadComponent();
 
     }
   }
+
+
+  
 
 }

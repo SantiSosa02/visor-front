@@ -21,8 +21,8 @@
       </span>
     </ng-template>
   </p-menubar>
-  <div class="col-12 col-lg-4 mt-3 informe">
-    <label for="total" class="total-label text-center">Informe de Ventas del Último Mes:</label>
+  <div class="col-12 col-lg- mt-3 informe">
+    <label for="total" class="total-label text-center">Total ventas del último mes:</label>
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text">$</span>
@@ -31,7 +31,7 @@
         id="total"
         type="text"
         class="form-control total-input"
-        [value]="sumaVentasActivasUltimoMes | currency:'USD':'symbol':'1.2-2' | slice:1"
+        [value]="sumaVentasActivasUltimoMes.toLocaleString('es-ES')"
         disabled
       >
     </div>
@@ -69,7 +69,7 @@
           <td>{{item.idcliente}}</td>
           <td>{{item.fecha}}</td>
           <td>{{item.metodopago}}</td>
-          <td>{{ item.valortotal | currency:'':'symbol':'1.0-0' }}</td>
+          <td>$ {{ item.valortotal.toLocaleString('es-ES')}}</td>
 
           <td>
             <div
