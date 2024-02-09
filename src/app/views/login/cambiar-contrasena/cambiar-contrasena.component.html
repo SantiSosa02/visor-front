@@ -38,7 +38,8 @@
             <div class="col-10">
               <div class="input-container mt-3">
 
-                <input type="password"
+                <input 
+                [type]="showConfirmPassword ? 'text' : 'password'"
                 name="confirmarContrasena"
                 id="confirmarContrasena"
                 class="form-control"
@@ -62,7 +63,7 @@
             <i class="fa-solid fa-eye" *ngIf="showConfirmPassword"></i>
             <i class="fa-solid fa-eye-slash" *ngIf="!showConfirmPassword"></i>
           </div>
-          
+
           <div class="contenedor-botones">
             <button pButton pRipple type="button" class="p-button-success boton-registrar" 
             [disabled]="!camposValidos || !camposCompletos()"
