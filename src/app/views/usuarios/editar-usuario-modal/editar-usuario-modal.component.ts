@@ -49,7 +49,7 @@ camposValidos:boolean=false;
     private toastr: ToastrService,
     private router : Router,
     public bsModalRef: BsModalRef,
-    private cookieService : CookieService
+    private cookieService : CookieService,
     ) 
     {
     this.route.params.subscribe(params => {

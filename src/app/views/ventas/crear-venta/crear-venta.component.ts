@@ -37,7 +37,9 @@ export class CrearVentaComponent {
     fecha:new Date().toISOString().split('T')[0],
     metodopago:'',
     estadopago:'',
+    tipopago:'',
     valortotal:'',
+    oberservacion:'',
     detalleProductos:[],
     detalleServicios:[]
   }
@@ -47,10 +49,11 @@ export class CrearVentaComponent {
     'Transferencia'
   ]
 
-  estadosPago=[
+  tiposPago=[
     'Contado',
     'Credito'
   ]
+
 
   clientes: any[] = [];
   categorias: any[] = [];
@@ -79,6 +82,7 @@ export class CrearVentaComponent {
   camposValidos:boolean=false;
   token=localStorage.getItem('token');
   
+  
   errorMessages={
     cantidad:'',
     precio:''
@@ -93,9 +97,21 @@ export class CrearVentaComponent {
 
   }
 
+  setEstadoPago() {
+    if (this.sale.tipopago === 'Contado') {
+      this.sale.estadopago = 'Pagado';
+    } else if (this.sale.tipopago === 'Credito') {
+      this.sale.estadopago = 'Pendiente';
+    }
+  }
+  
+  formatNumber(num: number): string {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+  
   camposCompletos(): boolean {
     return (
-      !!this.sale.estadopago &&
+      !!this.sale.tipopago &&
       !!this.sale.metodopago &&
       !!this.sale.idcliente &&
       (this.sale.detalleProductos.length > 0 || this.sale.detalleServicios.length > 0)
@@ -164,30 +180,31 @@ export class CrearVentaComponent {
   
     // Elimina la letra "e" si está presente
     inputValue = inputValue.replace(/e/gi, '');
-   // console.log(typeof inputValue);
-    // Verifica si el campo está vacío y elimina el mensaje de error
-    if (inputValue.trim() === '') {
-      this.errorMessages.precio = '';
-      this.camposValidos=false;
-    } else {
-      // Convierte el valor a un número
-      const numericValue = parseInt(inputValue.replace(/[^\d.-]/g, ''), 10);
   
-      if (!isNaN(numericValue) && numericValue >= 1000 && numericValue <= 500000) {
-        // Si el valor es numérico y cumple con los límites, no muestra ningún formato
-        this.errorMessages.precio = '';
-        this.camposValidos=true;
-      } else {
-        this.errorMessages.precio = 'El precio de venta debe ser un número válido  (mayor o igual a 1.000 y menor que 500.000).';
-        this.camposValidos=false;
-      }
+    // Remueve los separadores de miles (puntos)
+    inputValue = inputValue.replace(/\./g, '');
+  
+    // Verifica si el campo está vacío
+    if (!inputValue.trim()) {
+      // Si el campo está vacío, no muestra ningún mensaje de error
+      this.errorMessages.precio = '';
+      this.camposValidos = true;
+      return; // Sale de la función
     }
   
-    // Asigna el valor limpio nuevamente al campo de entrada
-    inputElement.value = inputValue;
+    // Convierte el valor a un número
+    const numericValue = parseFloat(inputValue);
   
-    // También actualiza la propiedad vinculada al modelo de datos
-
+    // Verifica si el valor está dentro de los límites
+    if (numericValue >= 1000 && numericValue <= 600000) {
+      // Si el valor está dentro de los límites, no muestra ningún mensaje de error
+      this.errorMessages.precio = '';
+      this.camposValidos = true;
+    } else {
+      // Si el valor está fuera de los límites, muestra un mensaje de error
+      this.errorMessages.precio = 'El precio de venta debe estar entre 1.000 y 600.000';
+      this.camposValidos = false;
+    }
   }
   
   eliminarProducto(index: number) {
@@ -552,18 +569,15 @@ obtenerPrecioProducto() {
 }
 
 registrarVenta() {
- // console.log('Haciendo clic en el botón de Registrar');
- 
-  this.apiVentas.createSale(this.sale,this.token).subscribe(
+  // Modifica el objeto this.sale para que el campo observacion esté presente pero sin valor asignado
+  this.sale.observacion = null; // o '' si prefieres que esté vacío en lugar de nulo
+
+  this.apiVentas.createSale(this.sale, this.token).subscribe(
     (response) => {
-      //console.log('Respuesta del servidor:', response);
       if (response && response.status === 'success') {
-       // console.log('Registro exitoso');
         if (response.sale) {
-         // console.log('Datos del producto:', response.sale); // Actualiza el mensaje aquí
           this.submit();
         }
-   
       } else {
         this.submit();
       }
@@ -573,6 +587,7 @@ registrarVenta() {
     }
   );
 }
+
 
 reloadComponent() {
   const currentRoute = this.router.url;

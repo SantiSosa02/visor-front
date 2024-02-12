@@ -30,3 +30,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 10px;
 }
 
+/* app.menu.component.scss */
+
+.layout-menu a {
+  text-decoration: none; /* Elimina el subrayado de todos los enlaces dentro de .layout-menu */
+}
+
+

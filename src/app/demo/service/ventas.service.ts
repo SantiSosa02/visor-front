@@ -83,10 +83,25 @@ private baseUrl='https://api-postgress.onrender.com/api/ventas'
     return this.http.get<any>(getSaleUrl, { headers });
   }
 
+  public getObservacionId(saleId: number,token?:string): Observable<any> {
+    const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
+    const getObservacionUrl = `${this.baseUrl}/ver-observacion/${saleId}`;
+    return this.http.get<any>(getObservacionUrl, { headers });
+  }
+
   public createSale(sale: any,token?:string): Observable<any> {
     const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
     return this.http.post(this.baseUrl, sale, { headers });
  }
+
+ public createObservacion(saleId: number, obser: string, token?: string): Observable<any> {
+  const headers = token ? new HttpHeaders().set('x-token', token) : undefined;
+  const url = `${this.baseUrl}/observacion/${saleId}`;
+  const body = {observacion : obser}
+  return this.http.put(url, body, { headers });
+}
+
+
 
 public updateSaleState(saleId: number, newState: boolean,token?:string): Observable<any> {
   const headers = token ? new HttpHeaders().set('x-token', token) : undefined;

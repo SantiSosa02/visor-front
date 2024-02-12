@@ -21,7 +21,7 @@
       </span>
     </ng-template>
   </p-menubar>
-  <div class="col-12 col-lg- mt-3 informe">
+  <div class="col-12 col-lg-4 mt-3 informe">
     <label for="total" class="total-label text-center">Total ventas del último mes:</label>
     <div class="input-group">
       <div class="input-group-prepend">
@@ -45,20 +45,24 @@
     <table class="table align-middle text-nowrap">
       <thead>
         <tr>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">N Factura</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Cliente</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Fecha</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">M Pago</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">V total</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Estado
+          <th class="text-dark " style="width: 250px;">Factura</th>
+          <th class="text-dark " style="width: 250px;">Cliente</th>
+          <th class="text-dark " style="width: 250px;">Fecha</th>
+          <th class="text-dark " style="width: 250px;">M Pago</th>
+          <th class="text-dark " style="width: 250px;">V total</th>
+          <th class="text-dark " style="width: 250px;">Estado
             pago</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">
+            <th class="text-dark " style="width: 250px;">Tipo
+              pago</th>
+          <th class="text-dark " style="width: 250px;">
             Estado
-            <i class="fa-solid fa-filter" matTooltip="Filtrar"
-              (click)="cambiarFiltro(!filtroActivo)"
-              [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}"></i>
+            <i class="fa-solid fa-filter"
+                (click)="cambiarFiltro(!filtroActivo)"
+                [matTooltip]="filtroActivo ? 'Ver ventas anuladas' : 'Ver ventas activas'"
+                [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}">
+            </i>
           </th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Acciones</th>
+          <th class="text-dark" style="width: 250px;">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -70,14 +74,18 @@
           <td>{{item.fecha}}</td>
           <td>{{item.metodopago}}</td>
           <td>$ {{ item.valortotal.toLocaleString('es-ES')}}</td>
-
+          
           <td>
-            <div
-              [ngClass]="{'estado-pago': item.estadopago === 'Credito', 'estado-container': item.estadopago === 'Contado', 'circulo-amarillo': item.estadopago === 'Credito', 'circulo-verde': item.estadopago === 'Contado'}"
-              style="font-weight: bold;">
+            <div [ngClass]="{
+              'estado-pago': item.estadopago === 'Pendiente' || item.estadopago === 'En proceso',
+              'estado-container': item.estadopago === 'Contado',
+              'circulo-amarillo': item.estadopago === 'Pendiente' || item.estadopago === 'En proceso',
+              'circulo-verde': item.estadopago === 'Pagado'
+            }" style="font-weight: bold;">
               {{ item.estadopago }}
-            </div>
+            </div> 
           </td>
+          <td>{{item.tipopago}}</td>
 
           <td class="estado-column">
             <div
@@ -101,12 +109,19 @@
                 </button>
               </div>
               <div class="boton-abono"
-                *ngIf="item.estadopago === 'Credito' && item.estado">
+                *ngIf="item.tipopago === 'Credito' && item.estado">
                 <button (click)="abrirModalAbonos(item.idventa)"
                   matTooltip="Agregar abono" pButton pRipple type="button"
                   icon="pi pi-wallet" class="p-button-rounded p-button-info">
                 </button>
               </div>
+              <div class="boton-observacion"
+              *ngIf="!item.estado">
+              <button (click)="mostrarObservacion(item.idventa)"
+                matTooltip="Ver observación" pButton pRipple type="button"
+                icon="pi pi-comment" class="p-button-rounded p-button-info">
+              </button>
+            </div>
               <div class="boton-switch align-items-center">
                 <label class="switch"
                   matTooltip="{{ item.estado ? 'Desactivar' : 'Activar' }}">

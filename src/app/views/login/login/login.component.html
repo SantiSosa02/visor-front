@@ -10,7 +10,7 @@
                 <form class="row g-3 mt-3">
                     <div class="col-10">
                         <div class="input-container mt-5">
-        
+
                             <input
                                 type="text"
                                 id="correo"
@@ -22,16 +22,17 @@
                                 placeholder>
                             <label for="correo" class="input-label">Correo
                             </label>
-        
+
                             <div class="invalid-feedback error-message"
-                                *ngIf="errorMessages.correo" style="color: red;">
+                                *ngIf="errorMessages.correo"
+                                style="color: red;">
                                 {{errorMessages.correo}}
                             </div>
                         </div>
                     </div>
                     <div class="col-10">
                         <div class="input-container mt-3">
-                         
+
                             <input
                                 [type]="showPassword ? 'text' : 'password'"
                                 id="contrasena"
@@ -42,35 +43,41 @@
                                 placeholder>
                             <label for="correo" class="input-label">Contraseña
                             </label>
-        
+
                             <div class="invalid-feedback error-message mt-2"
-                                *ngIf="errorMessages.contrasena" style="color: red;">
+                                *ngIf="errorMessages.contrasena"
+                                style="color: red;">
                                 {{errorMessages.contrasena}}
                             </div>
                         </div>
                     </div>
-                    <div class="eye-icon col-2 check" (click)="togglePasswordVisibility()">
+                    <div class="eye-icon col-2 check"
+                        (click)="togglePasswordVisibility()">
                         <i class="fa-solid fa-eye" *ngIf="showPassword"></i>
-                        <i class="fa-solid fa-eye-slash" *ngIf="!showPassword"></i>
-                      </div>
+                        <i class="fa-solid fa-eye-slash"
+                            *ngIf="!showPassword"></i>
+                    </div>
                     <div class="contenedor-botones">
-                        <button pButton pRipple type="button" class="p-button-success boton-registrar" (click)="login()"
-                                [ngClass]="{'is-invalid': errorMessages.credenciales}">Iniciar sesión</button>
-                        
-                        <div class="invalid-feedback error-message mt-3"
-                             *ngIf="errorMessages.credenciales" style="color: red;">
-                          {{errorMessages.credenciales}}
-                        </div>
-                      </div>
+                        <button pButton pRipple type="button"
+                            class="p-button-success boton-registrar"
+                            (click)="login()"
+                            [ngClass]="{'is-invalid': errorMessages.credenciales}">
+                            Iniciar sesión
+                        </button>
 
-                
+                        <div class="invalid-feedback error-message mt-3"
+                            *ngIf="errorMessages.credenciales"
+                            style="color: red;">
+                            {{errorMessages.credenciales}}
+                        </div>
+                    </div>
 
                 </form>
                 <div class="recuperar">
-                    <a  class="enlace-recuperar" (click)="abrirRecuperar()">
-                     ¿Olvidaste tu contraseña?
+                    <a class="enlace-recuperar" (click)="abrirRecuperar()">
+                        ¿Olvidaste tu contraseña?
                     </a>
-                  </div>
+                </div>
             </div>
 
         </div>

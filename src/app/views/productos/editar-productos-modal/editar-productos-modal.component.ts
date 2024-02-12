@@ -162,33 +162,38 @@ validarCantidad(event: Event) {
 }
 
 validarPrecioVenta(event: Event) {
+  console.log('Validando precio...');
+
   const inputElement = event.target as HTMLInputElement;
   let inputValue = inputElement.value;
 
   // Elimina la letra "e" si está presente
   inputValue = inputValue.replace(/e/gi, '');
-  console.log(typeof inputValue);
-  // Verifica si el campo está vacío y elimina el mensaje de error
-  if (inputValue.trim() === '') {
-    this.errorMessages.precio_venta = '';
-  } else {
-    // Convierte el valor a un número
-    const numericValue = parseInt(inputValue.replace(/[^\d.-]/g, ''), 10);
 
-    if (!isNaN(numericValue) && numericValue >= 1000 && numericValue <= 10000000) {
-      // Si el valor es numérico y cumple con los límites, no muestra ningún formato
+  // Remueve los separadores de miles (puntos)
+  inputValue = inputValue.replace(/\./g, '');
+
+  // Verifica si el campo está vacío
+  if (!inputValue.trim()) {
+      // Si el campo está vacío, no muestra ningún mensaje de error
       this.errorMessages.precio_venta = '';
-      this.camposValidos=true;
-    } else {
-      this.errorMessages.precio_venta = 'El precio de venta debe ser un número válido en pesos colombianos (mayor o igual a 1.000 y menor que 10.000.000).';
-      this.camposValidos=false;
-    }
+      this.camposValidos = true;
+      return; // Sale de la función
   }
-  // Asigna el valor limpio nuevamente al campo de entrada
-  inputElement.value = inputValue;
 
-  // También actualiza la propiedad vinculada al modelo de datos
-  this.datosModificados.precio_venta = inputValue;
+  // Convierte el valor a un número
+  const numericValue = parseFloat(inputValue);
+
+  // Verifica si el valor está dentro de los límites
+  if (numericValue >= 1000 && numericValue <= 10000000) {
+      // Si el valor está dentro de los límites, no muestra ningún mensaje de error
+      this.errorMessages.precio_venta = '';
+      this.camposValidos = true;
+  } else {
+      // Si el valor está fuera de los límites, muestra un mensaje de error
+      this.errorMessages.precio_venta = 'El precio de venta debe estar entre 1.000 y 10.000.000.';
+      this.camposValidos = false;
+  }
 }
 
 validarCategoria() {

@@ -8,6 +8,8 @@ import { CrearClientesModalComponent } from '../crear-clientes-modal/crear-clien
 import { EditarClientesModalComponent } from '../editar-clientes-modal/editar-clientes-modal.component';
 import { DetalleClienteComponent } from '../detalle-cliente/detalle-cliente.component';
 import * as XLSX from 'xlsx';
+import { Observable } from 'rxjs';
+
 
 
 @Component({
@@ -59,38 +61,34 @@ export class ListarClientesComponent {
     this.data = clientesFiltrados.slice(startIndex, endIndex);
   }
 
-  cargarClientes(activos: boolean){
-    if(activos){
-      this.apiClientes.getClientesActivos(this.token).subscribe(
-        (data: any[]) => {
-          this.totalItems= data.length;
-          this.datosOriginales = [...data];
-          this.actualizarTabla();
-          this.noHayClientesRegistrados = data.length === 0;
-        },
-        (error) => {
-          this.noHayClientesRegistrados = true;
-          // console.error('Error al obtener los clientes activos:', error)
-          this.toastr.warning('No hay clientes activos', 'Advertencia');
-        }
-      )
-    }else{
-      this.apiClientes.getClientesInactivos(this.token).subscribe(
-        (data : any[]) => {
-          this.totalItems = data.length;
-          this.datosOriginales= [...data];
-          this.actualizarTabla();
-          this.noHayClientesRegistrados = data.length === 0;
-        
-        },
-        (error) => {
-          this.noHayClientesRegistrados =  true;
-          // console.error('Error al obtener los clientes inactivos:', error)
-          this.toastr.warning('No hay clientes inactivos', 'Advertencia');
-
-        }
-      )
+  cargarClientes(activos: boolean) {
+    let clientesObservable: Observable<Object>;
+  
+    if (activos) {
+      clientesObservable = this.apiClientes.getClientesActivos(this.token);
+    } else {
+      clientesObservable = this.apiClientes.getClientesInactivos(this.token);
     }
+  
+    clientesObservable.subscribe(
+      (data: any[]) => {
+        // Si es necesario, puedes convertir los datos al tipo array
+        const clientes: any[] = Array.isArray(data) ? data : [];
+  
+        // Ordenar los clientes alfabéticamente por nombre o algún otro criterio
+        clientes.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  
+        // Actualizar propiedades y tabla
+        this.totalItems = clientes.length;
+        this.datosOriginales = [...clientes];
+        this.actualizarTabla();
+        this.noHayClientesRegistrados = clientes.length === 0;
+      },
+      (error) => {
+        this.noHayClientesRegistrados = true;
+        this.toastr.warning('No hay clientes inactivos', 'Advertencia');
+      }
+    );
   }
 
   cambiarFiltro(activos: boolean) {

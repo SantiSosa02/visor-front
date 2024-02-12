@@ -15,20 +15,20 @@
                         name="nombre"
                         [(ngModel)]="datosModificados.nombre"
                         class="form-control"
-                        (blur)="validarNombre()"
+                        (input)="validarNombre()"
                         [ngClass]="{'is-invalid': errorMessages.nombre}"
                         placeholder="Ingresa el nombre">
                     <label for="name" class="input-label">Nombre
                         <span style="color: red;" *ngIf="!datosModificados.nombre">*</span>
                     </label>
-                    <div class="invalid-feedback error-message mt-2"
+                    <div class="invalid-feedback error-message "
                         *ngIf="errorMessages.nombre" style="color: red;">
                         {{errorMessages.nombre}}
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 ">
+            <div class="col-12 mt-1">
                 <div class="input-container">
                     <label for="name">Categoria
                         <span style="color: red;" *ngIf="!datosModificados.idcategoria">*</span>
@@ -62,7 +62,8 @@
                         (input)="validarStockMinimo($event)"
                         [ngClass]="{'is-invalid': errorMessages.stock_minimo}"
                         placeholder="Ingresa el stock minimo"
-                        required>
+                        required
+                        min="0">
                     <label for="name" class="input-label">Stock minimo
                         <span style="color: red;" *ngIf="!datosModificados.stock_minimo">*</span>
                     </label>
@@ -85,40 +86,44 @@
                         (input)="validarCantidad($event)"
                         [ngClass]="{'is-invalid': errorMessages.cantidad}"
                         placeholder="Ingresa la cantidad"
-                        disabled>
+                        disabled
+                        min="0">
                     <label for="name" class="input-label">Cantidad
                         <span style="color: red;" *ngIf="!datosModificados.cantidad">*</span>
                     </label>
-                    <div class="invalid-feedback error-message mt-2"
+                    <div class="invalid-feedback error-message"
                         *ngIf="errorMessages.cantidad" style="color: red;">
                         {{errorMessages.cantidad}}
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
-                <div class="input-container">
-
-                    <input
-                        type="number"
-                        id="precio_venta"
-                        name="precio_venta"
-                        [(ngModel)]="datosModificados.precio_venta"
-                        class="form-control"
-                        (input)="validarPrecioVenta($event)"
-                        [ngClass]="{'is-invalid': errorMessages.precio_venta}"
-                        placeholder="Ingresa el precio de venta">
-                    <label for="name" class="input-label">Precio venta
-                        <span style="color: red;" *ngIf="!datosModificados.precio_venta">*</span>
-                    </label>
+            <div class="col-12 mt-1">
+                <label for="name">Precio venta
+                    <span style="color: red;" *ngIf="!datosModificados.precio_venta">*</span>
+                </label>
+                <div class="input-container"> 
+                    <p-inputNumber
+                    type="number"
+                    style="height: 40px;"
+                    id="precio_venta"
+                    name="precio_venta"
+                    (keyup)="validarPrecioVenta($event)"
+                    [ngClass]="{'is-invalid': errorMessages.precio_venta}"
+                    min="0"
+                    [(ngModel)]="datosModificados.precio_venta"> 
+                </p-inputNumber>
+                
+            
                     <div class="invalid-feedback error-message mt-2"
                         *ngIf="errorMessages.precio_venta" style="color: red;">
                         {{errorMessages.precio_venta}}
                     </div>
                 </div>
             </div>
+            
 
-            <div class="botones mt-4">
+            <div class="botones mt-3">
                 <button pButton pRipple type="button"    class="p-button-success boton-registrar"
                     [disabled]="loading || !camposCompletos() || !cambios() || !camposValidos"
                     (click)="actualizarProducto()">

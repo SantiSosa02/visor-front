@@ -39,7 +39,9 @@ export class DetalleVentaComponent {
     fecha: '',
     metodopago: '',
     estadopago: '',
+    tipopago:'',
     valortotal: '',
+    observacion:'',
     estado: false,
     detalleProductos: [],
     detalleServicios: []
@@ -49,6 +51,7 @@ export class DetalleVentaComponent {
   venta: any;
 
   clientes: any[] = [];
+  observaciones: any[]=[];
   categorias: any[] = [];
   servicios: any[] = [];
   productos: any[] = [];
@@ -74,7 +77,9 @@ export class DetalleVentaComponent {
   camposValidos: boolean = false;
   token = localStorage.getItem('token');
 
-
+  formatNumber(num: number): string {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
 
   ngOnInit() {
 
@@ -89,8 +94,10 @@ export class DetalleVentaComponent {
             metodopago: data.venta.metodopago,
             fecha: data.venta.fecha,
             estadopago: data.venta.estadopago,
+            tipopago:data.venta.tipopago,
             valortotal: data.venta.valortotal,
             idcliente: data.venta.idcliente,
+            observacion: data.venta.observacion,
             detalleProductos: data.venta.DetalleVentaProductos || [],
             detalleServicios: data.venta.DetalleVentaServicios || []
           };
@@ -101,6 +108,8 @@ export class DetalleVentaComponent {
           this.datosModificados.valortotal = data.venta.valortotal;
           this.datosModificados.idcliente = data.venta.idcliente;
           this.datosModificados.estadopago = data.venta.estadopago;
+          this.datosModificados.tipopago = data.venta.tipopago;
+          this.datosModificados.observacion= data.venta.observacion,
           this.datosModificados.detalleProductos = data.venta.DetalleVentaProductos || [];
           this.datosModificados.detalleServicios = data.venta.DetalleVentaServicios || [];
 

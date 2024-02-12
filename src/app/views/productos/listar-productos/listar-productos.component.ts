@@ -10,6 +10,8 @@ import { EditarProductosModalComponent } from '../editar-productos-modal/editar-
 import { AgregarCantidadModalComponent } from '../agregar-cantidad-modal/agregar-cantidad-modal.component';
 import { ApiCategoriaService } from 'src/app/demo/service/categorias.service';
 import { DetalleProductoComponent } from '../detalle-producto/detalle-producto.component';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-listar-productos',
@@ -216,38 +218,31 @@ actualizarTabla(): void {
   }
 
   cargarProductos(activos: boolean) {
+    let productosObservable: Observable<any[]>;
   
     if (activos) {
-      this.apiProducto.getProductosActivos(this.token).subscribe(
-        (data: any[]) => {
-          this.totalItems = data.length;
-          this.datosOriginales = [...data];
-          this.actualizarTabla();
-          this.noHayProductosRegistrados = data.length === 0;
-          this.cargarProductosConNombreCategoria();
-        },
-        (error) => {
-          this.noHayProductosRegistrados = true;
-          // console.error('Error al obtener productos activos:', error);
-          this.toastr.warning('No hay productos activos', 'Advertencia');
-        }
-      );
+      productosObservable = this.apiProducto.getProductosActivos(this.token);
     } else {
-    
-      this.apiProducto.getProductosInactivos(this.token).subscribe(
-        (data: any[]) => {
-          this.totalItems = data.length;
-          this.datosOriginales = [...data];
-          this.actualizarTabla();
-          this.noHayProductosRegistrados = data.length === 0;
-          this.cargarProductosConNombreCategoria();
-        },
-        (error) => {
-          this.noHayProductosRegistrados = true;
-          // console.error('Error al obtener categorías inactivas:', error);
-          this.toastr.warning('No hay productos inactivos', 'Advertencia');        }
-      );
+      productosObservable = this.apiProducto.getProductosInactivos(this.token);
     }
+  
+    productosObservable.subscribe(
+      (data: any[]) => {
+        // Ordenar los productos por nombre alfabéticamente
+        data.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  
+        // Actualizar propiedades y tabla
+        this.totalItems = data.length;
+        this.datosOriginales = [...data];
+        this.actualizarTabla();
+        this.noHayProductosRegistrados = data.length === 0;
+        this.cargarProductosConNombreCategoria();
+      },
+      (error) => {
+        this.noHayProductosRegistrados = true;
+        this.toastr.warning('No hay productos inactivos', 'Advertencia');
+      }
+    );
   }
 
   

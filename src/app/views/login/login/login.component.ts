@@ -1,6 +1,6 @@
 
 import { NgForm } from '@angular/forms';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { ApiUsuariosService } from '../../../demo/service/usuarios.service';
 import { ToastrService } from 'ngx-toastr';
 import { BtnLoadingComponent } from 'src/app/shared/components/btn-loading/btn-loading.component';
@@ -146,7 +146,12 @@ export class LoginComponent {
     });
   }
   
-  
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.login();
+    }
+  }
   
   
   

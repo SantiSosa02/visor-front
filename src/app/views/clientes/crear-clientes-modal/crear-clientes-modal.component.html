@@ -13,7 +13,7 @@
                         name="nombre"
                         [(ngModel)]="client.nombre"
                         class="form-control"
-                        (blur)="validarNombre()"
+                        (input)="validarNombre()"
                         [ngClass]="{'is-invalid': errorMessages.nombre}"
                         placeholder=" ">
                     <label for="nombre" class="input-label">Nombre
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12 mt-3">
                 <div class="input-container">
                     <input
                         type="apellido"
@@ -35,7 +35,7 @@
                         name="apellido"
                         [(ngModel)]="client.apellido"
                         class="form-control"
-                        (blur)="validarApellido()"
+                        (input)="validarApellido()"
                         [ngClass]="{'is-invalid': errorMessages.apellido}"
                         placeholder=" ">
                     <label for="nombre" class="input-label">Apellido
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12 mt-3">
                 <div class="input-container">
 
                     <input
@@ -62,7 +62,7 @@
                         [ngClass]="{'is-invalid': errorMessages.telefono}"
                         placeholder=" ">
 
-                    <label for="telefono" class="input-label">Telefono
+                    <label for="telefono" class="input-label">Celular
                         <span style="color: red;" *ngIf="!client.telefono">*</span>
                     </label>
 
@@ -73,7 +73,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12 mt-3">
                 <div class="input-container">
 
                     <input
@@ -97,7 +97,7 @@
                 </div>
             </div>
 
-            <div class="botones">
+            <div class="botones mt-3">
                 <button  pButton pRipple type="button"    class="p-button-success boton-registrar"
                     [disabled]="loading || !camposCompletos() || !camposValidos"
                     (click)="registrarCliente()">

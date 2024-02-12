@@ -13,7 +13,7 @@
                         name="nombre"
                         [(ngModel)]="datosModificados.nombre"
                         class="form-control"
-                        (blur)="validarNombre()"
+                        (input)="validarNombre()"
                         [ngClass]="{'is-invalid': errorMessages.nombre}"
                         placeholder>
                     <label for="nombre" class="input-label">Nombre
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12 mt-3">
                 <div class="input-container">
                     <label for="descripcion" >Descripción
                         <span style="color: red;" *ngIf="!datosModificados.descripcion">*</span>
@@ -37,7 +37,7 @@
                         name="descripcion"
                         [(ngModel)]="datosModificados.descripcion"
                         class="form-control"
-                        (blur)="validarDescripcion()"
+                        (input)="validarDescripcion()"
                         [ngClass]="{'is-invalid': errorMessages.descripcion}"
                         placeholder
                         style="resize: none;  height: 90px;">
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="botones mt-4">
+            <div class="botones mt-3">
                 <button pButton pRipple type="button"
                 class="p-button-success boton-registrar"
                     [disabled]="loading || !camposCompletos() || !cambios() || !camposValidos"

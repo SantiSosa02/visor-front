@@ -65,42 +65,93 @@ export class ListarCrearAbonosModalComponent {
   }
 
  
-  validarValorAbono(event: Event) {
+//   validarValorAbono(event: Event) {
+//     const inputElement = event.target as HTMLInputElement;
+//     let inputValue = inputElement.value;
+
+//     // Elimina la letra "e" si está presente
+//     inputValue = inputValue.replace(/e/gi, '');
+
+//     // Convierte el valor a un número
+//     const numericValue = parseInt(inputValue.replace(/[^\d.-]/g, ''), 10);
+
+//     // Obtener el valor restante total
+//     const valorRestanteTotal = this.calcularValorRestanteTotal();
+
+//     // Verifica si el campo está vacío y elimina el mensaje de error
+//     if (inputValue.trim() === '') {
+//         this.errorMessages.valorAbono = '';
+//     } else if (!isNaN(numericValue) && numericValue >= 1000 && numericValue <= 2000000) {
+//         // Si el valor es numérico y cumple con los límites, verifica si es mayor al valor restante
+//         if (numericValue > valorRestanteTotal) {
+//             this.errorMessages.valorAbono = 'El valor de abono no puede ser mayor al valor restante.';
+//             this.camposValidos = false;
+//         } else {
+//             this.errorMessages.valorAbono = '';
+//             this.camposValidos = true;
+//         }
+//     } else {
+//         this.errorMessages.valorAbono = 'El valor de abono debe ser un número válido (mayor o igual a 1.000 y menor que 2.000.000).';
+//         this.camposValidos = false;
+//     }
+
+//     // Asigna el valor limpio nuevamente al campo de entrada
+//     inputElement.value = inputValue;
+
+//     // También actualiza la propiedad vinculada al modelo de datos
+//     this.abono.valorAbono = inputValue;
+// }
+
+validarValorAbono(event: Event) {
+    console.log('Validando valor de abono...');
+
     const inputElement = event.target as HTMLInputElement;
     let inputValue = inputElement.value;
 
     // Elimina la letra "e" si está presente
     inputValue = inputValue.replace(/e/gi, '');
 
+    // Remueve los separadores de miles (puntos)
+    inputValue = inputValue.replace(/\./g, '');
+
+    // Verifica si el campo está vacío
+    if (!inputValue.trim()) {
+        // Si el campo está vacío, no muestra ningún mensaje de error
+        this.errorMessages.valorAbono = '';
+        this.camposValidos = false;
+        return; // Sale de la función
+    }
+
     // Convierte el valor a un número
-    const numericValue = parseInt(inputValue.replace(/[^\d.-]/g, ''), 10);
+    const numericValue = parseFloat(inputValue);
 
     // Obtener el valor restante total
     const valorRestanteTotal = this.calcularValorRestanteTotal();
 
-    // Verifica si el campo está vacío y elimina el mensaje de error
-    if (inputValue.trim() === '') {
+    // Verifica si el valor del abono es mayor al valor restante total
+    if (numericValue > valorRestanteTotal) {
+        this.errorMessages.valorAbono = 'El valor de abono no puede ser mayor al valor restante.';
+        this.camposValidos = false;
+        return; // Sale de la función
+    }
+
+    // Verifica si el valor está dentro de los límites
+    if (numericValue >= 1000 && numericValue <= 2000000) {
+        // Si el valor está dentro de los límites, no muestra ningún mensaje de error
         this.errorMessages.valorAbono = '';
-    } else if (!isNaN(numericValue) && numericValue >= 1000 && numericValue <= 2000000) {
-        // Si el valor es numérico y cumple con los límites, verifica si es mayor al valor restante
-        if (numericValue > valorRestanteTotal) {
-            this.errorMessages.valorAbono = 'El valor de abono no puede ser mayor al valor restante.';
-            this.camposValidos = false;
-        } else {
-            this.errorMessages.valorAbono = '';
-            this.camposValidos = true;
-        }
+        this.camposValidos = true;
     } else {
+        // Si el valor está fuera de los límites, muestra un mensaje de error
         this.errorMessages.valorAbono = 'El valor de abono debe ser un número válido (mayor o igual a 1.000 y menor que 2.000.000).';
         this.camposValidos = false;
     }
-
-    // Asigna el valor limpio nuevamente al campo de entrada
-    inputElement.value = inputValue;
-
-    // También actualiza la propiedad vinculada al modelo de datos
-    this.abono.valorAbono = inputValue;
 }
+
+
+formatNumber(num: number): string {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 
   
 

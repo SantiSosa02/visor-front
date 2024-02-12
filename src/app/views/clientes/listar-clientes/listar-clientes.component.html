@@ -28,17 +28,19 @@
     <table class="table align-middle text-nowrap" id="tabla-clientes">
       <thead>
         <tr>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Nombre</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Apellido</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Telefono</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Correo</th>
-          <th class="text-dark font-medium fs-5" style="width: 190px;">
+          <th class="text-dark " style="width: 250px;">Nombre</th>
+          <th class="text-dark " style="width: 250px;">Apellido</th>
+          <th class="text-dark " style="width: 250px;">Celular</th>
+          <th class="text-dark " style="width: 250px;">Correo</th>
+          <th class="text-dark " style="width: 190px;">
             Estado
-            <i class="fa-solid fa-filter" matTooltip="Filtrar"
-              (click)="cambiarFiltro(!filtroActivo)"
-              [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}"></i>
+            <i class="fa-solid fa-filter"
+                (click)="cambiarFiltro(!filtroActivo)"
+                [matTooltip]="filtroActivo ? 'Ver clientes inactivos' : 'Ver clientes activos'"
+                [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}">
+            </i>
           </th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Acciones</th>
+          <th class="text-dark " style="width: 250px;">Acciones</th>
 
         </tr>
       </thead>

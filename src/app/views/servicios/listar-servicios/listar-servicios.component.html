@@ -25,15 +25,17 @@
     <table class="table align-middle text-nowrap">
       <thead>
         <tr>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Nombre</th>
-          <th class="text-dark font-medium fs-5" style="width: 380px;">Descripción</th>
-          <th class="text-dark font-medium fs-5" style="width: 280px;">
+          <th class="text-dark " style="width: 250px;">Nombre</th>
+          <th class="text-dark " style="width: 370px;">Descripción</th>
+          <th class="text-dark " style="width: 150px;">
             Estado
-            <i class="fa-solid fa-filter" matTooltip="Filtrar"
-              (click)="cambiarFiltro(!filtroActivo)"
-              [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}"></i>
+            <i class="fa-solid fa-filter"
+                (click)="cambiarFiltro(!filtroActivo)"
+                [matTooltip]="filtroActivo ? 'Ver servicios inactivos' : 'Ver servicios activas'"
+                [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}">
+            </i>
           </th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Acciones</th>
+          <th class="text-dark " style="width: 150px;">Acciones</th>
         </tr>
       </thead>
       <tbody>

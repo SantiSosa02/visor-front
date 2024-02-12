@@ -66,6 +66,8 @@ import { DialogModule } from 'primeng/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { PasswordModule } from 'primeng/password';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { InputNumberModule } from 'primeng/inputnumber';
+
 
 
 @NgModule({
@@ -138,9 +140,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         DropdownModule,
         DialogModule,
         PasswordModule,
-        MatTooltipModule
+        MatTooltipModule,
+        InputNumberModule
         
-    
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy},

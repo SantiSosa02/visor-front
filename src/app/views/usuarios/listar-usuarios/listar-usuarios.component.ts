@@ -8,6 +8,7 @@ import { CrearUsuarioModalComponent } from '../crear-usuario-modal/crear-usuario
 import { EditarUsuarioModalComponent } from '../editar-usuario-modal/editar-usuario-modal.component';
 import { DetalleUsuarioComponent } from '../detalle-usuario/detalle-usuario.component';
 import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/demo/service/auth.service';
 
 
@@ -248,39 +249,34 @@ export class ListarUsuariosComponent {
     this.cargarUsuarios(activos);
   }
 
+
   cargarUsuarios(activos: boolean) {
     const token = localStorage.getItem('token');
+    let usuariosObservable: Observable<any[]>;
+  
     if (activos) {
-      this.apiserviceusuario.getUsuariosActivos(token).subscribe(
-        (data: any[]) => {
-          this.totalItems = data.length;
-          this.datosOriginales = [...data];
-          this.actualizarTabla();
-          this.noHayUsuariosRegistrados = data.length === 0;
-        },
-        (error) => {
-          this.noHayUsuariosRegistrados = true;
-          // console.error('Error al obtener usuarios activos:', error);
-          this.toastr.warning('No hay usuarios activos', 'Advertencia');
-        }
-      );
+      usuariosObservable = this.apiserviceusuario.getUsuariosActivos(token);
     } else {
-      const token = localStorage.getItem('token');
-      this.apiserviceusuario.getUsuariosInactivos(token).subscribe(
-        (data: any[]) => {
-          this.totalItems = data.length;
-          this.datosOriginales = [...data];
-          this.actualizarTabla();
-          this.noHayUsuariosRegistrados = data.length === 0;
-        },
-        (error) => {
-          this.noHayUsuariosRegistrados = true;
-          // console.error('Error al obtener usuarios inactivos:', error);
-          this.toastr.warning('No hay usuarios inactivos', 'Advertencia');
-        }
-      );
+      usuariosObservable = this.apiserviceusuario.getUsuariosInactivos(token);
     }
+  
+    usuariosObservable.subscribe(
+      (data: any[]) => {
+        // Ordenar los usuarios por nombre alfabéticamente
+        data.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  
+        // Actualizar propiedades y tabla
+        this.totalItems = data.length;
+        this.datosOriginales = [...data];
+        this.actualizarTabla();
+        this.noHayUsuariosRegistrados = data.length === 0;
+      },
+      (error) => {
+        this.noHayUsuariosRegistrados = true;
+        this.toastr.warning('No hay usuarios inactivos', 'Advertencia');      }
+    );
   }
+  
   
   
   get totalPages(): number {

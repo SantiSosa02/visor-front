@@ -3,7 +3,7 @@
         <h4 class="card-title">Registro de Usuario</h4>
     </div>
     <div class="modal-body">
-        <form class="row g-3 mb-3">
+        <form class="row g-3 mb-2">
             <div class="col-12 mt-5">
                 <div class="input-container">
                     <input
@@ -12,7 +12,7 @@
                         name="nombre"
                         [(ngModel)]="user.nombre"
                         class="form-control"
-                        (blur)="validarNombre()"
+                        (input)="validarNombre()"
                         [ngClass]="{'is-invalid': errorMessages.nombre}"
                         placeholder="">
                         <label for="name" class="input-label">Nombre 
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12 mt-3">
                 <div class="input-container">
                  
                     <input
@@ -35,7 +35,7 @@
                         name="apellido"
                         [(ngModel)]="user.apellido"
                         class="form-control"
-                        (blur)="validarApellido()"
+                        (input)="validarApellido()"
                         [ngClass]="{'is-invalid': errorMessages.apellido}"
                         placeholder="">
                         <label for="apellido" class="input-label">Apellido 
@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12 mt-3">
                 <div class="input-container">
                
                 <input
@@ -57,7 +57,7 @@
                     name="correo"
                     [(ngModel)]="user.correo"
                     class="form-control"
-                    (blur)="validarCorreo()"
+                    (input)="validarCorreo()"
                     [ngClass]="{'is-invalid': errorMessages.correo}"
                     placeholder="">
                     <label for="correo" class="input-label">Correo 
@@ -70,7 +70,7 @@
             </div>
             </div>
 
-            <div class="col-10 mt-4">
+            <div class="col-10 mt-3">
                 <div class="input-container relative-position">
                   <input
                     [type]="showPassword ? 'text' : 'password'"
@@ -78,7 +78,7 @@
                     name="contrasena"
                     [(ngModel)]="user.contrasena"
                     class="form-control"
-                    (blur)="validarContrasena()"
+                    (input)="validarContrasena()"
                     [ngClass]="{'is-invalid': errorMessages.contrasena}"
                     placeholder=""
                   />
@@ -101,7 +101,7 @@
                 <i class="fa-solid fa-eye" *ngIf="showPassword"></i>
                 <i class="fa-solid fa-eye-slash" *ngIf="!showPassword"></i>
               </div>
-            <div class="col-10 mt-4">
+            <div class="col-10 mt-3">
                 <div class="input-container">
                 <input
                     [type]="showConfirmPassword ? 'text' : 'password'"

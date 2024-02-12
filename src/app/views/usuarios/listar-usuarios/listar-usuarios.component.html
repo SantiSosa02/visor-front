@@ -26,16 +26,19 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Nombre</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Apellido</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">Correo</th>
-          <th class="text-dark font-medium fs-5" style="width: 250px;">
+          <th class="text-dark " style="width: 250px;">Nombre</th>
+          <th class="text-dark " style="width: 250px;">Apellido</th>
+          <th class="text-dark " style="width: 250px;">Correo</th>
+          <th class="text-dark " style="width: 250px;">
             Estado
             <i class="fa-solid fa-filter"
-              (click)="cambiarFiltro(!filtroActivo)" matTooltip="Filtrar"
-              [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}"></i>
-          </th>
-          <th class="text-dark font-medium fs-5" style="width: 290px;">Acciones</th>
+                (click)="cambiarFiltro(!filtroActivo)"
+                [matTooltip]="filtroActivo ? 'Ver usuarios inactivos' : 'Ver usuarios activos'"
+                [ngClass]="{'icono-azul': filtroActivo, 'active': filtroActivo}">
+            </i>
+        </th>
+        
+          <th class="text-dark font-bold" style="width: 290px;">Acciones</th>
         </tr>
       </thead>
       <tbody>

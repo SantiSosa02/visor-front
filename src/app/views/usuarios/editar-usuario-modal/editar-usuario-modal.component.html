@@ -4,7 +4,7 @@
         <h4 class="card-title">Editar usuario</h4>
     </div>
     <div class="modal-body">
-        <form class="row g-2 mb-3">
+        <form class="row g-2 mb-2">
             <div class="col-12 mt-5">
                 <div class="input-container">
                   
@@ -14,7 +14,7 @@
                         name="nombre"
                         [(ngModel)]="datosModificados.nombre"
                         class="form-control"
-                        (blur)="validarNombre()"
+                        (input)="validarNombre()"
                         [ngClass]="{'is-invalid': errorMessages.nombre}"
                         placeholder="">
                         <label for="name" class="input-label">Nombre
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12 mt-3">
                 <div class="input-container">
                    
                     <input
@@ -36,7 +36,7 @@
                         name="apellido"
                         [(ngModel)]="datosModificados.apellido"
                         class="form-control"
-                        (blur)="validarApellido()"
+                        (input)="validarApellido()"
                         [ngClass]="{'is-invalid': errorMessages.apellido}"
                         placeholder="">
                         <label for="apellido" class="input-label">Apellido
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12 mt-3">
                 <div class="input-container">
                     
                     <input
@@ -58,7 +58,7 @@
                         name="correo"
                         [(ngModel)]="datosModificados.correo"
                         class="form-control"
-                        (blur)="validarCorreo()"
+                        (input)="validarCorreo()"
                         [ngClass]="{'is-invalid': errorMessages.correo}"
                         placeholder="">
                         <label for="correo" class="input-label">Correo
@@ -71,7 +71,7 @@
                 </div>
             </div>
 
-            <div class="botones mt-4">
+            <div class="botones mt-3">
                 <button pButton pRipple type="button"  class="p-button-success boton-registrar"
                     [disabled]="loading || !camposCompletos() ||!cambios()|| !camposValidos "
                     (click)="actualizarUsuario()">

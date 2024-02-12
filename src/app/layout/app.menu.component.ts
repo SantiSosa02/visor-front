@@ -6,12 +6,14 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'app-menu',
     templateUrl: './app.menu.component.html',
+    styleUrls: ['./app.menu.component.scss']
+
 })
 export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
 
-    constructor(public layoutService: LayoutService,private router: Router) { }
+    constructor(public layoutService: LayoutService) { }
 
     ngOnInit() {
         this.model = [

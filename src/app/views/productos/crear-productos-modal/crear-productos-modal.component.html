@@ -15,7 +15,7 @@
                         name="nombre"
                         [(ngModel)]="product.nombre"
                         class="form-control"
-                        (blur)="validarNombre()"
+                        (input)="validarNombre()"
                         [ngClass]="{'is-invalid': errorMessages.nombre}"
                         placeholder>
                     <label for="name" class="input-label">Nombre
@@ -28,9 +28,10 @@
                     </div>
                 </div>
             </div>
+            
 
-            <div class="col-12 ">
-                <div class>
+            <div class="col-12 mt-1 ">
+                <div  class="input-container">
                     <label for="categoria">Categoría <span style="color: red;"
                             *ngIf="!product.idcategoria">*</span></label>
                     <select
@@ -49,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-3">
                 <div class="input-container">
 
                     <input
@@ -62,7 +63,8 @@
                         (input)="validarStockMinimo($event)"
                         [ngClass]="{'is-invalid': errorMessages.stock_minimo}"
                         placeholder
-                        required>
+                        required
+                        min="0">
                     <label for="name" class="input-label">Stock minimo
                         <span style="color: red;" *ngIf="!product.stock_minimo">*</span>
                     </label>
@@ -73,7 +75,7 @@
                 </div>
             </div>
 
-            <div class="col-6 mt-4">
+            <div class="col-6 mt-3">
                 <div class="input-container">
 
                     <input
@@ -84,7 +86,8 @@
                         class="form-control"
                         (input)="validarCantidad($event)"
                         [ngClass]="{'is-invalid': errorMessages.cantidad}"
-                        placeholder>
+                        placeholder
+                        min="0">
                     <label for="name" class="input-label">Cantidad
                         <span style="color: red;" *ngIf="!product.cantidad">*</span>
                     </label>
@@ -95,29 +98,32 @@
                 </div>
             </div>
 
-            <div class="col-12 mt-4">
-                <div class="input-container">
-
-                    <input
+            <div class="col-12 mt-3 principal">
+                <label for="name">Precio venta
+                    <span style="color: red;" *ngIf="!product.precio_venta">*</span>
+                </label>
+                <div class="oe">
+                    <p-inputNumber   
                         type="number"
+                        style="height: 37px;"
                         id="precio_venta"
                         name="precio_venta"
-                        [(ngModel)]="product.precio_venta "
-                        class="form-control"
-                        (input)="validarPrecioVenta($event)"
+                        (keyup)="validarPrecioVenta($event)"
                         [ngClass]="{'is-invalid': errorMessages.precio_venta}"
-                        placeholder>
-                    <label for="name" class="input-label">Precio venta
-                        <span style="color: red;" *ngIf="!product.precio_venta">*</span>
-                    </label>
+                        [(ngModel)]="product.precio_venta"> 
+                    </p-inputNumber>
+                    
                     <div class="invalid-feedback error-message mt-2"
                         *ngIf="errorMessages.precio_venta" style="color: red;">
                         {{errorMessages.precio_venta}}
                     </div>
                 </div>
             </div>
+            
+            
+            
 
-            <div class="botones mt-4">
+            <div class="botones mt-3">
                 <button pButton pRipple type="button"
                     class="p-button-success boton-registrar"
                     [disabled]="loading || !camposCompletos() || !camposValidos"
@@ -131,6 +137,7 @@
                     Cerrar
                 </button>
             </div>
+
         </form>
     </div>
 </div>

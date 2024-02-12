@@ -39,6 +39,7 @@ export class ListarVentasComponent {
     fecha: '',
     metodopago: '',
     estadopago: '',
+    tipopago:'',
     valortotal: '',
     estado: false,
     detalleProductos: [],
@@ -185,6 +186,7 @@ export class ListarVentasComponent {
         this.datosModificados.valortotal = data.venta.valortotal;
         this.datosModificados.idcliente = data.venta.idcliente;
         this.datosModificados.estadopago = data.venta.estadopago;
+        this.datosModificados.tipopago = data.venta.tipopago;
         this.datosModificados.detalleProductos =
           data.venta.DetalleVentaProductos || [];
         this.datosModificados.detalleServicios =
@@ -312,9 +314,9 @@ export class ListarVentasComponent {
                 </div>
               </div>
               <div class="container">
-                <label>Estado de Pago:</label>
+                <label>Tipo de pago:</label>
                 <div class="etiqueta">
-                  <p>${this.datosModificados.estadopago}</p>
+                  <p>${this.datosModificados.tipopago}</p>
                 </div>
               </div>
               <div class="container">
@@ -382,17 +384,13 @@ export class ListarVentasComponent {
   toggleEstado(sale: any) {
     const saleId = sale.idventa;
     const estadoAnterior = sale.estado;
-
+  
     sale.estado = !estadoAnterior;
-
+  
     this.apiVentas.getAbonosRelacionados(saleId, this.token).subscribe(
       (response: any) => {
-
-        // Obtén la cantidad de abonos desde la respuesta
         const cantidadAbonos = response.length;
-
-        // Agrega este console.log para verificar la cantidad de abonos
-
+  
         if (cantidadAbonos > 0) {
           Swal.fire({
             title: 'Alerta',
@@ -402,12 +400,11 @@ export class ListarVentasComponent {
             confirmButtonColor: '#3085d6',
             allowOutsideClick: false,
             allowEscapeKey: false
-          })
-            .then((result) => {
-              if (result.isConfirmed) {
-                sale.estado = estadoAnterior;
-              }
-            });
+          }).then((result) => {
+            if (result.isConfirmed) {
+              sale.estado = estadoAnterior;
+            }
+          });
         } else {
           Swal.fire({
             title: 'Confirmar Cambio de Estado',
@@ -418,22 +415,46 @@ export class ListarVentasComponent {
             confirmButtonColor: '#4CAF50',
             cancelButtonText: 'Cancelar',
             allowOutsideClick: false,
-            allowEscapeKey: false
+            allowEscapeKey: false,
+            input: 'text',
+            inputLabel: 'Observación',
+            inputPlaceholder: 'Ingresa la observación aquí',
+            inputValidator: (value) => {
+              // Puedes agregar más validaciones aquí si es necesario
+              return null; // No es necesario validar la entrada en este caso
+            }
           }).then((result) => {
             if (result.isConfirmed) {
-              // Cambia el estado del interruptor solo si el usuario hace clic en "Aceptar"
-              this.cambiarEstadoVenta(saleId, !estadoAnterior);
-              this.toastr.success('Estado de la venta actualizada con éxito', 'Éxito', {
-                timeOut: 1000
-              });
-              setTimeout(() => {
-                this.reloadComponent();
-              }, 1000);
+              const observacion = result.value;
+              // Realiza la solicitud PUT para modificar la observación
+              this.apiVentas.createObservacion(saleId, observacion, this.token).subscribe(
+                () => {
+                  // Si la observación se guarda correctamente, cambia el estado de la venta
+                  this.cambiarEstadoVenta(saleId, !estadoAnterior);
+                  this.toastr.success('Estado de la venta actualizada con éxito', 'Éxito', {
+                    timeOut: 2000
+                  });
+                  setTimeout(() => {
+                    this.reloadComponent();
+                  }, 2000);
+                },
+                (error) => {
+                  console.error('Error al guardar la observación:', error);
+                  Swal.fire({
+                    title: 'Error',
+                    text: 'Hubo un problema al guardar la observación.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#d33',
+                  });
+                }
+              );
             } else {
-              // Si se hace clic en "Cancelar," restaura el estado del interruptor
+              // Si se cancela, restaura el estado de la venta
               sale.estado = estadoAnterior;
             }
           });
+          
         }
       },
       (error) => {
@@ -448,9 +469,6 @@ export class ListarVentasComponent {
       }
     );
   }
-
-
-
 
   abonoRelacionados(sale: any) {
     const saleId = sale.idventa;
@@ -497,7 +515,7 @@ export class ListarVentasComponent {
 
     Swal.fire({
       title: 'Venta Inactiva',
-      text: 'Esta venta está actualmente inactiva y no se puede activar.',
+      text: 'Esta venta está actualmente anulada y no se puede activar.',
       icon: 'warning',
       confirmButtonText: 'OK',
       confirmButtonColor: '#4CAF50'
@@ -582,6 +600,8 @@ export class ListarVentasComponent {
     if (activos) {
       this.apiVentas.getVentasActivos(this.token).subscribe(
         (data: any[]) => {
+          // Ordenar las ventas por fecha de forma descendente
+          data.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
           this.totalItems = data.length;
           this.datosOriginales = [...data];
           this.actualizarTabla();
@@ -590,13 +610,14 @@ export class ListarVentasComponent {
         },
         (error) => {
           this.noHayVentasRegsitradas = true;
-          // console.error('Error al obtener ventas activas: ', error);
           this.toastr.warning('No hay ventas activas', 'Advertencia');
         }
       );
     } else {
       this.apiVentas.getVentasInactivos(this.token).subscribe(
         (data: any[]) => {
+          // Ordenar las ventas por fecha de forma descendente
+          data.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
           this.totalItems = data.length;
           this.datosOriginales = [...data];
           this.actualizarTabla();
@@ -605,11 +626,47 @@ export class ListarVentasComponent {
         },
         (error) => {
           this.noHayVentasRegsitradas = true;
-          // console.error('Error al obtener ventas inactivas: ', error);
-          this.toastr.warning('No hay ventas inactivos', 'Advertencia');
+          this.toastr.warning('No hay ventas anuladas', 'Advertencia');
         }
       );
     }
+  }
+  
+  mostrarObservacion(idVenta: number) {
+    // Realiza una llamada al backend para obtener la observación de la venta con el ID proporcionado
+    this.apiVentas.getObservacionId(idVenta, this.token).subscribe(
+      (response: any) => {
+        // Verifica si se obtuvo la observación correctamente
+        if (response && response.observacion) {
+          // Muestra la observación en un SweetAlert
+          Swal.fire({
+            title: 'Observación de la venta',
+            text: response.observacion,
+            icon: 'info',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#4CAF50',
+          });
+        } else {
+          // Muestra un mensaje si no se encontró la observación
+          Swal.fire({
+            title: 'Observación no encontrada',
+            text: `No se encontró ninguna observación para la venta (${idVenta}).`,
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
+        }
+      },
+      (error) => {
+        // Maneja el error si ocurre algún problema al obtener la observación
+        console.error('Error al obtener la observación de la venta:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un problema al obtener la observación de la venta.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    );
   }
 
   formatearPrecioVenta(precio: number): string {

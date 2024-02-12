@@ -22,6 +22,7 @@
     position: relative;
 }
 
+
 .input-label {
     position: absolute;
     top: 50%;
@@ -61,3 +62,4 @@ input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
   .boton-registrar {
     width: 120px; /* Ajusta el ancho según tus necesidades */
 }
+

@@ -10,6 +10,8 @@ import { DetalleCategoriaComponent } from '../detalle-categoria/detalle-categori
 import { User } from 'src/app/demo/interfaces';
 import { AuthService } from 'src/app/demo/service/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-listar-categorias',
@@ -287,26 +289,23 @@ actualizarTabla(): void {
     this.cargarCategorias(activos);
   }
 
-cargarCategorias(activos: boolean) {
-  const token = localStorage.getItem('token');
-  if (activos) {
-    this.apiCategoria.getActiveCategory(token).subscribe(
-      (data: any[]) => {
-        this.totalItems = data.length;
-        this.datosOriginales = [...data];
-        this.actualizarTabla();
-        this.noHayUsuariosRegistrados = data.length === 0;
-      },
-      (error) => {
-        this.noHayUsuariosRegistrados = true;
-        // console.error('Error al obtener categorías activas:', error);
-        this.toastr.warning('No hay categorias activas', 'Advertencia');
-      }
-    );
-  } else {
+
+  cargarCategorias(activos: boolean) {
     const token = localStorage.getItem('token');
-    this.apiCategoria.getInactiveCategory(token ).subscribe(
+    let categoriasObservable: Observable<any[]>;
+  
+    if (activos) {
+      categoriasObservable = this.apiCategoria.getActiveCategory(token);
+    } else {
+      categoriasObservable = this.apiCategoria.getInactiveCategory(token);
+    }
+  
+    categoriasObservable.subscribe(
       (data: any[]) => {
+        // Ordenar las categorías por nombre alfabéticamente
+        data.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  
+        // Actualizar propiedades y tabla
         this.totalItems = data.length;
         this.datosOriginales = [...data];
         this.actualizarTabla();
@@ -314,12 +313,11 @@ cargarCategorias(activos: boolean) {
       },
       (error) => {
         this.noHayUsuariosRegistrados = true;
-        // console.error('Error al obtener categorías inactivas:', error);
-        this.toastr.warning('No hay categorias inactivos', 'Advertencia');
+        this.toastr.warning('No hay categorías inactivas', 'Advertencia');
       }
     );
   }
-}
+  
 cambiarFilasPorPagina() {
   // Asegúrate de que currentPage sea válido después del cambio
   const totalPages = Math.ceil(this.totalItems / this.itemsPerPage);

@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import { CrearServiciosModalComponent } from '../crear-servicios-modal/crear-servicios-modal.component';
 import { EditarServiciosModalComponent } from '../editar-servicios-modal/editar-servicios-modal.component';
 import { DetalleServicioComponent } from '../detalle-servicio/detalle-servicio.component';
+import { Observable } from 'rxjs';
+
 
 
 
@@ -85,36 +87,30 @@ export class ListarServiciosComponent implements OnInit {
   }
 
   cargarServicios(activos: boolean) {
-
+    let serviciosObservable: Observable<any[]>;
+  
     if (activos) {
-      this.apiServicio.getServiciosActivos(this.token).subscribe(
-        (data: any[]) => {
-          this.totalItems = data.length;
-          this.datosOriginales = [...data];
-          this.actualizarTabla();
-          this.noHayServiciosRegistrados = data.length === 0;
-        },
-        (error) => {
-          this.noHayServiciosRegistrados = true;
-          // console.error('Error al obtener servicios activos:', error);
-          this.toastr.warning('No hay servicios activos', 'Advertencia');
-        }
-      );
+      serviciosObservable = this.apiServicio.getServiciosActivos(this.token);
     } else {
-      this.apiServicio.getServiciosInactivos(this.token).subscribe(
-        (data: any[]) => {
-          this.totalItems = data.length;
-          this.datosOriginales = [...data];
-          this.actualizarTabla();
-          this.noHayServiciosRegistrados = data.length === 0;
-        },
-        (error) => {
-          this.noHayServiciosRegistrados = true;
-          // console.error('Error al obtener servicios inactivos:', error);
-          this.toastr.warning('No hay servicios inactivos', 'Advertencia');
-        }
-      );
+      serviciosObservable = this.apiServicio.getServiciosInactivos(this.token);
     }
+  
+    serviciosObservable.subscribe(
+      (data: any[]) => {
+        // Ordenar los servicios por nombre alfabéticamente
+        data.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  
+        // Actualizar propiedades y tabla
+        this.totalItems = data.length;
+        this.datosOriginales = [...data];
+        this.actualizarTabla();
+        this.noHayServiciosRegistrados = data.length === 0;
+      },
+      (error) => {
+        this.noHayServiciosRegistrados = true;
+        this.toastr.warning('No hay servicios inactivos', 'Advertencia');
+      }
+    );
   }
 
   actualizarTabla(): void {

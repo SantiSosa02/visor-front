@@ -36,14 +36,14 @@
 
       <div class="col-3 mt-5">
         <div class="select-metodopago">
-          <label for="estadopago">Estado de pago</label>
-          <select id="estadopago"
-            name="estadopago"
-            [(ngModel)]="datosModificados.estadopago"
+          <label for="tipopago">Tipo de pago</label>
+          <select id="tipopago"
+            name="tipopago"
+            [(ngModel)]="datosModificados.tipopago"
             class="form-select"
             disabled>
-            <option [value]="datosModificados.estadopago">{{
-              datosModificados.estadopago }}</option>
+            <option [value]="datosModificados.tipopago">{{
+              datosModificados.tipopago }}</option>
           </select>
         </div>
       </div>
@@ -104,8 +104,8 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ detalle.nombre }}</td>
                 <td>{{ detalle.cantidad }}</td>
-                <td>$ {{ detalle.precio.toLocaleString('es-ES') }}</td>
-                <td>$ {{ detalle.subtotal.toLocaleString('es-ES')}}</td>
+                <td>$ {{formatNumber( detalle.precio)}}</td>
+                <td>$ {{ formatNumber(detalle.subtotal)}}</td>
                 <td>{{ detalle.tipo }}</td>
               </tr>
             </ng-container>
@@ -117,8 +117,8 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ detalle.nombre }}</td>
                 <td>{{ detalle.cantidad }}</td>
-                <td>$ {{ detalle.precio.toLocaleString('es-ES') }}</td>
-                <td>$ {{ detalle.subtotal.toLocaleString('es-ES')
+                <td>$ {{ formatNumber(detalle.precio) }}</td>
+                <td>$ {{ formatNumber(detalle.subtotal)
                   }}</td>
                 <td>{{ detalle.tipo }}</td>
               </tr>
