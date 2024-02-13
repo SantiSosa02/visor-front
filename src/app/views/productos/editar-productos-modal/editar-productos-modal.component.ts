@@ -282,18 +282,6 @@ cambios(): boolean {
     });
   }
 
-//   submit() {
-//     if (!this.loading) {
-//         this.loading = true;
-//         setTimeout(() => {
-//             this.toastr.success('Usuario actualizado con éxito', 'Éxito', { progressBar: true, timeOut: 1000 });
-
-//                 this.reloadComponent();
-//                 this.cerrarModal();
-
-//         }, 1000);
-//     }
-// }
   
 submit() {
   if (!this.loading) {

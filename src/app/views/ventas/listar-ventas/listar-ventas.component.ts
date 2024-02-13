@@ -416,13 +416,24 @@ export class ListarVentasComponent {
             cancelButtonText: 'Cancelar',
             allowOutsideClick: false,
             allowEscapeKey: false,
-            input: 'text',
+            input: 'textarea', // Cambiado a 'textarea'
             inputLabel: 'Observación',
             inputPlaceholder: 'Ingresa la observación aquí',
+            inputAttributes: {
+              // Establece la propiedad resize a none para evitar que el textarea sea redimensionable
+              style: 'resize: none;'
+            },
             inputValidator: (value) => {
-              // Puedes agregar más validaciones aquí si es necesario
-              return null; // No es necesario validar la entrada en este caso
-            }
+              if (!value) {
+                  return 'Por favor ingresa una observación';
+              }
+              const pattern = /^[a-zA-Z0-9\s]*$/;
+              if (!pattern.test(value)) {
+                  return 'La observación solo puede contener letras y números';
+              }
+              return null;
+          }
+          
           }).then((result) => {
             if (result.isConfirmed) {
               const observacion = result.value;
@@ -469,7 +480,7 @@ export class ListarVentasComponent {
       }
     );
   }
-
+  
   abonoRelacionados(sale: any) {
     const saleId = sale.idventa;
     console.log(saleId)
@@ -638,10 +649,16 @@ export class ListarVentasComponent {
       (response: any) => {
         // Verifica si se obtuvo la observación correctamente
         if (response && response.observacion) {
-          // Muestra la observación en un SweetAlert
+          // Muestra la observación en un SweetAlert con un textarea
           Swal.fire({
-            title: 'Observación de la venta',
-            text: response.observacion,
+            title: 'Motivo de anulación',
+            html: `<textarea 
+            disabled 
+            style="width: 100%; 
+            height: 100px; 
+            resize: none; 
+            padding:10px; 
+            color: #999;">${response.observacion}</textarea>`,
             icon: 'info',
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#4CAF50',
@@ -668,6 +685,7 @@ export class ListarVentasComponent {
       }
     );
   }
+  
 
   formatearPrecioVenta(precio: number): string {
     // Formatea el precio de venta aquí según tus necesidades

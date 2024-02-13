@@ -6,13 +6,20 @@
         object-fit: cover;/* Escalar la imagen para que quepa en el contenedor */
         margin-right: 20px;
     }
+    
+    .layout-topbar-logo{
+        text-decoration: none;
+    }
   
+
+
+
 
 </style>
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="/index">
         <img src="assets/layout/images/VISOR1.png" alt="logo">
-        <span>VISOR</span>
+        <span class="texto-titulo">VISOR</span>
     </a>
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">

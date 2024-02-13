@@ -303,25 +303,13 @@ cambios(): boolean {
     });
   }
 
-//   submit() {
-//     if (!this.loading) {
-//         this.loading = true;
-//         setTimeout(() => {
-//             this.toastr.success('Usuario actualizado con éxito', 'Éxito', { progressBar: true, timeOut: 1000 });
-
-//                 this.reloadComponent();
-//                 this.cerrarModal();
-
-//         }, 1000);
-//     }
-// }
   
 submit() {
   if (!this.loading) {
     this.loading = true;
 
     // Cambia el tiempo de duración del mensaje del Toastr a 1000 ms (1 segundo)
-    this.toastr.success('Empleado actualizado con éxito.', 'Éxito', { progressBar: true, timeOut: 2000 });
+    this.toastr.success('Usuario actualizado con éxito.', 'Éxito', { progressBar: true, timeOut: 2000 });
     this.cerrarModal();
     this.reloadComponent();
   }

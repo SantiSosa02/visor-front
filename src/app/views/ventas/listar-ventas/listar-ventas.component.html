@@ -122,7 +122,8 @@
                 icon="pi pi-comment" class="p-button-rounded p-button-info">
               </button>
             </div>
-              <div class="boton-switch align-items-center">
+              <div class="boton-switch align-items-center"
+              *ngIf="item.estado !== 'Activo' && item.estado">
                 <label class="switch"
                   matTooltip="{{ item.estado ? 'Desactivar' : 'Activar' }}">
                   <input type="checkbox" [checked]="item.estado"

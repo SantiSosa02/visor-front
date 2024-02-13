@@ -1,14 +1,29 @@
 <style>
-        .layout-footer img {
-        border-radius: 50%; /* Hace que la imagen sea redonda */
-        width: 30px; /* Ancho deseado */
-        height: 22px; /* Alto deseado */
-        object-fit: cover;/* Escalar la imagen para que quepa en el contenedor */
-        margin-right: 20px;
+    .layout-footer-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 5px;
     }
+    
+    .layout-footer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .layout-footer span {
+        flex: 1; /* Esto permite que los spans ocupen el espacio disponible */
+        text-align: center; /* Centra el texto horizontalmente */
+    }
+    
 </style>
-<div class="layout-footer">
- <!--<img  src="assets/layout/images/VISOR1.png" alt="Logo" height="20" class="mr-2"/>-->
-    by
-    <span class="font-medium ml-2">Santiago Sosa Cadavid</span>
+
+<div class="layout-footer-container">
+    <div class="layout-footer">
+        <!--<img  src="assets/layout/images/VISOR1.png" alt="Logo" height="20" class="mr-2"/>-->
+        <span>By Santiago Sosa Cadavid</span>
+        <span>&copy; {{ currentYear }}. Todos los derechos reservados.</span>
+    </div>
 </div>

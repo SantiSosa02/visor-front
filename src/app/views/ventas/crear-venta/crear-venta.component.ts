@@ -9,6 +9,7 @@ import { ApiCategoriaService } from 'src/app/demo/service/categorias.service';
 import { ApiProductosService } from 'src/app/demo/service/productos.service';
 import { ApiServiciosService } from 'src/app/demo/service/servicios.service';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-venta',
@@ -568,24 +569,37 @@ obtenerPrecioProducto() {
   }
 }
 
-registrarVenta() {
-  // Modifica el objeto this.sale para que el campo observacion esté presente pero sin valor asignado
-  this.sale.observacion = null; // o '' si prefieres que esté vacío en lugar de nulo
 
-  this.apiVentas.createSale(this.sale, this.token).subscribe(
-    (response) => {
-      if (response && response.status === 'success') {
-        if (response.sale) {
-          this.submit();
+registrarVenta() {
+  Swal.fire({
+    title: 'Confirmar registro',
+    text: '¿Estás seguro de registrar esta venta?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, registrar',
+    cancelButtonText: 'Cancelar',
+    confirmButtonColor: '#4CAF50',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Si el usuario confirma, procede con el registro de la venta
+      this.sale.observacion = null; // o '' si prefieres que esté vacío en lugar de nulo
+
+      this.apiVentas.createSale(this.sale, this.token).subscribe(
+        (response) => {
+          if (response && response.status === 'success') {
+            if (response.sale) {
+              this.submit();
+            }
+          } else {
+            this.submit();
+          }
+        },
+        (error) => {
+          console.error('Error en la solicitud:', error);
         }
-      } else {
-        this.submit();
-      }
-    },
-    (error) => {
-      console.error('Error en la solicitud:', error);
+      );
     }
-  );
+  });
 }
 
 

@@ -231,7 +231,7 @@ formatNumber(num: number): string {
 registrarAbono() {
   // Muestra un mensaje de confirmación
   Swal.fire({
-    title: 'Confirmar Registro',
+    title: 'Confirmar registro',
     text: '¿Estás seguro de registrar este abono?',
     icon: 'question',
     showCancelButton: true,
