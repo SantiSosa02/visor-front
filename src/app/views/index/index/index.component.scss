@@ -43,3 +43,22 @@
   border: 1px solid #ddd; /* Color del borde de las celdas */
   padding: 8px; /* Espaciado interno de las celdas */
 }
+
+.circulo-rojito{
+  display: inline-block;
+  padding: 5px 8px; /* Ajusta el relleno según tus preferencias */
+  border-radius: 10%;
+  background-color: transparent; /* Ajusta el fondo según tus preferencias */
+  color: black; /* Ajusta el color del texto según tus preferencias */
+  text-align: center; /* Centra el texto horizontalmente */
+  min-width: 40px; /* Establece un ancho mínimo para el círculo */
+  font-size: 12px;
+}
+
+.circulo-rojito {
+  background-color: #dc3545; /* Color rojo */
+  color: #fff; /* Color blanco para el texto */
+  font-weight: bold;
+}
+
+

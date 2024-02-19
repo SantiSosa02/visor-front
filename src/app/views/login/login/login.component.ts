@@ -201,8 +201,14 @@ export class LoginComponent {
     this.bsModalRef.hide();  // Cierra el modal
   }
 
-  abrirRecuperar() {
-    this.bsModalRef= this.modalService.show(RecuperarComponent);
+
+
+   abrirRecuperar() {
+    this.bsModalRef= this.modalService.show(RecuperarComponent,{ 
+      backdrop:'static',
+      keyboard:false
+     });
    }
+
    
 }

@@ -1,3 +1,10 @@
+interface Cliente {
+  nombre: string;
+  apellido: string;
+  // Otras propiedades...
+  nombreCompleto?: string;
+}
+
 import { Component, ChangeDetectorRef  } from '@angular/core';
 import { ApiVentasService } from 'src/app/demo/service/ventas.service';
 import { Router } from '@angular/router';
@@ -44,6 +51,8 @@ export class CrearVentaComponent {
     detalleProductos:[],
     detalleServicios:[]
   }
+
+  
   
   metodosPago=[
     'Efectivo',
@@ -56,7 +65,7 @@ export class CrearVentaComponent {
   ]
 
 
-  clientes: any[] = [];
+  clientes: Cliente[] = [];
   categorias: any[] = [];
   servicios: any[] = [];
   productos: any[] = [];
@@ -119,6 +128,20 @@ export class CrearVentaComponent {
     );
   }
 
+camposCpmpletos2():boolean{
+  return(
+    !!this.cantidadProducto &&
+    !!this.selectedProducto
+  )
+}
+
+camposCpmpletos3():boolean{
+  return(
+    !!this.selectedServicio &&
+    !!this.precioServicio
+  )
+}
+
   validarCantidad(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     let inputValue = inputElement.value;
@@ -159,7 +182,6 @@ export class CrearVentaComponent {
   
           // Compara con la cantidad ingresada
           if (this.cantidadProducto > cantidadActual) {
-            console.warn('La cantidad ingresada es mayor que la cantidad actual del producto.');
             this.errorMessages.cantidad = 'La cantidad ingresada es mayor que la cantidad actual.';
             this.camposValidos=false;
           } else {
@@ -185,11 +207,11 @@ export class CrearVentaComponent {
     // Remueve los separadores de miles (puntos)
     inputValue = inputValue.replace(/\./g, '');
   
-    // Verifica si el campo está vacío
-    if (!inputValue.trim()) {
-      // Si el campo está vacío, no muestra ningún mensaje de error
+    // Verifica si el campo está vacío o es igual a cero
+    if (!inputValue.trim() || parseFloat(inputValue) === 0) {
+      // Si el campo está vacío o es igual a cero, muestra un mensaje de error
       this.errorMessages.precio = '';
-      this.camposValidos = true;
+      this.camposValidos = false;
       return; // Sale de la función
     }
   
@@ -206,7 +228,8 @@ export class CrearVentaComponent {
       this.errorMessages.precio = 'El precio de venta debe estar entre 1.000 y 600.000';
       this.camposValidos = false;
     }
-  }
+}
+
   
   eliminarProducto(index: number) {
     // Elimina el producto del arreglo detalleProductos
@@ -282,13 +305,16 @@ export class CrearVentaComponent {
     return randomFacturaNumber;
   }
 
-  obtenerClientes(){
-    this.apiClientes.getClientes(this.token).subscribe(
-      (data) => {
-        this.clientes = data;
+  obtenerClientes() {
+    this.apiClientes.getClientesActivos(this.token).subscribe(
+      (data: any[]) => {
+        this.clientes = data.map(cliente => ({
+          ...cliente,
+          nombreCompleto: `${cliente.nombre} ${cliente.apellido}`
+        }));
       },
       (error) => {
-        console.error('Error al obtener las categorías:', error);
+        console.error('Error al obtener los clientes:', error);
       }
     );
   }
@@ -329,14 +355,14 @@ export class CrearVentaComponent {
   }
 
   get filteredClientes() {
-    if (this.searchCliente.trim() === '') {
-        return this.clientes;
+    if (!this.searchCliente.trim()) {
+      return this.clientes;
     }
+
     const searchTerm = this.searchCliente.toLowerCase();
 
     return this.clientes.filter(cliente => {
-        const fullName = cliente.nombre + ' ' + cliente.apellido;
-        return fullName.toLowerCase().includes(searchTerm);
+      return cliente.nombreCompleto.toLowerCase().includes(searchTerm);
     });
   }
 
@@ -416,6 +442,7 @@ filtrarProductosPorCategoria(idcategoria: any) {
         this.cantidadProducto = null;
         this.precioProductoFormateado='';
         this.selectedCategoria='';
+        this.camposValidos=false
   
         // Notifica cambios al Angular Change Detector si es necesario
         this.cdRef.detectChanges();
@@ -463,6 +490,7 @@ filtrarProductosPorCategoria(idcategoria: any) {
         this.calcularTotal();
   
         this.selectedServicio = '';
+        this.camposValidos=false;
         this.descripcionServicio = '';
         this.precioServicio = null;
   

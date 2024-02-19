@@ -7,7 +7,9 @@
 
             <div class="col-2 mt-3">
                 <div class="input-container">
-                    <label for="name">Numero Factura</label>
+                    <label for="name">Numero Factura 
+                        <span style="color: red;" >*</span>
+                    </label>
                     <input
                         type="number"
                         name="numerofactura"
@@ -29,13 +31,17 @@
                         class="form-control"
                         [(ngModel)]="sale.fecha"
                         disabled>
-                    <label for="name" class="input-label">Fecha</label>
+                    <label for="name" class="input-label">Fecha
+                        <span style="color: red;">*</span>
+                    </label>
                 </div>
             </div>
 
             <div class="col-3 mt-5">
                 <div class="select-metodopago">
-                    <label for="cliente">Tipo de pago</label>
+                    <label for="cliente">Tipo de pago
+                        <span style="color: red;" *ngIf="!sale.tipopago">*</span>
+                    </label>
                     <select
                         id="tipopago"
                         name="tipopago"
@@ -53,7 +59,9 @@
 
             <div class="col-3  mt-5">
                 <div class="select-metodopago">
-                    <label for="cliente">Metodo de pago</label>
+                    <label for="cliente">Metodo de pago
+                        <span style="color: red;" *ngIf="!sale.metodopago">*</span>
+                    </label>
                     <select
                         id="metodopago"
                         name="metodopago"
@@ -69,33 +77,28 @@
                 </div>
             </div>
 
-            <div class="col-3 mt-3">
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
                 <div class="input-container">
-                    <input type="text" name="searchCliente"
-                        [(ngModel)]="searchCliente" class="form-control"
-                        placeholder>
-                    <label for="name" class="input-label">Filtrar
-                        cliente</label>
+                  <label for="cliente">Cliente
+                    <span style="color: red;" *ngIf="!sale.idcliente">*</span>
+                  </label>
+                  <p-dropdown
+                    id="cliente"
+                    name="idcliente"
+                    [options]="filteredClientes"
+                    [(ngModel)]="sale.idcliente"
+                    optionLabel="nombreCompleto"
+                    optionValue="idcliente" 
+                    [filter]="true"
+                    filterBy="nombreCompleto"
+                    [showClear]="true"
+                    placeholder="Selecciona un cliente">
+                  </p-dropdown>
                 </div>
-            </div>
-
-            <div class="col-3 mt-3">
-                <div class="select-cliente">
-                    <label for="cliente">Cliente</label>
-                    <select
-                        id="cliente"
-                        name="idcliente"
-                        [(ngModel)]="sale.idcliente"
-                        class="form-select">
-                        <option value disabled selected>Selecciona un
-                            cliente</option>
-                        <option *ngFor="let cliente of filteredClientes"
-                            [value]="cliente.idcliente">{{ cliente.nombre + " "
-                            + cliente.apellido }}</option>
-                    </select>
-
-                </div>
-            </div>
+              </div>
+              
+              
+              
 
             <div class="col-12 contenedor-botones">
                 <button
@@ -143,7 +146,9 @@
 
                 </div>
                 <div class="col-2">
-                    <label for="producto">Producto</label>
+                    <label for="producto">Producto
+                        <span style="color: red;">*</span>
+                    </label>
                     <select
                         id="producto"
                         name="idproducto"
@@ -151,7 +156,8 @@
                         (change)="obtenerPrecioProducto()"
                         class="form-select"
                         required
-                        [attr.disabled]="noHayProductosRelacionados ? 'true' : null">
+                        [attr.disabled]="noHayProductosRelacionados ? 'true' : null"
+                        >
 
                         <!-- Si no hay productos disponibles -->
                         <ng-container
@@ -191,7 +197,9 @@
                 </div>
 
                 <div class="col-4 col-lg-2 cantidad-agregar">
-                    <label for="cantidadProducto">Cantidad</label>
+                    <label for="cantidadProducto">Cantidad
+                        <span style="color: red;" *ngIf="!sale.cantidad">*</span>
+                    </label>
                     <input
                         type="number"
                         name="cantidadProducto"
@@ -233,7 +241,7 @@
 
                 <div class="boton-agregar">
                     <button class="btn btn-success boton-add"
-                        [disabled]="!camposValidos"
+                        [disabled]="!camposValidos || !camposCpmpletos2()"
                         (click)="agregarProducto()" matTooltip="Agregar">
                         <i class="fa-solid fa-plus"></i>
                     </button>
@@ -243,8 +251,10 @@
             <div *ngIf="mostrarDetallesServicios"
                 class="col-12 row contenedor-detalleServicio ">
 
-                <div class="col-4 col-lg-2 col-md-4">
-                    <label for="servicio">Servicio</label>
+                <div class="col-lg-2 col-md-4 col-sm-11 col-2">
+                    <label for="servicio">Servicio
+                        <span style="color: red;" >*</span>
+                    </label>
                     <select
                         id="idservicio"
                         name="idservicio"
@@ -259,9 +269,13 @@
                             {{ servicio.nombre }}
                         </option>
                     </select>
+                    <div class="invalid-feedback error-message mt-2"
+                    *ngIf="errorMessages.servicio" style="color: red;">
+                    {{errorMessages.servicio}}
+                </div>
                 </div>
 
-                <div class="col-12 col-lg-4 col-md-4">
+                <div class="col-lg-4 col-md-6 col-sm-12 mt-3">
                     <label for="descripcion">Descripción</label>
                     <input
                         type="text"
@@ -273,8 +287,10 @@
                         disabled>
                 </div>
 
-                <div class="col-4 col-lg-2 col-md-4">
-                    <label for="precio">Precio</label>
+                <div class="col-lg-2 col-md-3 col-sm-12 mt-3">
+                    <label for="precio">Precio
+                        <span style="color: red;">*</span>
+                    </label>
 
                      <input
                         type="number"
@@ -319,7 +335,7 @@
 
                 <div class="boton-agregar">
                     <button class="btn btn-success boton-add"
-                        [disabled]="!camposValidos"
+                        [disabled]="!camposValidos || !camposCpmpletos3()"
                         (click)="agregarServicio()" matTooltip="Agregar">
                         <i class="fa-solid fa-plus"></i></button>
                 </div>
@@ -392,7 +408,7 @@
             <div class="botones mt-4">
                 <button pButton pRipple type="button"
                     class="p-button-success boton-registrar"
-                    [disabled]="loading || !camposCompletos() || !camposValidos"
+                    [disabled]="loading || !camposCompletos()"
                     (click)="registrarVenta()">
                     <span *ngIf="!loading">Registrar</span>
                 </button>

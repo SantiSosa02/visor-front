@@ -77,14 +77,8 @@ loading:boolean = false;
       // Reemplazar múltiples espacios entre palabras con un solo espacio
       this.user.nombre = this.user.nombre.replace(/\s+/g, ' ');
   
-      // Capitalizar la primera letra de cada palabra
-      const palabras = this.user.nombre.split(' ');
-      const nombreCapitalizado = palabras.map(
-        palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1)
-      );
-  
-      // Unir las palabras nuevamente con un solo espacio
-      this.user.nombre = nombreCapitalizado.join(' ');
+      // Capitalizar la primera letra de cada palabra y convertir el resto en minúsculas
+      this.user.nombre = this.capitalizeFirstLetter(this.user.nombre);
   
       if (!validacion.test(this.user.nombre)) {
         this.errorMessages.nombre = 'El nombre solo acepta letras, un espacio entre palabras y letras con acentos (á, é, í, ó, ú).';
@@ -92,13 +86,39 @@ loading:boolean = false;
       } else if (this.user.nombre.length > 50) {
         this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
         this.camposValidos = false;
-      } else {
+      }else if (this.user.nombre.length < 3) {
+        this.errorMessages.nombre = 'El nombre no debe ser menor a 3 caracteres.';
+        this.camposValidos = false;
+       } else {
         this.errorMessages.nombre = '';
         this.camposValidos = true;
       }
     }
   }
-  
+
+  capitalizeFirstLetter(str) {
+    let result = '';
+    let capitalizeNext = true;
+
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+        if (capitalizeNext && /[a-záéíóú]/i.test(char)) {
+            // Si se debe capitalizar el próximo carácter y el carácter actual es una letra
+            result += char.toUpperCase();
+            capitalizeNext = false;
+        } else {
+            // Si no se debe capitalizar el próximo carácter o el carácter actual no es una letra
+            result += char.toLowerCase();
+            if (char === 'ñ' || char === 'Ñ') {
+                capitalizeNext = false; // Evitar que se capitalice la siguiente letra
+            } else if (char === ' ') {
+                capitalizeNext = true; // Restaurar la capitalización para la próxima palabra
+            }
+        }
+    }
+
+    return result;
+}
   
 
   validarApellido() {
@@ -117,11 +137,7 @@ loading:boolean = false;
       const palabras = this.user.apellido.split(' ');
   
       // Capitaliza la primera letra de cada palabra
-      const apellidoCapitalizado = palabras.map(
-        palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
-  
-      // Une las palabras nuevamente
-      this.user.apellido = apellidoCapitalizado.join(' ');
+      this.user.apellido = this.capitalizeFirstLetter(this.user.apellido);
   
       if (!validacion.test(this.user.apellido)) {
         this.errorMessages.apellido = 'El apellido solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
@@ -129,7 +145,10 @@ loading:boolean = false;
       } else if (this.user.apellido.length > 50) {
         this.errorMessages.apellido = 'El apellido no debe superar los 50 caracteres.';
         this.camposValidos = false;
-      } else {
+      } else if (this.user.apellido.length < 3) {
+        this.errorMessages.apellido = 'El apellido no debe ser menor a 3 caracteres.';
+        this.camposValidos = false;
+      }else {
         this.errorMessages.apellido = '';
         this.camposValidos = true;
       }
@@ -137,7 +156,8 @@ loading:boolean = false;
   }
   
   validarCorreo() {
-    const validacionCorreo = /^[a-zA-Z0-9._%-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-]+\.(com|co|org|net|edu)$/;
+    const validacionCorreo = /^[a-zA-Z0-9._%-ñÑáéíóúÁÉÍÓÚ]{4,}@[a-zA-Z0-9.-]+\.(com|co|org|net|edu)$/;
+
   
     if (!this.user.correo) {
       this.errorMessages.correo = '';

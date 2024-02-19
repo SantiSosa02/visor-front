@@ -19,8 +19,12 @@
           <tbody>
             <tr *ngFor="let producto of productos">
               <td>{{ producto.nombre }}</td>
-              <td style="color: red; font-weight: bold;">{{ producto.cantidad }}</td>
-            </tr>
+              <td>
+                <div class="circulo-rojito">
+                  <span class="bold-text">{{ producto.cantidad }}</span>
+                </div>
+              </td>
+                          </tr>
           </tbody>
         </table>
       </div>

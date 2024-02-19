@@ -99,7 +99,7 @@
 
             <div class="botones mt-3">
                 <button  pButton pRipple type="button"    class="p-button-success boton-registrar"
-                    [disabled]="loading || !camposCompletos() || !camposValidos"
+                    [disabled]="!camposCompletos() || !camposValidos"
                     (click)="registrarCliente()">
                     <span *ngIf="!loading">Registrar</span>
                 </button>

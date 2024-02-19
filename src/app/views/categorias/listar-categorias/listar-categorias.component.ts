@@ -227,7 +227,8 @@ actualizarTabla(): void {
   // Filtrar todos los usuarios, tanto activos como inactivos
   const usuariosFiltrados = this.datosOriginales.filter(item => {
     return (
-      item.nombre.toLowerCase().includes(busquedaMinuscula) 
+      item.nombre.toLowerCase().includes(busquedaMinuscula) ,
+      item.descripcion.toLowerCase().includes(busquedaMinuscula)
     );
   });
 

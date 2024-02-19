@@ -598,7 +598,9 @@ export class ListarVentasComponent {
     });
   }
 
-
+  formatNumber(num: number): string {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
 
 
   cambiarFiltro(activos: boolean) {
@@ -766,14 +768,15 @@ export class ListarVentasComponent {
       (data: any[]) => {
         // Crea un array para almacenar los datos
         const excelData: any[] = [];
-
+  
         // Agrega el encabezado del thead
         const headerData = [
-          'N Factura', 'Cliente', 'Fecha', 'M Pago', 'V total', 'Estado pago', 'Estado', 'ID Venta'
+          ['Ventas', '', '', '', '', '', ''], // Esto crea una fila con siete celdas vacías que preceden al encabezado 'Ventas'
+          ['Factura', 'Cliente', 'Fecha', 'Tipo Pago', 'Metodo pago', 'Valor total', 'Estado pago', 'Estado']
           // Agrega más campos según la estructura de tus datos
         ];
-        excelData.push(headerData);
-
+        excelData.push(...headerData);
+  
         // Itera sobre los datos y obtén los valores de las celdas
         const promesasClientes = data.map((item) => {
           return new Promise<void>((resolve, reject) => {
@@ -785,11 +788,11 @@ export class ListarVentasComponent {
                     item.numerofactura,
                     nombreCliente,
                     item.fecha,
+                    item.tipopago,
                     item.metodopago,
-                    item.valortotal,
+                    this.formatNumber( item.valortotal),
                     item.estadopago,
                     item.estado ? 'Activo' : 'Inactivo',
-                    item.idventa,
                     // Puedes eliminar 'item.idcliente' aquí ya que ahora estás usando el nombre del cliente
                     // Agrega más campos según la estructura de tus datos
                   ];
@@ -804,15 +807,37 @@ export class ListarVentasComponent {
             );
           });
         });
-
+  
         Promise.all(promesasClientes).then(() => {
           // Crea una hoja de cálculo
           const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(excelData);
-
+  
+          // Fusiona las celdas para el título "Ventas"
+          const range = XLSX.utils.decode_range('A1:G1'); // Rango de celdas para fusionar
+          ws['!merges'] = [{ s: { r: range.s.r, c: range.s.c }, e: { r: range.e.r, c: range.e.c } }]; // Fusiona las celdas
+  
+          // Ajusta el ancho de las columnas
+          const wscols = [{ wch: 20 }, { wch: 30 }, { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 15 }];
+          ws['!cols'] = wscols;
+  
+          // Alinea el contenido del encabezado a la izquierda
+          ws['!align'] = 'left';
+  
+          // Alinea el título "Ventas" al centro
+          const titleCell = XLSX.utils.encode_cell({ r: range.s.r, c: range.s.c }); // Celda de título
+          ws[titleCell].s = { alignment: { horizontal: 'center' } }; // Establece la alineación horizontal al centro
+  
+          // Alinea el encabezado de las columnas al centro
+          const rangeHeader = XLSX.utils.decode_range('A2:G2'); // Rango de celdas para el encabezado
+          for (let i = rangeHeader.s.c; i <= rangeHeader.e.c; i++) {
+            const headerCell = XLSX.utils.encode_cell({ r: rangeHeader.s.r, c: i });
+            ws[headerCell].s = { alignment: { horizontal: 'center' } }; // Establece la alineación horizontal al centro
+          }
+  
           // Crea un libro de trabajo
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
           XLSX.utils.book_append_sheet(wb, ws, 'Ventas');
-
+  
           // Guarda el archivo
           XLSX.writeFile(wb, 'ventas.xlsx');
         });
@@ -823,8 +848,6 @@ export class ListarVentasComponent {
       }
     );
   }
-
-
-
-
+  
+  
 }

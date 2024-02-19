@@ -75,6 +75,17 @@ input:checked + .slider:before {
   font-size: 13px;
 }
 
+.circulo-rojito{
+  display: inline-block;
+  padding: 5px 8px; /* Ajusta el relleno según tus preferencias */
+  border-radius: 10%;
+  background-color: transparent; /* Ajusta el fondo según tus preferencias */
+  color: black; /* Ajusta el color del texto según tus preferencias */
+  text-align: center; /* Centra el texto horizontalmente */
+  min-width: 40px; /* Establece un ancho mínimo para el círculo */
+  font-size: 12px;
+}
+
 
 .card-title {
   font-weight: bold;
@@ -99,6 +110,9 @@ input:checked + .slider:before {
 h4 {
   font-size: 28px;
   margin-left: 5px;
+}
+.bold-text {
+  font-weight: bold;
 }
 
 
@@ -188,6 +202,11 @@ label {
 }
 
 .circulo-rojo {
+  background-color: #dc3545; /* Color rojo */
+  color: #fff; /* Color blanco para el texto */
+}
+
+.circulo-rojito {
   background-color: #dc3545; /* Color rojo */
   color: #fff; /* Color blanco para el texto */
 }

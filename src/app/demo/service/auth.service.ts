@@ -69,7 +69,6 @@ export class AuthService {
   }
 
   login(correo: string, contrasena: string): Observable<boolean> {
-    console.log('Attempting login...');
     const url = `https://api-postgress.onrender.com/api/usuarios/login`;
     //  const url='http://localhost:8080/api/usuarios/login';
     
@@ -84,7 +83,6 @@ export class AuthService {
   private handleLoginResponse(response: any): boolean {
     if (response && response.usuario && response.token) {
       this.setAuthentication(response.usuario, response.token);
-      console.log('Login successful:', response.message);
       return true;
     } else {
       console.error('Error: Invalid server response.');
@@ -129,12 +127,10 @@ export class AuthService {
   
 
   checkAuthStatus(): Observable<User | null> {
-    console.log('Checking authentication status...');
   
     const token = localStorage.getItem('token');
   
     if (!token) {
-      console.log('No token found. Not authenticated.');
       this._authStatus.next(AuthStatus.notAuthenticated);
       return of(null);
     }
@@ -158,7 +154,6 @@ export class AuthService {
   }
 
   logout() {
-    console.log('Logging out...');
     this._currentUser.next(null);
     this._authStatus.next(AuthStatus.notAuthenticated);
   

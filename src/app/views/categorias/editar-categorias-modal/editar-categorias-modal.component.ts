@@ -20,6 +20,7 @@ export class EditarCategoriasModalComponent {
 datosModificados:any ={
     nombre:'',
     descripcion:'',
+    estado:false
 }
 
 errorMessages = {
@@ -56,7 +57,9 @@ camposValidos:boolean = false;
     }
     return (
         this.datosModificados.nombre !== this.datosOriginales.nombre ||
-        this.datosModificados.descripcion !== this.datosOriginales.descripcion
+        this.datosModificados.descripcion !== this.datosOriginales.descripcion||
+        this.datosModificados.estado !== this.datosOriginales.estado 
+
     );
 }
 
@@ -64,43 +67,47 @@ validarNombre() {
   const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
 
   if (!this.datosModificados.nombre) {
-    this.errorMessages.nombre = '';
-    this.camposValidos = false;
+      this.errorMessages.nombre = '';
+      this.camposValidos = false;
   } else {
-    // Eliminar espacios en blanco al inicio y al final del nombre
-    this.datosModificados.nombre = this.datosModificados.nombre.trim();
+      // Eliminar espacios en blanco al inicio y al final del nombre
+      this.datosModificados.nombre = this.datosModificados.nombre.trim();
 
-    this.datosModificados.nombre = this.datosModificados.nombre.replace(/\s+/g, ' ');
+      this.datosModificados.nombre = this.datosModificados.nombre.replace(/\s+/g, ' ');
 
-
-    if (!validacion.test(this.datosModificados.nombre)) {
-      this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
-      this.camposValidos = false;
-    } else if (this.datosModificados.nombre.length > 50) {
-      this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
-      this.camposValidos = false;
+      if (!validacion.test(this.datosModificados.nombre)) {
+          this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
+          this.camposValidos = false;
+      } else if (this.datosModificados.nombre.length > 50) {
+          this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
+          this.camposValidos = false;
+      }else if (this.datosModificados.nombre.length < 3) {
+        this.errorMessages.nombre = 'El nombre no debe ser menor a 3 caracteres.';
+        this.camposValidos = false;
     } else {
-      const token = localStorage.getItem('token');
-      if (this.datosModificados.nombre !== this.datosOriginales.nombre) {
-        this.apicategoria.verificarNombreExistente(this.datosModificados.nombre, token).subscribe(
-          (response) => {
-            if (response.existe) {
-              this.errorMessages.nombre = 'Este nombre ya está en uso por otra categoria.';
-              this.camposValidos = false;
-            } else {
-              this.datosModificados.nombre = this.datosModificados.nombre.charAt(0).toUpperCase() + this.datosModificados.nombre.slice(1);
-              this.errorMessages.nombre = '';
-              this.camposValidos = true;
-            }
-          },
-          (error) => {
-            console.error('Error al verificar el nombre:', error);
+          const token = localStorage.getItem('token');
+          if (this.datosModificados.nombre !== this.datosOriginales.nombre) {
+              this.apicategoria.verificarNombreExistente(this.datosModificados.nombre, token).subscribe(
+                  (response) => {
+                      if (response.existe) {
+                          this.errorMessages.nombre = 'Este nombre ya está en uso por otra categoria.';
+                          this.camposValidos = false;
+                      } else {
+                          // Capitalizar solo la primera letra de la primera palabra
+                          this.datosModificados.nombre = this.datosModificados.nombre.charAt(0).toUpperCase() + this.datosModificados.nombre.slice(1).toLowerCase();
+                          this.errorMessages.nombre = '';
+                          this.camposValidos = true;
+                      }
+                  },
+                  (error) => {
+                      console.error('Error al verificar el nombre:', error);
+                  }
+              );
           }
-        );
       }
-    }
   }
 }
+
 
 
 validarDescripcion() {
@@ -143,6 +150,7 @@ validarDescripcion() {
           
           this.datosModificados.nombre = data.nombre ;
           this.datosModificados.descripcion = data.descripcion;
+          this.datosModificados.estado = data.estado;
       
           // Realiza cualquier otra lógica que necesites con los datos del usuario
         } else {
@@ -158,6 +166,7 @@ validarDescripcion() {
       id: this.categoryId,
       nombre: this.datosModificados.nombre,
       descripcion: this.datosModificados.descripcion,
+      estado:this.datosModificados.estado
     };
     const token = localStorage.getItem('token');
     this.apicategoria.updateCategory(this.categoryId, usuarioActualizado, token).subscribe((respuesta) => {

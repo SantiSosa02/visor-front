@@ -128,7 +128,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
         SharedModule,
         MatDialogModule,
         ReactiveFormsModule,
-        FormsModule,
         ModalModule.forRoot(),
         TableModule,    
         ToolbarModule,

@@ -71,42 +71,47 @@ loading:boolean = false;
 
   validarNombre() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
-  
+
     if (!this.product.nombre) {
-      this.errorMessages.nombre = '';
-      this.camposValidos = false;
+        this.errorMessages.nombre = '';
+        this.camposValidos = false;
     } else {
-      // Eliminar espacios en blanco al inicio y al final del nombre
-      this.product.nombre = this.product.nombre.trim();
+        // Eliminar espacios en blanco al inicio y al final del nombre
+        this.product.nombre = this.product.nombre.trim();
 
-      this.product.nombre = this.product.nombre.replace(/\s+/g, ' ');
+        this.product.nombre = this.product.nombre.replace(/\s+/g, ' ');
 
-      if (!validacion.test(this.product.nombre)) {
-        this.errorMessages.nombre = 'El nombre solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).';
-        this.camposValidos = false;
-      } else if (this.product.nombre.length > 50) {
-        this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
-        this.camposValidos = false;
-      } else {
-        const token = localStorage.getItem('token');
-        this.apiProducto.verificarNombreExistente(this.product.nombre, token).subscribe(
-          (response) => {
-            if (response.existe) {
-              this.errorMessages.nombre = 'Este nombre ya está en uso por otro producto.';
-              this.camposValidos = false;
-            } else {
-              this.product.nombre = this.product.nombre.charAt(0).toUpperCase() + this.product.nombre.slice(1);
-              this.errorMessages.nombre = '';
-              this.camposValidos = true;
-            }
-          },
-          (error) => {
-            console.error('Error al verificar el nombre:', error);
-          }
-        );
-      }
+        if (!validacion.test(this.product.nombre)) {
+            this.errorMessages.nombre = 'El nombre solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).';
+            this.camposValidos = false;
+        } else if (this.product.nombre.length > 50) {
+            this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
+            this.camposValidos = false;
+        }else if (this.product.nombre.length < 3) {
+          this.errorMessages.nombre = 'El nombre no ser menor a 3 caracteres.';
+          this.camposValidos = false;
+      }  else {
+            const token = localStorage.getItem('token');
+            this.apiProducto.verificarNombreExistente(this.product.nombre, token).subscribe(
+                (response) => {
+                    if (response.existe) {
+                        this.errorMessages.nombre = 'Este nombre ya está en uso por otro producto.';
+                        this.camposValidos = false;
+                    } else {
+                        // Capitalizar solo la primera letra de la primera palabra
+                        this.product.nombre = this.product.nombre.charAt(0).toUpperCase() + this.product.nombre.slice(1).toLowerCase();
+                        this.errorMessages.nombre = '';
+                        this.camposValidos = true;
+                    }
+                },
+                (error) => {
+                    console.error('Error al verificar el nombre:', error);
+                }
+            );
+        }
     }
-  }
+}
+
   
 
 

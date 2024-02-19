@@ -277,8 +277,6 @@ export class ListarUsuariosComponent {
     );
   }
   
-  
-  
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.itemsPerPage);
   }

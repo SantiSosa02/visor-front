@@ -16,7 +16,8 @@
                         class="form-control"
                         (input)="validarNombre()"
                         [ngClass]="{'is-invalid': errorMessages.nombre}"
-                        placeholder="">
+                        placeholder=""
+                        [disabled]="!datosModificados.estado">
                         <label for="name" class="input-label">Nombre
                             <span style="color: red;" *ngIf="!datosModificados.nombre">*</span>
                         </label>
@@ -38,7 +39,8 @@
                         class="form-control"
                         (input)="validarApellido()"
                         [ngClass]="{'is-invalid': errorMessages.apellido}"
-                        placeholder="">
+                        placeholder=""
+                        [disabled]="!datosModificados.estado">
                         <label for="apellido" class="input-label">Apellido
                             <span style="color: red;" *ngIf="!datosModificados.apellido">*</span>
                         </label>
@@ -60,7 +62,8 @@
                         class="form-control"
                         (input)="validarCorreo()"
                         [ngClass]="{'is-invalid': errorMessages.correo}"
-                        placeholder="">
+                        placeholder=""
+                        [disabled]="!datosModificados.estado">
                         <label for="correo" class="input-label">Correo
                             <span style="color: red;" *ngIf="!datosModificados.correo">*</span>
                         </label>

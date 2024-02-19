@@ -6,29 +6,33 @@
             </div>
             <form #loginForm="ngForm" action="">
                 <div class="modal-body">
-                    <p class="mt-2">Ingrese su correo electrónico para recuperar la contraseña:</p>
-                    <input type="email"
-                     name="correo" 
-                     id="correo" 
-                     [(ngModel)]="correo"
-                     class="form-control mt-2" 
-                     placeholder="Correo electrónico"
-                     [ngClass]="{'is-invalid': errorMessages.recuperar}">
-                     <div class="invalid-feedback error-message mt-2"
-                     *ngIf="errorMessages.recuperar" style="color: green;">
-                     {{errorMessages.recuperar}}
-                 </div>
-                </div>
+                    <p class="mt-2">Ingrese su correo electrónico para recuperar la contraseña:
+                        <span style="color: red;">*</span>
+                    </p>
+                    <input 
+                      type="email"
+                      name="correo" 
+                      id="correo" 
+                      [(ngModel)]="user.correo"
+                      (input)="validarCorreo()"
+                      class="form-control mt-2" 
+                      placeholder="Correo electrónico"
+                      [ngClass]="{'is-invalid': errorMessages.recuperar}"
+                      [style.color]="mensajeColor"> <!-- Aquí se establece el color del texto -->
+                    <div class="invalid-feedback error-message mt-2" [style.color]="mensajeColor">
+                      {{errorMessages.recuperar}}
+                    </div>
+                  </div>
+                  
             </form>
 
             <div class="botones mt-4">
                 <button pButton pRipple type="button"
-                    class="p-button-success boton-registrar"
-                    [disabled]="loading"
-                    (click)="forgotPassword(loginForm)">
-                    <span *ngIf="!loading">Recuperar</span>
-                    <span *ngIf="loading">Enviando correo...</span>
-                </button>
+                class="p-button-success boton-recuperar"
+                [disabled]="!correoCompleto() || !correoValido"
+                (click)="forgotPassword(loginForm)">
+            <span >Recuperar</span>
+        </button>
                 <button
                     pButton pRipple type="button"
                     class="p-button-secondary"

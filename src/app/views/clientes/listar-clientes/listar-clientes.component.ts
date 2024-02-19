@@ -200,48 +200,56 @@ export class ListarClientesComponent {
   obtenerEstadoFormateado(estado: boolean): string {
     return estado ? 'Activo' : 'Inactivo';
   }
-
   exportarExcel(): void {
     // Obtén todos los datos, ya sean activos o inactivos
     this.apiClientes.getClientes(this.token).subscribe(
       (data: any[]) => {
-        // Crea un array para almacenar los datos
-        const excelData: any[] = [];
-  
-        // Agrega el encabezado del thead (excluyendo la columna de acciones)
-        const headerData = [
-          '#', 'Nombre', 'Apellido', 'Telefono', 'Correo', 'Estado'
-        ];
-        excelData.push(headerData);
-  
-        // Itera sobre los datos y obtén los valores de las celdas
-        data.forEach(item => {
-          const rowData = [
-            item.idcliente,
-            item.nombre,
-            item.apellido,
-            item.telefono,
-            item.correo,
-            this.obtenerEstadoFormateado(item.estado) // Utiliza la función para obtener el estado formateado
+        try {
+          // Crea un array para almacenar los datos
+          const excelData: any[] = [];
+      
+          // Agrega el encabezado del thead (excluyendo la columna de acciones)
+          const headerData = [
+            ['Clientes', '', '', '',''], // Agrega el encabezado 'Clientes' en una fila separada
+            ['Nombre', 'Apellido', 'Telefono', 'Correo', 'Estado']
           ];
-          excelData.push(rowData);
-        });
-  
-        // Crea una hoja de cálculo
-        const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(excelData);
-  
-        // Crea un libro de trabajo
-        const wb: XLSX.WorkBook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Clientes');
-  
-        // Guarda el archivo
-        XLSX.writeFile(wb, 'clientes.xlsx');
+          excelData.push(...headerData);
+      
+          // Itera sobre los datos y obtén los valores de las celdas
+          data.forEach(item => {
+            const rowData = [
+              item.nombre,
+              item.apellido,
+              item.telefono,
+              item.correo,
+              this.obtenerEstadoFormateado(item.estado) // Utiliza la función para obtener el estado formateado
+            ];
+            excelData.push(rowData);
+          });
+      
+          // Crea una hoja de cálculo
+          const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(excelData);
+      
+          // Fusiona las celdas para el título "Clientes"
+          const range = XLSX.utils.decode_range('A1:E1'); // Rango de celdas para fusionar
+          ws['!merges'] = [{ s: { r: range.s.r, c: range.s.c }, e: { r: range.e.r, c: range.e.c } }]; // Fusiona las celdas
+      
+          // Crea un libro de trabajo
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, 'Clientes');
+      
+          // Guarda el archivo
+          XLSX.writeFile(wb, 'clientes.xlsx');
+        } catch (error) {
+          console.error('Error al exportar a Excel:', error);
+        }
       },
       (error) => {
         console.error('Error al obtener los clientes:', error);
       }
     );
   }
+  
 
   cambiarFilasPorPagina() {
     // Asegúrate de que currentPage sea válido después del cambio

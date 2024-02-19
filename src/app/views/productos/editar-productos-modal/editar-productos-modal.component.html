@@ -17,8 +17,10 @@
                         class="form-control"
                         (input)="validarNombre()"
                         [ngClass]="{'is-invalid': errorMessages.nombre}"
-                        placeholder="Ingresa el nombre">
-                    <label for="name" class="input-label">Nombre
+                        placeholder="Ingresa el nombre"
+                        [disabled]="!datosModificados.estado">
+                    <label for="name" class="input-label"
+                    >Nombre
                         <span style="color: red;" *ngIf="!datosModificados.nombre">*</span>
                     </label>
                     <div class="invalid-feedback error-message "
@@ -39,7 +41,8 @@
                         id="idcategoria"
                         name="idcategoria"
                         [(ngModel)]="datosModificados.idcategoria"
-                        (change)="validarCategoria()">
+                        (change)="validarCategoria()"
+                        [disabled]="!datosModificados.estado">
 
                         <option value disabled selected>Selecciona una categoría</option>
                         <option *ngFor="let categoria of categorias"
@@ -63,8 +66,9 @@
                         [ngClass]="{'is-invalid': errorMessages.stock_minimo}"
                         placeholder="Ingresa el stock minimo"
                         required
-                        min="0">
-                    <label for="name" class="input-label">Stock minimo
+                        min="0"
+                        [disabled]="!datosModificados.estado">
+                    <label for="name" class="input-label">Stock mínimo
                         <span style="color: red;" *ngIf="!datosModificados.stock_minimo">*</span>
                     </label>
                     <div class="invalid-feedback error-message mt-2"
@@ -87,7 +91,8 @@
                         [ngClass]="{'is-invalid': errorMessages.cantidad}"
                         placeholder="Ingresa la cantidad"
                         disabled
-                        min="0">
+                        min="0"
+                        disabled>
                     <label for="name" class="input-label">Cantidad
                         <span style="color: red;" *ngIf="!datosModificados.cantidad">*</span>
                     </label>
@@ -111,7 +116,8 @@
                     (keyup)="validarPrecioVenta($event)"
                     [ngClass]="{'is-invalid': errorMessages.precio_venta}"
                     min="0"
-                    [(ngModel)]="datosModificados.precio_venta"> 
+                    [(ngModel)]="datosModificados.precio_venta"
+                    [disabled]="!datosModificados.estado"> 
                 </p-inputNumber>
                 
             

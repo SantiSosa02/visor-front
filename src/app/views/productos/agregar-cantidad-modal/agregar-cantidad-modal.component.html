@@ -29,7 +29,9 @@
                     (input)="validarCantidad($event)"
                     [ngClass]="{'is-invalid': errorMessages.cantidad}"
                     placeholder="">
-                    <label for="cantidad" class="input-label">Cantidad a agregar</label>
+                    <label for="cantidad" class="input-label">Cantidad a agregar
+                        <span style="color: red;" *ngIf="!cantidadAAgregar">*</span>
+                    </label>
                 <div class="invalid-feedback error-message mt-2"
                     *ngIf="errorMessages.cantidad" style="color: red;">
                     {{errorMessages.cantidad}}

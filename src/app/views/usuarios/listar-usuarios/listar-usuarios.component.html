@@ -43,7 +43,7 @@
       </thead>
       <tbody>
         <div class="mensaje-no-resultados" *ngIf="data.length === 0">
-          No se encontraron resultados
+          No se encontraron usuarios
         </div>
         <tr *ngFor="let item of data; let i = index"
           [style.background-color]="item.estado ? '' : '#880f0f'">

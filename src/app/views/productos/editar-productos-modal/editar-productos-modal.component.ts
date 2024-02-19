@@ -23,7 +23,8 @@ datosModificados:any ={
   idcategoria: '',
   stock_minimo:'',
   cantidad:'',
-  precio_venta:'',
+  precio_venta:'', 
+  estado:false
 }
 
 errorMessages = {
@@ -66,47 +67,51 @@ token=localStorage.getItem('token');
 
   validarNombre() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s]+$/;
-  
-    if (!this.datosModificados.nombre) {
-      this.errorMessages.nombre = '';
-      this.camposValidos = false;
-    } else {
-      // Eliminar espacios en blanco al inicio y al final del nombre
-      this.datosModificados.nombre = this.datosModificados.nombre.trim();
 
-      this.datosModificados.nombre = this.datosModificados.nombre.replace(/\s+/g, ' ');
-  
-      if (!validacion.test(this.datosModificados.nombre)) {
-        this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
+    if (!this.datosModificados.nombre) {
+        this.errorMessages.nombre = '';
         this.camposValidos = false;
-      } else if (this.datosModificados.nombre.length > 50) {
-        this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
-        this.camposValidos = false;
-      } else {
-        if (this.datosModificados.nombre !== this.datosOriginales.nombre) {
-          this.apiProducto.verificarNombreExistente(this.datosModificados.nombre, this.token).subscribe(
-            (response) => {
-              if (response.existe) {
-                this.errorMessages.nombre = 'Este nombre ya está en uso por otro usuario.';
-                this.camposValidos = false;
-              } else {
-                this.datosModificados.nombre = this.datosModificados.nombre.charAt(0).toUpperCase() + this.datosModificados.nombre.slice(1);
+    } else {
+        // Eliminar espacios en blanco al inicio y al final del nombre
+        this.datosModificados.nombre = this.datosModificados.nombre.trim();
+
+        this.datosModificados.nombre = this.datosModificados.nombre.replace(/\s+/g, ' ');
+
+        if (!validacion.test(this.datosModificados.nombre)) {
+            this.errorMessages.nombre = 'El nombre solo acepta letras, espacios, números y letras con acentos (á, é, í, ó, ú).';
+            this.camposValidos = false;
+        } else if (this.datosModificados.nombre.length > 50) {
+            this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
+            this.camposValidos = false;
+        }else if (this.datosModificados.nombre.length < 3) {
+          this.errorMessages.nombre = 'El nombre no debe ser menor a 3 caracteres.';
+          this.camposValidos = false;
+      }  else {
+            if (this.datosModificados.nombre !== this.datosOriginales.nombre) {
+                this.apiProducto.verificarNombreExistente(this.datosModificados.nombre, this.token).subscribe(
+                    (response) => {
+                        if (response.existe) {
+                            this.errorMessages.nombre = 'Este nombre ya está en uso por otro producto.';
+                            this.camposValidos = false;
+                        } else {
+                            // Capitalizar solo la primera letra de la primera palabra
+                            this.datosModificados.nombre = this.datosModificados.nombre.charAt(0).toUpperCase() + this.datosModificados.nombre.slice(1).toLowerCase();
+                            this.errorMessages.nombre = '';
+                            this.camposValidos = true;
+                        }
+                    },
+                    (error) => {
+                        console.error('Error al verificar el nombre:', error);
+                    }
+                );
+            } else {
+                // Si el nombre es el mismo que el original, no mostramos el mensaje de error
                 this.errorMessages.nombre = '';
-                this.camposValidos = true;
-              }
-            },
-            (error) => {
-              console.error('Error al verificar el nombre:', error);
             }
-          );
-        } else {
-          // Si el nombre es el mismo que el original, no mostramos el mensaje de error
-          this.errorMessages.nombre = '';
         }
-      }
     }
-  }
-  
+}
+
   
 
   validarStockMinimo(event: Event) {
@@ -235,6 +240,7 @@ cambios(): boolean {
           this.datosModificados.stock_minimo = data.stock_minimo ;
           this.datosModificados.cantidad = data.cantidad ;
           this.datosModificados.precio_venta = data.precio_venta;
+          this.datosModificados.estado = data.estado;
           
           this.apíCategorias.getCategorias(this.token).subscribe((categorias) => {
             this.categorias = categorias;

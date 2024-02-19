@@ -327,7 +327,7 @@ cargarNumeroFactura(): Promise<void[]> {
 // Método para exportar abonos a Excel con nombres de clientes
 exportarExcelAbonos(): void {
   // Cargar nombres de clientes antes de exportar
- Promise.all([ this.cargarNombresClientes(),this.cargarNumeroFactura()]).then(() => {
+  Promise.all([this.cargarNombresClientes(), this.cargarNumeroFactura()]).then(() => {
     // Obtén todos los datos de abonos
     this.apiVentas.getAbonosRelacionados(this.ventaId, this.token).subscribe(
       (data: any[] | any) => {
@@ -336,14 +336,16 @@ exportarExcelAbonos(): void {
           // Crea un array para almacenar los datos
           const excelData: any[] = [];
 
-          // Agrega el encabezado del thead (excluyendo la columna de acciones)
-          const headerData = ['Fecha Abono', 'Valor Abono', 'Numero factura', 'Nombre Cliente'];
+          // Agrega el encabezado personalizado "Abonos" que ocupa de A1 a D1
+          excelData.push(['Abonos', '', '', '']); 
+
+          // Agrega el encabezado del thead
+          const headerData = ['Fecha Abono', 'Valor Abono', 'Numero factura', 'Cliente'];
           excelData.push(headerData);
 
           // Itera sobre los datos y obtén los valores de las celdas
           data.forEach((item, index) => {
             const rowData = [
-
               item.fechaabono,
               item.valorabono,
               this.numeroFactura,
@@ -354,6 +356,14 @@ exportarExcelAbonos(): void {
 
           // Crea una hoja de cálculo
           const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(excelData);
+
+          // Fusiona las celdas para el encabezado "Abonos"
+          const range = XLSX.utils.decode_range('A1:D1'); // Rango de celdas para fusionar
+          ws['!merges'] = [{ s: { r: range.s.r, c: range.s.c }, e: { r: range.e.r, c: range.e.c } }]; // Fusiona las celdas
+
+          // Alinea el encabezado "Abonos" al centro
+          const titleCell = XLSX.utils.encode_cell({ r: range.s.r, c: range.s.c }); // Celda de título
+          ws[titleCell].s = { alignment: { horizontal: 'center' } }; // Establece la alineación horizontal al centro
 
           // Crea un libro de trabajo
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -372,10 +382,13 @@ exportarExcelAbonos(): void {
   });
 }
 
+
+
   reloadComponent() {
     const currentRoute = this.router.url;
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([currentRoute]);  
+      this.camposValidos=false
     });
   }
 

@@ -48,12 +48,12 @@
           <th class="text-dark " style="width: 250px;">Factura</th>
           <th class="text-dark " style="width: 250px;">Cliente</th>
           <th class="text-dark " style="width: 250px;">Fecha</th>
-          <th class="text-dark " style="width: 250px;">M Pago</th>
+          <!-- <th class="text-dark " style="width: 250px;">M Pago</th> -->
           <th class="text-dark " style="width: 250px;">V total</th>
-          <th class="text-dark " style="width: 250px;">Estado
-            pago</th>
             <th class="text-dark " style="width: 250px;">Tipo
               pago</th>
+              <th class="text-dark " style="width: 250px;">Estado
+                pago</th>
           <th class="text-dark " style="width: 250px;">
             Estado
             <i class="fa-solid fa-filter"
@@ -72,9 +72,10 @@
           <td>{{item.numerofactura}}</td>
           <td>{{item.idcliente}}</td>
           <td>{{item.fecha}}</td>
-          <td>{{item.metodopago}}</td>
-          <td>$ {{ item.valortotal.toLocaleString('es-ES')}}</td>
-          
+          <!-- <td>{{item.metodopago}}</td> -->
+          <td>$ {{formatNumber(item.valortotal)}}</td>
+        
+          <td>{{item.tipopago}}</td>
           <td>
             <div [ngClass]="{
               'estado-pago': item.estadopago === 'Pendiente' || item.estadopago === 'En proceso',
@@ -85,7 +86,6 @@
               {{ item.estadopago }}
             </div> 
           </td>
-          <td>{{item.tipopago}}</td>
 
           <td class="estado-column">
             <div
@@ -139,7 +139,7 @@
 
     </table>
     <div class="mensaje-no-resultados" *ngIf="data.length === 0">
-      No se encontraron resultados
+      No se encontraron ventas
     </div>
   </div>
   <div class="pagination">

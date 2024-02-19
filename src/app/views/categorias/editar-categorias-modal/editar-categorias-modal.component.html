@@ -15,7 +15,8 @@
                         class="form-control"
                         (input)="validarNombre()"
                         [ngClass]="{'is-invalid': errorMessages.nombre}"
-                        placeholder>
+                        placeholder
+                        [disabled]="!datosModificados.estado">
                     <label for="nombre" class="input-label">Nombre
                         <span style="color: red;" *ngIf="!datosModificados.nombre">*</span>
                     </label>
@@ -40,7 +41,8 @@
                         (input)="validarDescripcion()"
                         [ngClass]="{'is-invalid': errorMessages.descripcion}"
                         placeholder
-                        style="resize: none;  height: 90px;">
+                        style="resize: none;  height: 90px;"
+                        [disabled]="!datosModificados.estado">
                     </textarea>
 
                     <div class="invalid-feedback error-message mt-2"

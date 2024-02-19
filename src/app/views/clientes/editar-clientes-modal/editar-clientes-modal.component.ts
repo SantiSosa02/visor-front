@@ -33,7 +33,8 @@ export class EditarClientesModalComponent {
     nombre:'',
     apellido:'',
     telefono:'',
-    correo:''
+    correo:'',
+    estado:false
   }
 
   errorMessages={
@@ -87,23 +88,47 @@ export class EditarClientesModalComponent {
       const palabras = this.datosModificados.nombre.split(' ');
   
       // Capitaliza la primera letra de cada palabra
-      const nombreCapitalizado = palabras.map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
-  
-      // Une las palabras nuevamente
-      this.datosModificados.nombre = nombreCapitalizado.join(' ');
-  
+      this.datosModificados.nombre = this.capitalizeFirstLetter(this.datosModificados.nombre);
+
       if (!validacion.test(this.datosModificados.nombre)) {
         this.errorMessages.nombre = 'El nombre solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
         this.camposValidos = false;
       } else if (this.datosModificados.nombre.length > 50) {
         this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
         this.camposValidos = false;
-      } else {
+      } else if (this.datosModificados.nombre.length < 3) {
+        this.errorMessages.nombre = 'El nombre no debe ser menor a 3 caracteres.';
+        this.camposValidos = false;
+      }else {
         this.errorMessages.nombre = '';
         this.camposValidos = true;
       }
     }
   }
+
+  capitalizeFirstLetter(str) {
+    let result = '';
+    let capitalizeNext = true;
+
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+        if (capitalizeNext && /[a-záéíóú]/i.test(char)) {
+            // Si se debe capitalizar el próximo carácter y el carácter actual es una letra
+            result += char.toUpperCase();
+            capitalizeNext = false;
+        } else {
+            // Si no se debe capitalizar el próximo carácter o el carácter actual no es una letra
+            result += char.toLowerCase();
+            if (char === 'ñ' || char === 'Ñ') {
+                capitalizeNext = false; // Evitar que se capitalice la siguiente letra
+            } else if (char === ' ') {
+                capitalizeNext = true; // Restaurar la capitalización para la próxima palabra
+            }
+        }
+    }
+
+    return result;
+}
   
   validarApellido() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
@@ -121,16 +146,16 @@ export class EditarClientesModalComponent {
       const palabras = this.datosModificados.apellido.split(' ');
   
       // Capitaliza la primera letra de cada palabra
-      const apellidoCapitalizado = palabras.map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1));
-  
-      // Une las palabras nuevamente
-      this.datosModificados.apellido = apellidoCapitalizado.join(' ');
+      this.datosModificados.apellido = this.capitalizeFirstLetter(this.datosModificados.apellido);
   
       if (!validacion.test(this.datosModificados.apellido)) {
         this.errorMessages.apellido = 'El apellido solo acepta letras, espacios y letras con acentos (á, é, í, ó, ú).';
         this.camposValidos = false;
       } else if (this.datosModificados.apellido.length > 50) {
         this.errorMessages.apellido = 'El apellido no debe superar los 50 caracteres.';
+        this.camposValidos = false;
+      }else if (this.datosModificados.apellido.length < 3) {
+        this.errorMessages.apellido = 'El apellido no debe ser menor a 3  caracteres.';
         this.camposValidos = false;
       } else {
         this.errorMessages.apellido = '';
@@ -153,7 +178,7 @@ export class EditarClientesModalComponent {
       this.errorMessages.telefono = '';
       this.camposValidos = false;
     } else if (inputValue.length !== 10 || inputValue.startsWith('0')) {
-      this.errorMessages.telefono = 'El teléfono debe tener exactamente 10 dígitos y no puede comenzar con 0.';
+      this.errorMessages.telefono = 'El celular debe tener exactamente 10 dígitos.';
       this.camposValidos = false;
     } else {
      
@@ -170,23 +195,42 @@ export class EditarClientesModalComponent {
   
 
   validarCorreo() {
-    const validacionCorreo = /^[a-zA-Z0-9._%-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-]+\.(com|co|org|net|edu)$/;
+    const validacionCorreo = /^[a-zA-Z0-9._%-ñÑáéíóúÁÉÍÓÚ]{4,}@[a-zA-Z0-9.-]+\.(com|co|org|net|edu)$/;
 
+  
     if (!this.datosModificados.correo) {
       this.errorMessages.correo = '';
-      this.camposValidos=false;
-    } else if (!validacionCorreo.test(this.datosModificados.correo)) {
-      this.errorMessages.correo = 'El correo debe tener una estructura válida (usuario123@dominio.com).';
-      this.camposValidos=false;
-    }else if (this.datosModificados.correo.length > 100) {
-      this.errorMessages.correo = 'El correo no debe superar los 100 caracteres.';
-      this.camposValidos=false;
-    }else {
-            this.errorMessages.correo = '';
-            this.camposValidos=true;
+      this.camposValidos = false;
+    } else {
+      // Eliminar espacios en blanco al inicio y al final del correo
+      this.datosModificados.correo = this.datosModificados.correo.trim();
+  
+      if (!validacionCorreo.test(this.datosModificados.correo)) {
+        this.errorMessages.correo = 'El correo debe tener una estructura válida (usuario123@dominio.com).';
+        this.camposValidos = false;
+      } else if (this.datosModificados.correo.length > 100) {
+        this.errorMessages.correo = 'El correo no debe superar los 100 caracteres.';
+        this.camposValidos = false;
+      } else {
+        const token = localStorage.getItem('token');
+        // Verificar si el correo ya existe
+        this.apiClientes.verificarCorreoExistente(this.datosModificados.correo, token).subscribe(
+          (response) => {
+            if (response.existe) {
+              this.errorMessages.correo = 'Este correo ya está en uso por otro cliente.';
+              this.camposValidos = false;
+            } else {
+              this.errorMessages.correo = '';
+              this.camposValidos = true;
+            }
+          },
+          (error) => {
+            console.error('Error al verificar el correo:', error);
+          }
+        );
+      }
     }
   }
-
   ngOnInit(){
     this.apiClientes.getClientById(this.clientId, this.token).subscribe(
       (data) => {
@@ -201,6 +245,7 @@ export class EditarClientesModalComponent {
           this.datosModificados.apellido=data.apellido;
           this.datosModificados.telefono=data.telefono;
           this.datosModificados.correo=data.correo;
+          this.datosModificados.estado = data.estado;
         }else{
           console.error('No se encontreo el cliente con el ID proporcionado.')
         }

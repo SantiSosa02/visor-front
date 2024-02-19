@@ -27,7 +27,6 @@ export class RecuperarComponent {
   user:any={
     correo:'',
     contrsena:'',
- 
   }
 
   errorMessages={
@@ -38,29 +37,32 @@ export class RecuperarComponent {
   }
 
   loading:boolean=false;
+  correoValido: boolean = false;
+  
+
+  correoCompleto():boolean{
+    return (
+      !!this.user.correo 
+    )
+  }
 
   validarCorreo() {
-    
     const validacionCorreo = /^[a-zA-Z0-9._%-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-]+\.(com|co|org|net|edu)$/;
-
-        // Obtener valores de los campos
-        const correo = (document.getElementById('correo') as HTMLInputElement).value;
-      
-
-    if (!correo) {
-      this.errorMessages.correo = '';
-   
-    } else if (!validacionCorreo.test(correo)) {
-      this.errorMessages.correo = 'El correo debe tener una estructura válida (usuario123@dominio.com).';
-   
-    } else if (this.user.correo.length > 50) {
-      this.errorMessages.correo = 'El correo no debe superar los 50 caracteres.';
-     
-    }else {
-         this.errorMessages.correo = '';
-        }
-      
+    if (!this.user.correo) {
+      this.errorMessages.recuperar = '';
+      this.correoValido = false;
+    } else if (!validacionCorreo.test(this.user.correo)) {
+      this.errorMessages.recuperar = 'El correo debe tener una estructura válida (usuario123@dominio.com).';
+      this.correoValido = false;
+    } else if (this.user.correo.length > 100) {
+      this.errorMessages.recuperar = 'El correo no debe superar los 100 caracteres.';
+      this.correoValido = false;
+    } else {
+      this.errorMessages.recuperar = '';
+      this.correoValido = true;
     }
+  }
+  
 
     validarContrasena(){
       const validacion = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
@@ -78,8 +80,10 @@ export class RecuperarComponent {
        this.errorMessages.contrasena=''
       }
    }
-  
+   mensajeColor: string;
 
+
+  
    forgotPassword(form: NgForm) {
     // Obtener el valor del campo de correo del formulario
     const correo = form.value.correo;
@@ -89,40 +93,62 @@ export class RecuperarComponent {
   
     // Llamar al servicio para solicitar el restablecimiento de contraseña
     this.apiUsuarios.forgotPassword({ correo }).subscribe(
-      (response) => {
-        if (response.message) {
-          // Asignar el mensaje de éxito a una propiedad en tu componente
-          this.errorMessages.recuperar = response.message;
-  
-          // Establecer un temporizador para borrar el mensaje y cerrar el modal después de 2 segundos
-          setTimeout(() => {
-            this.errorMessages.recuperar = '';
-            this.cerrarModal(); // Cierra el modal
-          }, 2000);
+        (response) => {
+            if (response.message) {
+                // Asignar el mensaje de éxito a una propiedad en tu componente
+                this.errorMessages.recuperar = response.message;
+                // Establecer el color del mensaje como verde si la operación fue exitosa
+                this.mensajeColor = 'green';
+
+                // Establecer un temporizador para borrar el mensaje y cerrar el modal después de 2 segundos
+                setTimeout(() => {
+                    this.errorMessages.recuperar = '';
+                    this.mensajeColor = ''; // Restablecer el color
+                    this.cerrarModal1(); // Cierra el modal
+                }, 2000);
+            }
+        },
+        (error) => {
+            if (error.error && error.error.error) {
+                this.errorMessages.recuperar = error.error.error;
+                // Establecer el color del mensaje como rojo si hay un error
+                if (error.error.error === 'El usuario no esta registrado') {
+                    this.mensajeColor = 'red';
+                    // Establecer un temporizador para borrar el mensaje después de 2 segundos
+                    setTimeout(() => {
+                        this.errorMessages.recuperar = '';
+                        this.mensajeColor = ''; // Restablecer el color
+                    }, 2000);
+                } else {
+                    // Dejar el color predeterminado si no es un error específico relacionado con el correo
+                    if (error.error.error !== 'El usuario no esta registrado.') {
+                        this.errorMessages.recuperar = ''; // Borrar cualquier mensaje de error relacionado con el correo
+                    }
+                    this.mensajeColor = ''; // Restablecer el color
+                }
+            }
         }
-      },
-      (error) => {
-        console.error('Error en la solicitud para recuperar contraseña:', error);
-        if (error.error && error.error.error) {
-          this.errorMessages.recuperar = error.error.error;
-  
-          // Establecer un temporizador para borrar el mensaje y cerrar el modal después de 2 segundos
-          setTimeout(() => {
-            this.errorMessages.recuperar = '';
-            this.cerrarModal(); // Cierra el modal
-          }, 2000);
-        }
-      }
     );
+}
+
+  
+  
+  cerrarModal1() {
+    setTimeout(() => {
+      this.bsModalRef.onHidden.subscribe(() => {
+        // Esta función se ejecutará después de que el modal se haya ocultado completamente
+        this.router.navigate(['/login']);
+      });
+      this.bsModalRef.hide();  // Cierra el modal
+    }, 2000); // 2000 milisegundos = 2 segundos
   }
   
-  
-  cerrarModal() {
+
+  cerrarModal(){
     this.bsModalRef.onHidden.subscribe(() => {
-      // Esta función se ejecutará después de que el modal se haya ocultado completamente
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login'])
     });
-    this.bsModalRef.hide();  // Cierra el modal
+    this.bsModalRef.hide();
   }
 
 

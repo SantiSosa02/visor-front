@@ -104,17 +104,17 @@ camposCompletos(): boolean {
       (response) => {
         console.log('Respuesta del servidor para cambiar contraseña:', response);
         if (response.message) {
-          // Asignar el mensaje de éxito a una propiedad en tu componente
-      
           // Mostrar el mensaje de éxito usando Toastr
           this.toastr.success(response.message);
-      
+  
           // Establecer un temporizador para borrar el mensaje después de 2 segundos
           setTimeout(() => {
-            
             this.camposHabilitados = false;
             this.newPassword = '';
             this.confirmarContrasena = '';
+  
+            // Redirigir al usuario al login después de 2 segundos
+            this.router.navigateByUrl('/login');
           }, 2000);
         }
         this.passworsdChange = true;

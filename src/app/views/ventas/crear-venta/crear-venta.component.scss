@@ -92,6 +92,11 @@ input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
     
 }
 
+.input-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
 
 .contenedor-botones{
     padding: 8px;
