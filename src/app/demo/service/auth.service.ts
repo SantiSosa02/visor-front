@@ -5,8 +5,7 @@ import { tap, map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthStatus, LoginResponse, User } from '../interfaces';
 import { checkTokenResponse } from '../interfaces/check-token.response';
-// import { Router } from '@angular/router'; // Importa el Router de Angular
-
+import { Router } from '@angular/router'; // Importa el Router de Angular
 
 @Injectable({
   providedIn: 'root'
@@ -17,46 +16,10 @@ export class AuthService {
   private _authStatus: BehaviorSubject<AuthStatus> = new BehaviorSubject<AuthStatus>(this.retrieveAuthStatusFromStorage());
   authStatus: Observable<AuthStatus> = this._authStatus.asObservable();
   
-
-  constructor(private http: HttpClient, 
-    // private router: Router
-    ) {
+  constructor(private http: HttpClient, private router: Router) {
     // Ejecutar inmediatamente al cargar la aplicación
     this.checkAuthStatus().subscribe();
-    // this.initTokenExpirationCheck();
   }
-
-  // private initTokenExpirationCheck() {
-  //   setInterval(() => {
-  //     this.checkTokenExpiration();
-  //   }, 10000); // Verifica cada 10 segundos si el token ha expirado
-  // }
-
-  // private checkTokenExpiration() {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     const tokenExpiration = this.getTokenExpiration(token);
-  //     const currentTime = Math.floor(new Date().getTime() / 1000);
-
-  //     if (tokenExpiration && tokenExpiration < currentTime) {
-  //       // Token ha expirado, redirigir al login
-  //       console.log('Token has expired. Redirecting to login...');
-  //       this.logout(); // Realiza el logout
-  //       this.router.navigate(['/login']); // Redirige al login
-  //     }
-  //   }
-  // }
-
-  // private getTokenExpiration(token: string): number | null {
-  //   try {
-  //     const [, payload] = token.split('.');
-  //     const decodedPayload = JSON.parse(atob(payload));
-  //     return decodedPayload.exp;
-  //   } catch (error) {
-  //     console.error('Error parsing token payload:', error);
-  //     return null;
-  //   }
-  // }
 
   private setAuthentication(user: User, token: string): void {
     this._currentUser.next(user);
@@ -70,8 +33,6 @@ export class AuthService {
 
   login(correo: string, contrasena: string): Observable<boolean> {
     const url = `https://api-postgress.onrender.com/api/usuarios/login`;
-    //  const url='http://localhost:8080/api/usuarios/login';
-    
     const body = { correo, contrasena };
 
     return this.http.post<LoginResponse>(url, body).pipe(
@@ -124,8 +85,6 @@ export class AuthService {
     return throwError(() => errorMessage);
   }
   
-  
-
   checkAuthStatus(): Observable<User | null> {
   
     const token = localStorage.getItem('token');
@@ -146,7 +105,13 @@ export class AuthService {
         this.setAuthentication(user, newToken);
         return user;
       }),
-      catchError(() => {
+      catchError(error => {
+        if (error.status === 401) {
+          // Token ha expirado, redirigir al login
+          console.log('Token has expired. Redirecting to login...');
+          this.logout(); // Realiza el logout
+          this.router.navigate(['/login']); // Redirige al login
+        }
         this._authStatus.next(AuthStatus.notAuthenticated);
         return of(null);
       })

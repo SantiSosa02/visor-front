@@ -148,3 +148,12 @@ input:focus + .input-label, input:not(:placeholder-shown) + .input-label {
     align-items: center;
     margin-top: 18%;
 }
+
+.checkk{
+    width: 15%;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 11%;
+}

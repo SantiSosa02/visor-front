@@ -44,14 +44,14 @@ export class CrearServiciosModalComponent {
   
   validarNombre() {
     const validacion = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/;
-
+  
     if (!this.service.nombre) {
         this.errorMessages.nombre = '';
         this.camposValidos = false;
     } else {
         // Eliminar espacios en blanco al inicio y al final del nombre
         this.service.nombre = this.service.nombre.trim();
-
+  
         this.service.nombre = this.service.nombre.replace(/\s+/g, ' ');
 
         if (!validacion.test(this.service.nombre)) {
@@ -60,14 +60,15 @@ export class CrearServiciosModalComponent {
         } else if (this.service.nombre.length > 50) {
             this.errorMessages.nombre = 'El nombre no debe superar los 50 caracteres.';
             this.camposValidos = false;
-        } else if (this.service.nombre.length < 53) {
+        } else if (this.service.nombre.length < 3) {
           this.errorMessages.nombre = 'El nombre no debe ser menor a 3 caracteres.';
           this.camposValidos = false;
       }else {
-            this.apiServicios.verificarNombreExistente(this.service.nombre, this.token).subscribe(
+            const token = localStorage.getItem('token');
+            this.apiServicios.verificarNombreExistente(this.service.nombre, token).subscribe(
                 (response) => {
                     if (response.existe) {
-                        this.errorMessages.nombre = 'El nombre ya está en uso por otro servicio.';
+                        this.errorMessages.nombre = 'Este nombre ya está en uso por otra categoría.';
                         this.camposValidos = false;
                     } else {
                         // Capitalizar solo la primera letra de la primera palabra
@@ -83,6 +84,7 @@ export class CrearServiciosModalComponent {
         }
     }
 }
+
 
   
 
