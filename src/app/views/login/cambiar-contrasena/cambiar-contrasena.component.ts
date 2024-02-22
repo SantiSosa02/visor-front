@@ -86,7 +86,6 @@ camposCompletos(): boolean {
     } else if (contrasena === confirmar) {
       this.errorMessages.confirmarContrasena = '';
       this.camposValidos = true;
-      console.log('Las contraseñas coinciden');
     } else if (!confirmar) {
       this.errorMessages.confirmarContrasena = '';
       this.camposValidos = false;
@@ -102,7 +101,6 @@ camposCompletos(): boolean {
     // Llamar al servicio para cambiar la contraseña
     this.apiUsuarios.changePassword(this.token, this.newPassword).subscribe(
       (response) => {
-        console.log('Respuesta del servidor para cambiar contraseña:', response);
         if (response.message) {
           // Mostrar el mensaje de éxito usando Toastr
           this.toastr.success(response.message);
@@ -120,7 +118,6 @@ camposCompletos(): boolean {
         this.passworsdChange = true;
       },
       (error) => {
-        console.error('Error en la solicitud para cambiar contraseña:', error);
         if (error.error && error.error.error) {
           this.errorMessages.recuperar = error.error.error;
           setTimeout(() => {

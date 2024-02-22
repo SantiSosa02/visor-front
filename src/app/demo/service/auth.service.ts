@@ -94,28 +94,28 @@ export class AuthService {
       return of(null);
     }
   
-    const url = `https://api-postgress.onrender.com/api/ruta-protegida`;
-    const headers = new HttpHeaders().set('x-token', token);
+    // const url = `https://api-postgress.onrender.com/api/ruta-protegida`;
+    // const headers = new HttpHeaders().set('x-token', token);
   
-    return this.http.get<checkTokenResponse>(url, { headers }).pipe(
-      map(({ user, token: newToken }) => {
-        // Actualiza el token en localStorage
-        localStorage.setItem('token', newToken);
-        // Actualiza la información del usuario
-        this.setAuthentication(user, newToken);
-        return user;
-      }),
-      catchError(error => {
-        if (error.status === 401) {
-          // Token ha expirado, redirigir al login
-          console.log('Token has expired. Redirecting to login...');
-          this.logout(); // Realiza el logout
-          this.router.navigate(['/login']); // Redirige al login
-        }
-        this._authStatus.next(AuthStatus.notAuthenticated);
-        return of(null);
-      })
-    );
+    // return this.http.get<checkTokenResponse>(url, { headers }).pipe(
+    //   map(({ user, token: newToken }) => {
+    //     // Actualiza el token en localStorage
+    //     localStorage.setItem('token', newToken);
+    //     // Actualiza la información del usuario
+    //     this.setAuthentication(user, newToken);
+    //     return user;
+    //   }),
+    //   catchError(error => {
+    //     if (error.status === 401) {
+    //       // Token ha expirado, redirigir al login
+    //       console.log('Token has expired. Redirecting to login...');
+    //       this.logout(); // Realiza el logout
+    //       this.router.navigate(['/login']); // Redirige al login
+    //     }
+    //     this._authStatus.next(AuthStatus.notAuthenticated);
+         return of(null);
+    //   })
+    // );
   }
 
   logout() {

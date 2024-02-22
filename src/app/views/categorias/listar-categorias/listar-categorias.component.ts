@@ -147,13 +147,11 @@ export class ListarCategoriasComponent {
   
     this.apiCategoria.getProductosRelacioandos(categoryId, token).subscribe(
       (response: any) => {
-        console.log('Respuesta del servicio:', response);
   
         // Verificar si la respuesta es válida y tiene la propiedad length
         const cantidadProductos = Array.isArray(response) ? response.length : 0;
   
         // Agregar un console.log para verificar la cantidad de productos
-        console.log('Cantidad de productos:', cantidadProductos);
   
         if (cantidadProductos > 0) {
           Swal.fire({

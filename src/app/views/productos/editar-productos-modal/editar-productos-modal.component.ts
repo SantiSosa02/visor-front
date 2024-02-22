@@ -167,7 +167,6 @@ validarCantidad(event: Event) {
 }
 
 validarPrecioVenta(event: Event) {
-  console.log('Validando precio...');
 
   const inputElement = event.target as HTMLInputElement;
   let inputValue = inputElement.value;
@@ -203,7 +202,6 @@ validarPrecioVenta(event: Event) {
 
 validarCategoria() {
   this.categoriaCambiada = this.datosModificados.idcategoria !== this.datosOriginales.idcategoria;
-  console.log('Categoría cambiada:', this.categoriaCambiada);
   this.camposValidos=true;
 }
 
@@ -267,10 +265,8 @@ cambios(): boolean {
   
     this.apiProducto.updateProduct(this.productId, productoActualizado, this.token).subscribe((respuesta) => {
       // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito o error
-      console.log('Respuesta del servidor:', respuesta);
       this.submit();
     });
-    console.log(productoActualizado);
   }
 
   cerrarModal() {

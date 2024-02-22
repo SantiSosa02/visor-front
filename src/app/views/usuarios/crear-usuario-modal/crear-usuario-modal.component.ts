@@ -220,23 +220,18 @@ loading:boolean = false;
   
     if (contrasena === this.confirmarContrasena) {
         this.errorMessages.confirmarContrasena = '';
-        console.log('Las contraseñas coinciden');
     } else {
         this.errorMessages.confirmarContrasena = 'Las contraseñas no coinciden';
-        console.log('Las contraseñas no coinciden');
     }
 }
 
 registrarUsuario() {
-  console.log('Haciendo clic en el botón de Registrar');
   
   if (this.user.contrasena !== this.confirmarContrasena) {
-    console.error('Las contraseñas no coinciden');
     return;
   }
 
   if (!this.user.correo) {
-    console.error('El campo de correo está vacío');
     return;
   }
   const token = localStorage.getItem('token');
@@ -244,10 +239,8 @@ registrarUsuario() {
   this.apiServices.createUser(this.user, token).subscribe(
     (response) => {
       if (response && response.status === 'success') {
-        console.log('Registro exitoso');
         this.submit();
         if (response.usuario) {
-          console.log('Datos del usuario:', response.usuario);
         }
       } else {
         console.error('Error al registrar el usuario:', response.message);

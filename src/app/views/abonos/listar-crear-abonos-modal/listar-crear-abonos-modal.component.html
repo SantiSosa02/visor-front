@@ -74,7 +74,7 @@
                                     type="number"
                                     id="valorabono"
                                     name="valorabono"
-                                    style="height: 37px;"
+                                    [style]="{'height': '37px'}"
                                     (keyup)="validarValorAbono($event)"
                                     [ngClass]="{'is-invalid': errorMessages.valorAbono}"
                                     [(ngModel)]="abono.valorabono">
@@ -108,7 +108,7 @@
                 </div>
                 <div *ngIf="abonos.length > 0">
                     <br>
-                    <div style="max-height: 300px; overflow-y: auto;">
+                    <div [style]="{ 'max-height': '300px', 'overflow-y': 'auto' }">
                         <table class="table">
                             <thead>
                                 <tr>

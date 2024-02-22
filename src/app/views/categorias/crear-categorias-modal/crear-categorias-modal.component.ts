@@ -133,12 +133,9 @@ camposValidos:boolean = false;
     const token = localStorage.getItem('token'); 
     this.apicategoria.createCategory(this.category, token).subscribe(
       (response) => {
-        console.log('Respuesta del servidor:', response);
         if (response && response.status === 'success') {
-          console.log('Registro exitoso');
           this.submit();
           if (response.categoria) {
-            console.log('Datos de la categoría:', response.usuario);
           }
         } else {
           console.error('Error al registrar la categoría:', response.message);

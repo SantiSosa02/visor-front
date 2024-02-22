@@ -121,7 +121,6 @@ loading:boolean = false;
 
     // Elimina la letra "e" si está presente
     inputValue = inputValue.replace(/e/gi, '');
-    console.log(typeof inputValue);
     // Aplica la validación de números mayores a 0
     const validacion = /^[1-9][0-9]*$/;
     if (inputValue && !validacion.test(inputValue) || +inputValue > 50) {
@@ -149,7 +148,6 @@ validarCantidad(event: Event) {
 
   // Elimina la letra "e" si está presente
   inputValue = inputValue.replace(/e/gi, '');
-  console.log(typeof inputValue);
   // Aplica la validación de números mayores a 0
   const validacion = /^[1-9][0-9]*$/;
   if (inputValue && !validacion.test(inputValue) || +inputValue > 100) {
@@ -168,7 +166,6 @@ validarCantidad(event: Event) {
 }
 
 validarPrecioVenta(event: Event) {
-  console.log('Validando precio...');
 
   const inputElement = event.target as HTMLInputElement;
   let inputValue = inputElement.value;
@@ -205,16 +202,12 @@ validarPrecioVenta(event: Event) {
 
 
   registrarProducto() {
-    console.log('Haciendo clic en el botón de Registrar');
     const token=localStorage.getItem('token');
     this.apiProducto.createProduct(this.product,token).subscribe(
       (response) => {
-        console.log('Respuesta del servidor:', response);
         if (response && response.status === 'success') {
-          console.log('Registro exitoso');
           this.submit();
           if (response.producto) {
-            console.log('Datos del producto:', response.producto); // Actualiza el mensaje aquí
           }
         } else {
           console.error('Error al registrar el producto:', response.message); // Actualiza el mensaje aquí

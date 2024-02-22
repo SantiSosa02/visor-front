@@ -263,11 +263,9 @@ export class EditarClientesModalComponent {
     };
     this.apiClientes.updateCliente(this.clientId, clienteActualizado, this.token).subscribe(
       (respuesta) => {
-        console.log('Respuesta dl servidor', respuesta)
         this.submit();
       }
     )
-    console.log(clienteActualizado)
   }
 
   cerrarModal(){

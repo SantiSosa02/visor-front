@@ -115,12 +115,10 @@ export class CrearServiciosModalComponent {
   }
 
   registrarServicio(){
-    console.log('Haciendo clic en el boton de registrar');
 
     this.apiServicios.createService(this.service, this.token).subscribe(
       (response) => {
         if(response && response.status === 'success') {
-          console.log('Registro exitoso');
           this.submit();
           if(response.service){
             console.log('Datos de el servicio:', response.service)

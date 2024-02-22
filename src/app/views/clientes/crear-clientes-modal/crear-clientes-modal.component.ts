@@ -135,7 +135,6 @@ export class CrearClientesModalComponent {
 
 
   validarTelefono(event: Event) {
-    console.log('validando');
     const inputElement = event.target as HTMLInputElement;
     let inputValue = inputElement.value;
 
@@ -215,14 +214,11 @@ export class CrearClientesModalComponent {
 
 
     registrarCliente(){
-      console.log('Haciendo clic en el boton de registrar.')
       this.apiClientes.createClient(this.client, this.token).subscribe(
         (response) => {
           if (response && response.status === 'success') {
-            console.log('Registro exitoso.')
             this.submit();
             if (response.client) {
-              console.log('Datos de el cliente', response.client)
             }
           } else {
             console.error('Error al registrar el cliente.', response.message)

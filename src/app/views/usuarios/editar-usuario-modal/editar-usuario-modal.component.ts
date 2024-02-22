@@ -195,7 +195,6 @@ validarCorreo() {
           }
         },
         (error) => {
-          console.error('Error al verificar el correo:', error);
         }
       );
     } else {
@@ -306,10 +305,8 @@ cambios(): boolean {
   
     this.apiservice.updateUser(this.userId, usuarioActualizado ,token).subscribe((respuesta) => {
       // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito o error
-      console.log('Respuesta del servidor:', respuesta);
       this.submit();
     });
-    console.log(usuarioActualizado);
   }
 
   cerrarModal() {

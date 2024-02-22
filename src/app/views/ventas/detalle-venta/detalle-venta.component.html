@@ -131,8 +131,9 @@
       <div class="col-12 mt-3">
         <label for="total" class="total-label">Total: $</label>
         <input id="total" type="text" class="total-input"
-          [value]="datosOriginales.valortotal.toLocaleString('es-ES')"
-          readonly>
+        [value]="datosOriginales.valortotal ? datosOriginales.valortotal.toLocaleString('es-ES') : ''"
+        readonly>
+      
       </div>
 
       <div class="botones mt-4">

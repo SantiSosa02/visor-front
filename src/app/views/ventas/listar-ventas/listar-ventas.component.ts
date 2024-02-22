@@ -450,7 +450,6 @@ export class ListarVentasComponent {
                   }, 2000);
                 },
                 (error) => {
-                  console.error('Error al guardar la observación:', error);
                   Swal.fire({
                     title: 'Error',
                     text: 'Hubo un problema al guardar la observación.',
@@ -469,7 +468,6 @@ export class ListarVentasComponent {
         }
       },
       (error) => {
-        console.error('Error al obtener abonos:', error);
         Swal.fire({
           title: 'Error',
           text: 'Hubo un problema al obtener los abonos.',
@@ -483,10 +481,8 @@ export class ListarVentasComponent {
   
   abonoRelacionados(sale: any) {
     const saleId = sale.idventa;
-    console.log(saleId)
     this.apiVentas.getAbonosRelacionados(saleId).subscribe(
       (abonos) => {
-        // console.log('Respuesta del servicio:', abonos); // Agrega este console.log
 
 
 
@@ -503,7 +499,6 @@ export class ListarVentasComponent {
         }
       },
       (error) => {
-        console.error('Error al obtener abonos:', error);
         Swal.fire({
           title: 'Error',
           text: 'Hubo un problema al obtener los abonos.',
@@ -677,7 +672,6 @@ export class ListarVentasComponent {
       },
       (error) => {
         // Maneja el error si ocurre algún problema al obtener la observación
-        console.error('Error al obtener la observación de la venta:', error);
         Swal.fire({
           title: 'Error',
           text: 'Hubo un problema al obtener la observación de la venta.',
@@ -706,7 +700,6 @@ export class ListarVentasComponent {
             resolve();
           },
           (error) => {
-            console.error('Error al obtener el nombre del cliente:', error);
             reject();
           }
         );
@@ -757,7 +750,6 @@ export class ListarVentasComponent {
         this.sumaVentasActivasUltimoMes = ventasMesActual.reduce((total, venta) => total + venta.valortotal, 0);
       },
       (error) => {
-        console.error('Error al obtener las ventas activas:', error);
       }
     );
   }
@@ -801,7 +793,6 @@ export class ListarVentasComponent {
                 resolve();
               },
               (error) => {
-                console.error('Error al obtener el nombre del cliente:', error);
                 reject();
               }
             );
@@ -843,7 +834,6 @@ export class ListarVentasComponent {
         });
       },
       (error) => {
-        console.error('Error al obtener las ventas:', error);
         this.toastr.error('Error al exportar las ventas a Excel', 'Error');
       }
     );

@@ -162,11 +162,9 @@ export class EditarServiciosModalComponent {
     };
     this.apiServicio.updateService(this.serviceId, servicioActualizado, this.token).subscribe(
       (respuesta) =>{
-        console.log('Respuesta del servidor', respuesta);
         this.submit();
       }
     );
-    console.log(servicioActualizado)
   }
 
   cerrarModal() {

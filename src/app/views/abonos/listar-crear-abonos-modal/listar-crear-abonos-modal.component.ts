@@ -103,7 +103,6 @@ export class ListarCrearAbonosModalComponent {
 // }
 
 validarValorAbono(event: Event) {
-    console.log('Validando valor de abono...');
 
     const inputElement = event.target as HTMLInputElement;
     let inputValue = inputElement.value;
@@ -159,11 +158,13 @@ formatNumber(num: number): string {
     this.apiAbonosService.getAbonos(this.token).subscribe(
       (data) => {
         // Filtra los abonos relacionados con la venta específica (idventa)
+        if(data && data.length > 0){
         this.abonos = data.filter(abono => abono.idventa === idventa);
-        // Puedes realizar otras acciones aquí si es necesario
+        }else{
+          this.abonos=[];
+        }
       },
       (error) => {
-        console.error('Error al obtener los abonos: ', error);
       }
     );
   }

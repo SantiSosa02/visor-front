@@ -110,7 +110,7 @@
                 <div class="input-container"> 
                     <p-inputNumber
                     type="number"
-                    style="height: 40px;"
+                    [ngStyle]="{ 'height': '37px' }"
                     id="precio_venta"
                     name="precio_venta"
                     (keyup)="validarPrecioVenta($event)"
