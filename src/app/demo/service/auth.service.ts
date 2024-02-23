@@ -86,7 +86,6 @@ export class AuthService {
   }
   
   checkAuthStatus(): Observable<User | null> {
-  
     const token = localStorage.getItem('token');
   
     if (!token) {
@@ -94,29 +93,13 @@ export class AuthService {
       return of(null);
     }
   
-    // const url = `https://api-postgress.onrender.com/api/ruta-protegida`;
-    // const headers = new HttpHeaders().set('x-token', token);
+    const user = JSON.parse(localStorage.getItem('user') || '');
+    this._currentUser.next(user);
+    this._authStatus.next(AuthStatus.authenticated);
   
-    // return this.http.get<checkTokenResponse>(url, { headers }).pipe(
-    //   map(({ user, token: newToken }) => {
-    //     // Actualiza el token en localStorage
-    //     localStorage.setItem('token', newToken);
-    //     // Actualiza la información del usuario
-    //     this.setAuthentication(user, newToken);
-    //     return user;
-    //   }),
-    //   catchError(error => {
-    //     if (error.status === 401) {
-    //       // Token ha expirado, redirigir al login
-    //       console.log('Token has expired. Redirecting to login...');
-    //       this.logout(); // Realiza el logout
-    //       this.router.navigate(['/login']); // Redirige al login
-    //     }
-    //     this._authStatus.next(AuthStatus.notAuthenticated);
-         return of(null);
-    //   })
-    // );
+    return of(user);
   }
+  
 
   logout() {
     this._currentUser.next(null);
