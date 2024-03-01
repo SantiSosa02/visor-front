@@ -60,7 +60,7 @@ export class ListarVentasComponent {
   sumaVentasActivasUltimoMes: number = 0;
   filtroEstadoPago: string = '';
   
-
+  
 
   construirTablaDetallesProductosYServicios(): Promise<string> {
     const promesas: Promise<string>[] = [];
@@ -165,7 +165,6 @@ export class ListarVentasComponent {
 
   imprimirDetalleVenta(idventa: number) {
     this.apiVentas.getVentasById(idventa, this.token).subscribe((data) => {
-      // console.log('Data:', data);
 
       if (data.venta) {
         this.datosOriginales = {
@@ -178,7 +177,6 @@ export class ListarVentasComponent {
           detalleProductos: data.venta.DetalleVentaProductos || [],
           detalleServicios: data.venta.DetalleVentaServicios || [],
         };
-        // console.log('Datos originales', this.datosOriginales);
 
         this.datosModificados.numerofactura = data.venta.numerofactura;
         this.datosModificados.metodopago = data.venta.metodopago;
@@ -369,7 +367,6 @@ export class ListarVentasComponent {
         }
       },
       (error) => {
-        console.error('Error en la solicitud:', error)
       }
     )
   }
@@ -729,30 +726,36 @@ export class ListarVentasComponent {
   }
 
   obtenerSumaVentasActivasUltimoMes() {
-    // Obtiene la fecha actual
+    // Obtiene la fecha actual en formato UTC
     const fechaActual = new Date();
-  
-    // Obtiene el primer día del mes actual
-    const primerDiaMesActual = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
-  
-    // Obtiene el último día del mes actual
-    const ultimoDiaMesActual = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0);
-  
+    
+    // Calcula la fecha de inicio hace 30 días
+    const fechaInicio = new Date();
+    fechaInicio.setDate(fechaActual.getDate() - 30);
+    
     // Llama a la API para obtener las ventas activas
     this.apiVentas.getVentasActivos(this.token).subscribe(
-      (ventas: any[]) => {
-        // Filtra las ventas del mes actual
-        const ventasMesActual = ventas.filter(venta =>
-          new Date(venta.fecha) >= primerDiaMesActual && new Date(venta.fecha) <= ultimoDiaMesActual
-        );
-  
-        // Suma las ventas del mes actual
-        this.sumaVentasActivasUltimoMes = ventasMesActual.reduce((total, venta) => total + venta.valortotal, 0);
-      },
-      (error) => {
-      }
+        (ventas: any[]) => {
+            // Filtra las ventas dentro del período de los últimos 30 días
+            const ventasUltimos30Dias = ventas.filter(venta => {
+              // Convierte la fecha de la venta a objeto Date
+              const fechaVenta = new Date(venta.fecha);
+              return fechaVenta >= fechaInicio && fechaVenta <= fechaActual;
+          });
+          
+            // Suma las ventas del período de los últimos 30 días
+            this.sumaVentasActivasUltimoMes = ventasUltimos30Dias.reduce((total, venta) => total + venta.valortotal, 0);
+        },
+        (error) => {
+            // Manejo de errores
+        }
     );
-  }
+}
+
+
+
+
+
 
   exportarVentasExcel(): void {
     // Obtén todos los datos de ventas, ya sean activas o inactivas

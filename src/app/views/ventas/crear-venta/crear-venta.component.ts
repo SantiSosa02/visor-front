@@ -148,7 +148,6 @@ camposCpmpletos3():boolean{
   
     // Elimina la letra "e" si está presente
     inputValue = inputValue.replace(/e/gi, '');
-//console.log(typeof inputValue);
     // Aplica la validación de números mayores a 0
     const validacion = /^[1-9][0-9]*$/;
     if (inputValue && !validacion.test(inputValue) ||+inputValue > 50) {
@@ -185,12 +184,10 @@ camposCpmpletos3():boolean{
             this.errorMessages.cantidad = 'La cantidad ingresada es mayor que la cantidad actual.';
             this.camposValidos=false;
           } else {
-            //console.log('La cantidad ingresada es válida.');
             this.camposValidos=true;
           }
         },
         (error) => {
-          console.error('Error al obtener el producto por ID:', error);
           // Manejar el error, mostrar un mensaje al usuario, etc.
         }
       );
@@ -314,7 +311,6 @@ camposCpmpletos3():boolean{
         }));
       },
       (error) => {
-        console.error('Error al obtener los clientes:', error);
       }
     );
   }
@@ -325,7 +321,6 @@ camposCpmpletos3():boolean{
         this.categorias = data;
       },
       (error) => {
-        console.error('Error al obtener las categorías:', error);
       }
     );
   }
@@ -336,7 +331,6 @@ camposCpmpletos3():boolean{
         this.servicios = data;
       },
       (error) => {
-        console.error('Error al obtener los servicios activos:', error);
       }
     );
   }
@@ -349,7 +343,6 @@ camposCpmpletos3():boolean{
         this.productos = data;
       },
       (error) => {
-        console.error('Error al obtener los productos:', error);
       }
     );
   }
@@ -374,7 +367,6 @@ filtrarProductosPorCategoria(idcategoria: any) {
         this.productos = data;
       },
       (error) => {
-        console.error('Error al obtener los productos por categoría:', error);
       }
     );
   } else {
@@ -448,7 +440,6 @@ filtrarProductosPorCategoria(idcategoria: any) {
         this.cdRef.detectChanges();
       },
       (error) => {
-        console.error('Error al buscar el producto por ID:', error);
         // Maneja el error, muestra un mensaje al usuario, etc.
       }
     );
@@ -498,7 +489,6 @@ filtrarProductosPorCategoria(idcategoria: any) {
         this.cdRef.detectChanges();
       },
       (error) => {
-        console.error('Error al buscar el servicio por ID:', error);
         // Maneja el error, muestra un mensaje al usuario, etc.
       }
     );
@@ -564,7 +554,6 @@ filtrarProductosPorCategoria(idcategoria: any) {
                 this.descripcionServicio = servicioEncontrado.descripcion;
             },
             (error) => {
-                console.error('Error al obtener el servicio por ID:', error);
                 // Manejar el error, mostrar un mensaje al usuario, etc.
             }
         );
@@ -586,7 +575,6 @@ obtenerPrecioProducto() {
               this.cantidad= productoEncontrado.cantidad;
           },
           (error) => {
-              console.error('Error al obtener el producto por ID:', error);
               // Manejar el error, mostrar un mensaje al usuario, etc.
           }
       );
@@ -623,7 +611,6 @@ registrarVenta() {
           }
         },
         (error) => {
-          console.error('Error en la solicitud:', error);
         }
       );
     }
