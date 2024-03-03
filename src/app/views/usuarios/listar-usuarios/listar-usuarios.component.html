@@ -45,47 +45,41 @@
         <div class="mensaje-no-resultados" *ngIf="data.length === 0">
           No se encontraron usuarios
         </div>
-        <tr *ngFor="let item of data; let i = index"
-          [style.background-color]="item.estado ? '' : '#880f0f'">
-
-          <td>{{ item.nombre }}</td>
-          <td>{{ item.apellido }}</td>
-          <td>{{ item.correo }}</td>
-          <td class="estado-column">
-            <div
-              [ngClass]="{'estado-container': true, 'circulo-verde': item.estado, 'circulo-rojo': !item.estado}"
-              style="font-weight: bold;">
-              {{ item.estado ? 'Activo' : 'Inactivo' }}
-            </div>
-          </td>
-
-          <td>
-            <div class="botones">
-              <div class="boton-editar">
-                <!-- Agrega el componente mat-tooltip con la propiedad matTooltip -->
-                <button pButton pRipple type="button"
-                  (click)="abrirModalDeEdicion(item.idusuario)"
-                  icon="pi pi-pencil"
-                  class="p-button-rounded p-button-warning" matTooltip="Editar">
-                </button>
-              </div>
-              <!-- <div class="boton-editar">
-                  <button pButton pRipple type="button" icon="pi pi-eye" (click)="abrirModalDetalle(item.idusuario)"
-                    class="p-button-rounded p-button-secondary" matTooltip="Ver detalles"></button>
-                </div> -->
-              <div class="boton-switch align-items-center">
-                <!-- Agrega el componente mat-tooltip con la propiedad matTooltip -->
-                <label class="switch"
-                  matTooltip="{{ item.estado ? 'Desactivar' : 'Activar' }}">
-                  <input type="checkbox" [checked]="item.estado"
-                    (change)="toggleEstado(item)">
-                  <span class="slider"></span>
-                </label>
-              </div>
-            </div>
-          </td>
-        </tr>
+        <ng-container *ngFor="let item of data; let i = index">
+          <ng-container *ngIf="item.correo !== 'visor6183@gmail.com'">
+            <tr [style.background-color]="item.estado ? '' : '#880f0f'">
+              <td>{{ item.nombre }}</td>
+              <td>{{ item.apellido }}</td>
+              <td>{{ item.correo }}</td>
+              <td class="estado-column">
+                <div [ngClass]="{'estado-container': true, 'circulo-verde': item.estado, 'circulo-rojo': !item.estado}"
+                     style="font-weight: bold;">
+                  {{ item.estado ? 'Activo' : 'Inactivo' }}
+                </div>
+              </td>
+      
+              <td>
+                <div class="botones">
+                  <div class="boton-editar">
+                    <button pButton pRipple type="button"
+                            (click)="abrirModalDeEdicion(item.idusuario)"
+                            icon="pi pi-pencil"
+                            class="p-button-rounded p-button-warning" matTooltip="Editar">
+                    </button>
+                  </div>
+                  <div class="boton-switch align-items-center">
+                    <label class="switch" matTooltip="{{ item.estado ? 'Desactivar' : 'Activar' }}">
+                      <input type="checkbox" [checked]="item.estado" (change)="toggleEstado(item)">
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
       </tbody>
+      
     </table>
   </div>
   <div class="pagination">

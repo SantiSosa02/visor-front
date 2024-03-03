@@ -44,7 +44,7 @@ export class ListarCategoriasComponent {
   totalItems: number = 1;
   currentPage: number = 1;
   itemsPerPage: number = 6;
-  noHayUsuariosRegistrados: boolean = true;
+  noHayCategoriasRegistradas: boolean = true;
   filtroActivo: boolean = true; 
   modalRef: BsModalRef;
   paqueteDialog: boolean = false;
@@ -308,10 +308,10 @@ actualizarTabla(): void {
         this.totalItems = data.length;
         this.datosOriginales = [...data];
         this.actualizarTabla();
-        this.noHayUsuariosRegistrados = data.length === 0;
+        this.noHayCategoriasRegistradas = data.length === 0;
       },
       (error) => {
-        this.noHayUsuariosRegistrados = true;
+        this.noHayCategoriasRegistradas = true;
         this.toastr.warning('No hay categorías inactivas', 'Advertencia');
       }
     );

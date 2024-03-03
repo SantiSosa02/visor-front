@@ -47,7 +47,6 @@ export class IndexComponent {
         this.productos = data.filter(producto => producto.cantidad < producto.stock_minimo);
       },
       (error) => {
-        console.error('Error al obtener productos activos:', error);
         // Puedes manejar el error según tus necesidades
       }
     );
