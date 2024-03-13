@@ -20,11 +20,10 @@ export class AuthInterceptor implements HttpInterceptor {
     private sessionExpiredMessageShown = false;
     private pageReloaded = false; 
 
-
     constructor(private router: Router, 
-        private toastr: ToastrService,
-        private authService: AuthService
-        ) { }
+                private authService: AuthService,
+                private toastr: ToastrService
+            ) { }
         
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -35,12 +34,9 @@ export class AuthInterceptor implements HttpInterceptor {
                 }
             }, (error: any) => {
                 if (error instanceof HttpErrorResponse) {
-                    if (error.status === 401 && !this.sessionExpiredMessageShown) {
-                        // Mostrar el mensaje de error solo una vez
-                 
-                        this.sessionExpiredMessageShown = true;
-                           // Mostrar SweetAlert de carga
-                           Swal.fire({
+                    if (error.status === 403 && !this.sessionExpiredMessageShown) {
+                        // Mostrar SweetAlert de carga
+                        Swal.fire({
                             title: 'Su sesión ha expirado.',
                             timer: 2000, // Duración de 2 segundos
                             timerProgressBar: true,
@@ -59,12 +55,11 @@ export class AuthInterceptor implements HttpInterceptor {
                                 this.router.navigate(['/login']);
                             }
                         });
-                     
+                        // Marca el mensaje de sesión expirada como mostrado
+                        this.sessionExpiredMessageShown = true;
                     }
                 }
-
             })
-            
-        );
-    }
+        );
+    }
 }

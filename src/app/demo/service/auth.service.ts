@@ -79,7 +79,6 @@ export class AuthService {
     } else if (error && error.error && error.error.error) {
       errorMessage = error.error.error;
     } else {
-      console.error('Se produjo un error inesperado:', error);
     }
   
     return throwError(() => errorMessage);

@@ -119,7 +119,6 @@ export class LoginComponent {
         }, 1000);
       },
       error: (error) => {
-        console.error('Error del servidor:', error);
       
         if (error.status === 401) {
           console.log('No autorizado - Redireccionando a la página de inicio de sesión...');
