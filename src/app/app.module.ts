@@ -67,7 +67,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { PasswordModule } from 'primeng/password';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputNumberModule } from 'primeng/inputnumber';
-
+import { AuthInterceptor } from './demo/service/interceptor';
 
 
 @NgModule({
@@ -146,6 +146,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy},
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         CountryService, CustomerService, EventService, IconService, NodeService, // Corregido el provider
         PhotoService, ProductService,
         
